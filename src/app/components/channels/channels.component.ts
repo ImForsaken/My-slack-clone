@@ -4,11 +4,8 @@ import {
   MatTreeFlatDataSource,
   MatTreeFlattener,
 } from '@angular/material/tree';
+import { ChannelNode } from './channelNote.interface';
 
-interface ChannelNode {
-  name: string;
-  children?: ChannelNode[];
-}
 interface ExampleFlatNode {
   expandable: boolean;
   name: string;

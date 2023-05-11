@@ -1,5 +1,5 @@
 <section>
-  <mat-toolbar color="primary">
+  <mat-toolbar class="main__header" color="primary">
     <button mat-icon-button>
       <mat-icon>help</mat-icon>
     </button>
@@ -9,16 +9,17 @@
   </mat-toolbar>
 
   <mat-sidenav-container>
-    <!-- left side -->
+    <!-- leftSide menu content -->
     <mat-sidenav #sidenav mode="side" [(opened)]="opened">
-      <mat-toolbar color="accent">
+      <mat-toolbar class="sidenav__header" color="primary">
         <div>Slack-Clone</div>
       </mat-toolbar>
       <app-channels></app-channels>
     </mat-sidenav>
-    <!-- main content -->
+
+    <!--rightSide main content -->
     <mat-sidenav-content>
-      <mat-toolbar color="accent">
+      <mat-toolbar>
         <button
           class="toggle__btn"
           type="button"
@@ -28,7 +29,7 @@
         >
           <mat-icon>menu_open</mat-icon>
         </button>
-        <div>#allgemein</div>
+        <div>#{{ channel.name }}</div>
       </mat-toolbar>
     </mat-sidenav-content>
   </mat-sidenav-container>
