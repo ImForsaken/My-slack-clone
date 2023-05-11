@@ -1,0 +1,19 @@
+.error {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 3rem;
+  background-color: purple;
+  color: whitesmoke;
+  text-shadow: 0 0 0.25rem black;
+  .error__notification {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .error__btn {
+  }
+}
