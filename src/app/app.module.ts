@@ -7,9 +7,11 @@ import { MaterialModule } from './shared/module/material.module';
 
 // Components
 import { AppComponent } from './app.component';
+import { PageNotFoundComponent } from './page/page-not-found/page-not-found.component';
+import { WelcomeComponent } from './page/welcome/welcome.component';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, PageNotFoundComponent, WelcomeComponent],
   imports: [BrowserModule, AppRoutingModule, MaterialModule],
   providers: [],
   bootstrap: [AppComponent],
