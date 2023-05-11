@@ -1,4 +1,5 @@
-/* You can add global styles to this file, and also import other style files */
+@import './app/shared/style/variables';
+@import '~quill/dist/quill.snow.css';
 
 * {
   box-sizing: border-box;
@@ -8,9 +9,29 @@ html,
 body {
   font-size: 100%;
   font-family: Roboto, "Helvetica Neue", sans-serif;
-  height: 100%;
+  height: 100dvh;
 }
 
 body {
   margin: 0;
+}
+
+.ql-toolbar.ql-snow {
+  border: 2px solid $color-gray;
+  border-radius: 10px 10px 0 0;
+  border-bottom: none;
+  color: $color-gray;
+  stroke: $color-gray;
+}
+
+.ql-snow .ql-picker {
+  color: $color-gray;
+}
+
+.ql-editor.ql-blank::before {
+  color: $color-gray;
+}
+
+.ql-snow .ql-stroke {
+  stroke: $color-gray;
 }
