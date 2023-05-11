@@ -9,9 +9,15 @@ import { MaterialModule } from './shared/module/material.module';
 import { AppComponent } from './app.component';
 import { PageNotFoundComponent } from './page/page-not-found/page-not-found.component';
 import { WelcomeComponent } from './page/welcome/welcome.component';
+import { MainComponent } from './page/main/main.component';
 
 @NgModule({
-  declarations: [AppComponent, PageNotFoundComponent, WelcomeComponent],
+  declarations: [
+    AppComponent,
+    PageNotFoundComponent,
+    WelcomeComponent,
+    MainComponent,
+  ],
   imports: [BrowserModule, AppRoutingModule, MaterialModule],
   providers: [],
   bootstrap: [AppComponent],

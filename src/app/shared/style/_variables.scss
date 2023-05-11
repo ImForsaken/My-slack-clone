@@ -1,0 +1,44 @@
+@use "sass:color";
+@use "sass:math";
+$color-primary: #350d36 !default;
+$color-hover: #4d2a51 !default;
+$color-gray: #cac0cb !default;
+$color-white: #f8f8f8 !default;
+$color-active: #1164a3 !default;
+
+/** 1200px oder schmaler */
+
+$breakpoint-lg: 75em !default;
+
+/** 992px oder schmaler */
+
+$breakpoint-md: 62em !default;
+
+/** 768px oder schmaler */
+
+$breakpoint-sm: 48em !default;
+
+/** 576px oder schmaler */
+
+$breakpoint-xs: 36em !default;
+
+/** 400px oder schmaler */
+
+$breakpoint-xxs: 25em !default;
+
+/** Breakpoints */
+
+@media (max-width: $breakpoint-lg) {
+}
+
+@media (max-width: $breakpoint-md) {
+}
+
+@media (max-width: $breakpoint-sm) {
+}
+
+@media (max-width: $breakpoint-xs) {
+}
+
+@media (max-width: $breakpoint-xxs) {
+}
