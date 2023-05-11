@@ -1,20 +1,17 @@
+//Modules
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppRoutingModule } from './app-routing.module';
+import { MaterialModule } from './shared/module/material.module';
+// Firebase
+
+// Components
 import { AppComponent } from './app.component';
-import { GeorgComponent } from './georg/georg.component';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    GeorgComponent
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule
-  ],
+  declarations: [AppComponent],
+  imports: [BrowserModule, AppRoutingModule, MaterialModule],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
