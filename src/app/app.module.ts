@@ -12,6 +12,13 @@ import { WelcomeComponent } from './page/welcome/welcome.component';
 import { MainComponent } from './page/main/main.component';
 import { DirectMessagesComponent } from './components/direct-messages/direct-messages.component';
 import { ChannelsComponent } from './components/channels/channels.component';
+import { ChatAreaComponent } from './chat/chat-area/chat-area.component';
+import { MessageComponent } from './chat/message/message.component';
+import { TextEditorComponent } from './chat/text-editor/text-editor.component';
+
+import { QuillModule } from 'ngx-quill';
+import { QuillConfigModule } from 'ngx-quill/config';
+
 
 @NgModule({
   declarations: [
@@ -21,8 +28,27 @@ import { ChannelsComponent } from './components/channels/channels.component';
     MainComponent,
     DirectMessagesComponent,
     ChannelsComponent,
+    ChatAreaComponent,
+    MessageComponent,
+    TextEditorComponent,
   ],
-  imports: [BrowserModule, AppRoutingModule, MaterialModule],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    MaterialModule,
+    QuillModule.forRoot(),
+    QuillConfigModule.forRoot({
+        modules: {
+          toolbar: [
+            [{ header: [1, 2, false] }],
+            ['bold', 'italic', 'underline'],
+            ['image', 'code-block']
+          ]
+        },
+        placeholder: 'Write a message.',
+        theme: 'snow'  // or 'bubble'
+    })
+  ],
   providers: [],
   bootstrap: [AppComponent],
 })
