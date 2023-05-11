@@ -7,8 +7,4 @@ import { Component, Input } from '@angular/core';
 })
 export class MainComponent {
   opened: boolean = true;
-
-  onMove(event: MouseEvent) {
-    console.log('eventX', event.x);
-  }
 }
