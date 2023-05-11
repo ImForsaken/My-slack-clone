@@ -10,8 +10,10 @@ import { AppComponent } from './app.component';
 import { PageNotFoundComponent } from './page/page-not-found/page-not-found.component';
 import { WelcomeComponent } from './page/welcome/welcome.component';
 import { MainComponent } from './page/main/main.component';
-import { DirectMessagesComponent } from './components/direct-messages/direct-messages.component';
-import { ChannelsComponent } from './components/channels/channels.component';
+import { DirectMessagesComponent } from './components/sidenav/direct-messages/direct-messages.component';
+import { ChannelsComponent } from './components/sidenav/channels/channels.component';
+import { DataProtectionComponent } from './components/info/data-protection/data-protection.component';
+import { LegalNoticeComponent } from './components/info/legal-notice/legal-notice.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +23,8 @@ import { ChannelsComponent } from './components/channels/channels.component';
     MainComponent,
     DirectMessagesComponent,
     ChannelsComponent,
+    DataProtectionComponent,
+    LegalNoticeComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, MaterialModule],
   providers: [],
