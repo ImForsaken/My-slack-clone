@@ -10,6 +10,7 @@ import { AppComponent } from './app.component';
 import { PageNotFoundComponent } from './page/page-not-found/page-not-found.component';
 import { WelcomeComponent } from './page/welcome/welcome.component';
 import { MainComponent } from './page/main/main.component';
+import { AuthComponent } from './auth/auth.component';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { MainComponent } from './page/main/main.component';
     PageNotFoundComponent,
     WelcomeComponent,
     MainComponent,
+    AuthComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, MaterialModule],
   providers: [],
