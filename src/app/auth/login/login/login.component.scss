@@ -1,0 +1,10 @@
+@use "../../../shared/style/variables" as *;
+
+p {
+  margin: 0;
+}
+
+section {
+  height: 100vh;
+  background-color: $color-primary;
+}
