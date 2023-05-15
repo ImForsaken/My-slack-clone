@@ -4,22 +4,12 @@ import {
   MatTreeFlatDataSource,
   MatTreeFlattener,
 } from '@angular/material/tree';
-import { ChannelNode } from './channelNote.interface';
+import {
+  ChannelNode,
+  ExampleFlatNode,
+} from '../../../shared/interface/channelNode.interface';
+import { ChannelService } from 'src/app/shared/service/channel.service';
 
-interface ExampleFlatNode {
-  expandable: boolean;
-  name: string;
-  level: number;
-}
-/**
- * Hier müssen später unsere Firebase daten rein
- */
-const TREE_DATA: ChannelNode[] = [
-  {
-    name: 'Channels',
-    children: [{ name: 'allgemain' }, { name: 'community' }, { name: 'news' }],
-  },
-];
 @Component({
   selector: 'app-channels',
   templateUrl: './channels.component.html',
@@ -48,8 +38,8 @@ export class ChannelsComponent implements OnInit, AfterViewInit {
 
   dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
 
-  constructor() {
-    this.dataSource.data = TREE_DATA;
+  constructor(private channelService: ChannelService) {
+    this.dataSource.data = this.channelService.getAllChannels();
   }
 
   hasChild = (_: number, node: ExampleFlatNode) => node.expandable;

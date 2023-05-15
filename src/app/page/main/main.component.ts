@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { ChannelNode } from 'src/app/components/sidenav/channels/channelNote.interface';
+import { ChannelNode } from 'src/app/shared/interface/channelNode.interface';
 
 @Component({
   selector: 'app-main',

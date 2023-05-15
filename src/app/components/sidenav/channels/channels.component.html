@@ -1,26 +1,19 @@
-<section>
-  <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
-    <!-- This is the tree node template for leaf nodes -->
-    <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding>
-      <!-- Channel List -->
-      <mat-icon>#</mat-icon
-      ><span class="channel" routerLink="/channel/{{ node.name }}">{{
-        node.name
-      }}</span>
-    </mat-tree-node>
+<mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
+  <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding>
+    <!-- Channel List -->
+    <mat-icon>#</mat-icon
+    ><span class="channel" routerLink="/channel/{{ node.name }}">{{
+      node.name
+    }}</span>
+  </mat-tree-node>
 
-    <!-- This is the tree node template for expandable nodes -->
-    <mat-tree-node
-      *matTreeNodeDef="let node; when: hasChild"
-      matTreeNodePadding
-    >
-      <button mat-icon-button matTreeNodeToggle>
-        <mat-icon>
-          {{ treeControl.isExpanded(node) ? "expand_more" : "chevron_right" }}
-        </mat-icon>
-      </button>
-      <!-- Channel-->
-      {{ node.name }}
-    </mat-tree-node>
-  </mat-tree>
-</section>
+  <mat-tree-node *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding>
+    <button mat-icon-button matTreeNodeToggle>
+      <mat-icon>
+        {{ treeControl.isExpanded(node) ? "expand_more" : "chevron_right" }}
+      </mat-icon>
+    </button>
+    <!-- Channel-->
+    {{ node.name }}
+  </mat-tree-node>
+</mat-tree>
