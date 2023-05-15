@@ -13,6 +13,7 @@ export class ChannelService {
         { name: 'allgemain' },
         { name: 'community' },
         { name: 'news' },
+        { name: 'news' },
       ],
     },
   ];

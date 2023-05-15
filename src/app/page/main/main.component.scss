@@ -1,8 +1,11 @@
-@use "../../shared/style/variables" as *;
+@import "../../shared/style/variables";
 section {
   height: 100%;
   display: flex;
   flex-direction: column;
+  .tst {
+    background-color: $blue-active;
+  }
   .main__header {
     display: flex;
     flex-direction: row;
@@ -11,14 +14,14 @@ section {
   mat-sidenav-container {
     height: 100%;
     mat-sidenav {
-      background-color: $color-primary;
+      background-color: $purple;
       width: 18rem;
       .sidenav__header {
         display: flex;
         flex-direction: row;
         justify-content: flex-end;
-        border-top: $color-gray 1px solid;
-        border-bottom: $color-gray 1px solid;
+        border-top: $grey 1px solid;
+        border-bottom: $grey 1px solid;
       }
     }
     mat-sidenav-content {

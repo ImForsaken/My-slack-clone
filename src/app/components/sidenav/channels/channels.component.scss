@@ -1,17 +1,17 @@
-@use "../../../shared/style/variables" as *;
+@import "../../../shared/style/variables";
 mat-tree {
   padding-inline: 0.5rem;
   background-color: transparent;
   gap: 1rem;
   mat-tree-node {
     background-color: transparent;
-    color: $color-white;
+    color: $white;
     .channel {
       cursor: pointer;
     }
   }
   mat-tree-node:hover {
     border-radius: 50rem;
-    background-color: $color-hover;
+    background-color: $purple-hover;
   }
 }
