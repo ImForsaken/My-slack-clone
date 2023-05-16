@@ -2,8 +2,9 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
+import { FormsModule } from '@angular/forms';
 import { MaterialModule } from './shared/module/material.module';
-// Firebase
+import { FirebaseModule } from './shared/module/firebase.module';
 
 // Components
 import { AppComponent } from './app.component';
@@ -20,6 +21,7 @@ import { QuillModule } from 'ngx-quill';
 import { QuillConfigModule } from 'ngx-quill/config';
 
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -30,12 +32,14 @@ import { QuillConfigModule } from 'ngx-quill/config';
     ChannelsComponent,
     ChatAreaComponent,
     MessageComponent,
-    TextEditorComponent,
+    TextEditorComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
+    FormsModule,
     MaterialModule,
+    FirebaseModule,
     QuillModule.forRoot(),
     QuillConfigModule.forRoot({
         modules: {
@@ -46,7 +50,7 @@ import { QuillConfigModule } from 'ngx-quill/config';
           ]
         },
         placeholder: 'Write a message.',
-        theme: 'snow'  // or 'bubble'
+        theme: 'snow'
     })
   ],
   providers: [],
