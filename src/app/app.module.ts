@@ -22,7 +22,7 @@ import { RegisterComponent } from './auth/register/register/register.component';
     LoginComponent,
     RegisterComponent,
   ],
-  imports: [BrowserModule, AppRoutingModule, MaterialModule],
+  imports: [BrowserModule, AppRoutingModule, MaterialModule,],
   providers: [],
   bootstrap: [AppComponent],
 })
