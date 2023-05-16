@@ -1,1 +1,6 @@
-<quill-editor [styles]="editor"></quill-editor>
+<quill-editor
+    [(ngModel)]="text"
+    (keydown)="onKeyDown($event)"
+    [format]="'html'"
+    [styles]="quillStyle">
+</quill-editor>
