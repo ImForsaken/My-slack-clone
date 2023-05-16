@@ -24,9 +24,6 @@ import { LegalNoticeComponent } from './components/info/legal-notice/legal-notic
 import { QuillModule } from 'ngx-quill';
 import { QuillConfigModule } from 'ngx-quill/config';
 
-
-
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -35,8 +32,6 @@ import { QuillConfigModule } from 'ngx-quill/config';
     MainComponent,
     LoginComponent,
     RegisterComponent,
-  ],
-  imports: [BrowserModule, AppRoutingModule, MaterialModule,],
     DirectMessagesComponent,
     ChannelsComponent,
     ChatAreaComponent,
@@ -53,17 +48,16 @@ import { QuillConfigModule } from 'ngx-quill/config';
     FirebaseModule,
     QuillModule.forRoot(),
     QuillConfigModule.forRoot({
-        modules: {
-          toolbar: [
-            [{ header: [1, 2, false] }],
-            ['bold', 'italic', 'underline'],
-            ['image', 'code-block']
-          ]
-        },
-        placeholder: 'Write a message.',
-        theme: 'snow'
-    })
-
+      modules: {
+        toolbar: [
+          [{ header: [1, 2, false] }],
+          ['bold', 'italic', 'underline'],
+          ['image', 'code-block'],
+        ],
+      },
+      placeholder: 'Write a message.',
+      theme: 'snow',
+    }),
   ],
   providers: [],
   bootstrap: [AppComponent],
