@@ -1,0 +1,17 @@
+<div class="message">
+    <img src="https://source.unsplash.com/random" width="30" height="30">
+    <div>
+        <div class="message-header">
+            <span><strong>{{ message.userId }}</strong></span>
+            <span>{{ message.timestamp }} Uhr</span>
+        </div>
+        <div class="message-body">
+            <quill-view-html [content]="message.text"></quill-view-html>
+            <!-- <p>{{ message.text }}</p> -->
+        </div>
+        <div class="message-footer">
+            <a href="#"><strong>5 Antworten</strong></a>
+            <span>Letze Antwort heute um 15:34</span>
+        </div>
+    </div>
+</div>
