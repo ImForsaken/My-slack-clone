@@ -11,14 +11,17 @@ import { AppComponent } from './app.component';
 import { PageNotFoundComponent } from './page/page-not-found/page-not-found.component';
 import { WelcomeComponent } from './page/welcome/welcome.component';
 import { MainComponent } from './page/main/main.component';
-import { DirectMessagesComponent } from './components/direct-messages/direct-messages.component';
-import { ChannelsComponent } from './components/channels/channels.component';
+import { DirectMessagesComponent } from './components/sidenav/direct-messages/direct-messages.component';
+import { ChannelsComponent } from './components/sidenav/channels/channels.component';
 import { ChatAreaComponent } from './chat/chat-area/chat-area.component';
 import { MessageComponent } from './chat/message/message.component';
 import { TextEditorComponent } from './chat/text-editor/text-editor.component';
+import { DataProtectionComponent } from './components/info/data-protection/data-protection.component';
+import { LegalNoticeComponent } from './components/info/legal-notice/legal-notice.component';
 
 import { QuillModule } from 'ngx-quill';
 import { QuillConfigModule } from 'ngx-quill/config';
+
 
 
 
@@ -32,7 +35,9 @@ import { QuillConfigModule } from 'ngx-quill/config';
     ChannelsComponent,
     ChatAreaComponent,
     MessageComponent,
-    TextEditorComponent
+    TextEditorComponent,
+    DataProtectionComponent,
+    LegalNoticeComponent,
   ],
   imports: [
     BrowserModule,
@@ -52,6 +57,7 @@ import { QuillConfigModule } from 'ngx-quill/config';
         placeholder: 'Write a message.',
         theme: 'snow'
     })
+
   ],
   providers: [],
   bootstrap: [AppComponent],

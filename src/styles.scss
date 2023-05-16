@@ -1,8 +1,11 @@
 @import './app/shared/style/variables';
 @import '~quill/dist/quill.snow.css';
 
+@use "/src/app/shared/style/theme" as mat;
+
 * {
   box-sizing: border-box;
+  margin: 0;
 }
 
 html,
@@ -11,11 +14,6 @@ body {
   font-family: Roboto, "Helvetica Neue", sans-serif;
   height: 100dvh;
 }
-
-body {
-  margin: 0;
-}
-
 
 // Quill Editor
 .ql-toolbar.ql-snow {
@@ -31,7 +29,7 @@ body {
 }
 
 .ql-editor.ql-blank::before {
-  color: $color-gray;
+  color: $color-gray; 
 }
 
 .ql-snow .ql-stroke {

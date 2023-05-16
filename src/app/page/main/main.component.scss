@@ -1,9 +1,12 @@
-@use "../../shared/style/variables" as *;
+@import "../../shared/style/variables";
 section {
   height: 100%;
   display: flex;
   flex-direction: column;
-  mat-toolbar {
+  .tst {
+    background-color: $blue-active;
+  }
+  .main__header {
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
@@ -11,7 +14,15 @@ section {
   mat-sidenav-container {
     height: 100%;
     mat-sidenav {
+      background-color: $purple;
       width: 18rem;
+      .sidenav__header {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-end;
+        border-top: $grey 1px solid;
+        border-bottom: $grey 1px solid;
+      }
     }
     mat-sidenav-content {
       mat-toolbar {
@@ -21,6 +32,10 @@ section {
       }
     }
   }
+}
+
+.mat-drawer-side {
+  border: none;
 }
 
 .toggle__btn {

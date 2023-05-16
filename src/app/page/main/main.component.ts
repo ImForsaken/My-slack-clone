@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { ChannelNode } from 'src/app/shared/interface/channelNode.interface';
 
 @Component({
   selector: 'app-main',
@@ -8,7 +9,9 @@ import { Component, Input } from '@angular/core';
 export class MainComponent {
   opened: boolean = true;
 
-  onMove(event: MouseEvent) {
-    console.log('eventX', event.x);
-  }
+  /**
+   * Hier den aktuellen Channel aud Firebase angeben
+   */
+  channel: ChannelNode = { name: 'allgemein' };
+  constructor() {}
 }
