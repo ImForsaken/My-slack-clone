@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
-import { ChatDbService } from 'src/app/shared/services/chat-db.service';
-import { UserDbService } from 'src/app/shared/services/user-db.service';
+import { ChatDbService } from 'src/app/shared/service/chat-db.service';
+import { UserDbService } from 'src/app/shared/service/user-db.service';
 import { Message } from 'src/app/shared/types/message';
 import { User } from 'src/app/shared/types/user';
 
@@ -13,7 +13,7 @@ export class ChatAreaComponent {
   chatService: ChatDbService = inject(ChatDbService);
   userService: UserDbService = inject(UserDbService);
 
-  chatId: string = 'bHADuOvmaLFl970vTDFK'; // Wird bei Click auf Chat an Chat Komponente übergenen.
+  chatId: string = 'bHADuOvmaLFl970vTDFK'; // Wird bei Click auf Chat an Chat Komponente übergeben.
 
   constructor() {
     const user: User = {
