@@ -1,16 +1,7 @@
 <section>
-  <mat-toolbar class="main__header" color="primary">
-    <button mat-icon-button>
-      <mat-icon>help</mat-icon>
-    </button>
-    <button mat-icon-button>
-      <mat-icon>manage_accounts</mat-icon>
-    </button>
-  </mat-toolbar>
-
   <mat-sidenav-container>
     <!-- leftSide menu content -->
-    <mat-sidenav #sidenav mode="side" [(opened)]="opened">
+    <mat-sidenav #sidenav mode="side" [(opened)]="isSidenavOpened">
       <mat-toolbar class="sidenav__header" color="primary">
         <div>Slack-Clone</div>
       </mat-toolbar>

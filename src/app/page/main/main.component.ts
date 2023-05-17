@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
 import { ChannelNode } from 'src/app/shared/interface/channelNode.interface';
 
 @Component({
@@ -7,11 +7,12 @@ import { ChannelNode } from 'src/app/shared/interface/channelNode.interface';
   styleUrls: ['./main.component.scss'],
 })
 export class MainComponent {
-  opened: boolean = true;
+  isSidenavOpened: boolean = true;
 
   /**
    * Hier den aktuellen Channel aud Firebase angeben
    */
   channel: ChannelNode = { name: 'allgemein' };
+
   constructor() {}
 }

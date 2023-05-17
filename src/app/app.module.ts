@@ -5,7 +5,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { FormsModule } from '@angular/forms';
 import { MaterialModule } from './shared/module/material.module';
 import { FirebaseModule } from './shared/module/firebase.module';
-
+import { QuillModule } from 'ngx-quill';
+import { QuillConfigModule } from 'ngx-quill/config';
 // Components
 import { AppComponent } from './app.component';
 import { PageNotFoundComponent } from './page/page-not-found/page-not-found.component';
@@ -18,12 +19,6 @@ import { MessageComponent } from './chat/message/message.component';
 import { TextEditorComponent } from './chat/text-editor/text-editor.component';
 import { DataProtectionComponent } from './components/info/data-protection/data-protection.component';
 import { LegalNoticeComponent } from './components/info/legal-notice/legal-notice.component';
-
-import { QuillModule } from 'ngx-quill';
-import { QuillConfigModule } from 'ngx-quill/config';
-
-
-
 
 @NgModule({
   declarations: [
@@ -47,17 +42,16 @@ import { QuillConfigModule } from 'ngx-quill/config';
     FirebaseModule,
     QuillModule.forRoot(),
     QuillConfigModule.forRoot({
-        modules: {
-          toolbar: [
-            [{ header: [1, 2, false] }],
-            ['bold', 'italic', 'underline'],
-            ['image', 'code-block']
-          ]
-        },
-        placeholder: 'Write a message.',
-        theme: 'snow'
-    })
-
+      modules: {
+        toolbar: [
+          [{ header: [1, 2, false] }],
+          ['bold', 'italic', 'underline'],
+          ['image', 'code-block'],
+        ],
+      },
+      placeholder: 'Write a message.',
+      theme: 'snow',
+    }),
   ],
   providers: [],
   bootstrap: [AppComponent],

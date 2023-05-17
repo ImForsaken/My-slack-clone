@@ -1,1 +1,14 @@
-
+section {
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  .header {
+    .header__content {
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-end;
+    }
+  }
+  router-outlet {
+  }
+}

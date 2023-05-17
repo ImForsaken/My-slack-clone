@@ -1,1 +1,27 @@
-<router-outlet> </router-outlet>
+<section>
+  <header class="header">
+    <mat-toolbar class="header__content" color="primary">
+      <!-- Info Menu -->
+      <button mat-icon-button [matMenuTriggerFor]="infoMenu">
+        <mat-icon>help</mat-icon>
+      </button>
+      <mat-menu #infoMenu="matMenu">
+        <button mat-menu-item routerLink="/legal-notice">
+          Legal Notice<mat-icon>copyright</mat-icon>
+        </button>
+        <button mat-menu-item routerLink="/data-protection">
+          Data Protection<mat-icon>security</mat-icon>
+        </button>
+      </mat-menu>
+      <!-- User Menu -->
+      <button mat-icon-button [matMenuTriggerFor]="userMenu">
+        <mat-icon>manage_accounts</mat-icon>
+      </button>
+      <mat-menu #userMenu="matMenu">
+        <button mat-menu-item>Settings<mat-icon>settings</mat-icon></button>
+        <button mat-menu-item>Logout<mat-icon>logout</mat-icon></button>
+      </mat-menu>
+    </mat-toolbar>
+  </header>
+  <router-outlet></router-outlet>
+</section>

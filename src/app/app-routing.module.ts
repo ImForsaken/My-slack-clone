@@ -3,10 +3,14 @@ import { RouterModule, Routes } from '@angular/router';
 import { WelcomeComponent } from './page/welcome/welcome.component';
 import { PageNotFoundComponent } from './page/page-not-found/page-not-found.component';
 import { MainComponent } from './page/main/main.component';
+import { LegalNoticeComponent } from './components/info/legal-notice/legal-notice.component';
+import { DataProtectionComponent } from './components/info/data-protection/data-protection.component';
 
 const routes: Routes = [
   { path: '', component: WelcomeComponent },
   { path: 'main', component: MainComponent },
+  { path: 'legal-notice', component: LegalNoticeComponent },
+  { path: 'data-protection', component: DataProtectionComponent },
   { path: '**', component: PageNotFoundComponent },
 ];
 

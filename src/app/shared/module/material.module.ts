@@ -6,6 +6,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatTreeModule } from '@angular/material/tree';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatCommonModule } from '@angular/material/core';
+import { MatMenuModule } from '@angular/material/menu';
 
 @NgModule({
   imports: [
@@ -16,6 +19,9 @@ import { MatTreeModule } from '@angular/material/tree';
     MatSidenavModule,
     MatTooltipModule,
     MatTreeModule,
+    MatDialogModule,
+    MatCommonModule,
+    MatMenuModule,
   ],
   exports: [
     BrowserAnimationsModule,
@@ -25,6 +31,9 @@ import { MatTreeModule } from '@angular/material/tree';
     MatSidenavModule,
     MatTooltipModule,
     MatTreeModule,
+    MatDialogModule,
+    MatCommonModule,
+    MatMenuModule,
   ],
 })
 export class MaterialModule {}
