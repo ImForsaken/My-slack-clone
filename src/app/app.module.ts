@@ -12,6 +12,8 @@ import { AppComponent } from './app.component';
 import { PageNotFoundComponent } from './page/page-not-found/page-not-found.component';
 import { WelcomeComponent } from './page/welcome/welcome.component';
 import { MainComponent } from './page/main/main.component';
+import { LoginComponent } from './auth/login/login/login.component';
+import { RegisterComponent } from './auth/register/register/register.component';
 import { DirectMessagesComponent } from './components/sidenav/direct-messages/direct-messages.component';
 import { ChannelsComponent } from './components/sidenav/channels/channels.component';
 import { ChatAreaComponent } from './chat/chat-area/chat-area.component';
@@ -26,6 +28,8 @@ import { LegalNoticeComponent } from './components/info/legal-notice/legal-notic
     PageNotFoundComponent,
     WelcomeComponent,
     MainComponent,
+    LoginComponent,
+    RegisterComponent,
     DirectMessagesComponent,
     ChannelsComponent,
     ChatAreaComponent,

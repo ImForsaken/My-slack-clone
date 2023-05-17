@@ -5,9 +5,10 @@ import { PageNotFoundComponent } from './page/page-not-found/page-not-found.comp
 import { MainComponent } from './page/main/main.component';
 import { LegalNoticeComponent } from './components/info/legal-notice/legal-notice.component';
 import { DataProtectionComponent } from './components/info/data-protection/data-protection.component';
+import { LoginComponent } from './auth/login/login/login.component';
 
 const routes: Routes = [
-  { path: '', component: WelcomeComponent },
+  { path: '', component: LoginComponent },
   { path: 'main', component: MainComponent },
   { path: 'legal-notice', component: LegalNoticeComponent },
   { path: 'data-protection', component: DataProtectionComponent },
