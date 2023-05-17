@@ -47,15 +47,23 @@ import { QuillConfigModule } from 'ngx-quill/config';
     FirebaseModule,
     QuillModule.forRoot(),
     QuillConfigModule.forRoot({
-        modules: {
-          toolbar: [
-            [{ header: [1, 2, false] }],
-            ['bold', 'italic', 'underline'],
-            ['image', 'code-block']
-          ]
+      modules: {
+        keyboard: {
+          bindings: {
+            customEnter: {
+              key: 'Enter',
+              handler: () => {},
+            }
+          }
         },
-        placeholder: 'Write a message.',
-        theme: 'snow'
+        toolbar: [
+          [{ header: [1, 2, false] }],
+          ['bold', 'italic', 'underline'],
+          ['image', 'code-block']
+        ]
+      },
+      placeholder: 'Write a message.',
+      theme: 'snow'
     })
 
   ],
