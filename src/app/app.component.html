@@ -1,7 +1,7 @@
 <section>
   <header class="header">
     <mat-toolbar class="header__content" color="primary">
-      <div class="header__logo" routerLink="/main">
+      <div class="header__logo" routerLink="/main" matTooltip="Home">
         <img
           class="header__logo-image"
           src="../assets/icons/s-c-logo.jpg"
@@ -10,7 +10,11 @@
       </div>
       <div class="header__menu">
         <!-- Info Menu -->
-        <button mat-icon-button [matMenuTriggerFor]="infoMenu">
+        <button
+          mat-icon-button
+          [matMenuTriggerFor]="infoMenu"
+          matTooltip="Info"
+        >
           <mat-icon>help</mat-icon>
         </button>
         <mat-menu #infoMenu="matMenu">
@@ -22,7 +26,11 @@
           </button>
         </mat-menu>
         <!-- User Menu -->
-        <button mat-icon-button [matMenuTriggerFor]="userMenu">
+        <button
+          mat-icon-button
+          [matMenuTriggerFor]="userMenu"
+          matTooltip="User Menu"
+        >
           <mat-icon>manage_accounts</mat-icon>
         </button>
         <mat-menu #userMenu="matMenu">
