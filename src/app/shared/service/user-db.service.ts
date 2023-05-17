@@ -1,5 +1,5 @@
 import { Injectable, inject } from '@angular/core';
-import { Firestore, collectionData, deleteDoc, doc, setDoc, updateDoc } from '@angular/fire/firestore';
+import { DocumentData, DocumentReference, Firestore, collectionData, deleteDoc, doc, docData, setDoc, updateDoc } from '@angular/fire/firestore';
 import { collection, CollectionReference } from '@firebase/firestore';
 import { Observable } from 'rxjs';
 import { User } from '../types/user';
@@ -27,8 +27,9 @@ export class UserDbService {
     return setDoc(doc(this.usersDbRef), userObj);
   }
 
-  getUser(userEmail: string): User | undefined {
-    return this.users.find(user => user.email === userEmail);
+  getUser$(userId: string): Observable<DocumentData> {
+    const usersDocRef: DocumentReference = doc(this.usersDbRef, userId);
+    return docData(usersDocRef);
   }
 
   updateUser(userId: string, userObj: User): Promise<void> {
