@@ -30,7 +30,11 @@ section {
       .header__menu {
         display: flex;
         flex-direction: row;
+        gap: 1rem;
         justify-content: flex-end;
+        button:hover {
+          background-color: $purple-hover;
+        }
       }
     }
   }
