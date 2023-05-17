@@ -5,11 +5,14 @@
       <mat-toolbar class="sidenav__header" color="primary">
         <div>Slack-Clone</div>
       </mat-toolbar>
-      <app-channels></app-channels>
+      <app-channels (selectedChannel)="displayName($event)"></app-channels>
+      <hr />
+      <div>DirectMessages</div>
     </mat-sidenav>
 
     <!--rightSide main content -->
     <mat-sidenav-content>
+      <!-- header -->
       <mat-toolbar>
         <button
           class="toggle__btn"
@@ -20,8 +23,12 @@
         >
           <mat-icon>menu_open</mat-icon>
         </button>
-        <div>#{{ channel.name }}</div>
+        <div>#{{ currentChannelName }}</div>
       </mat-toolbar>
+      <!-- chat display -->
+      <router-outlet></router-outlet>
+      <!-- inputbox -->
+      <app-chat-area></app-chat-area>
     </mat-sidenav-content>
   </mat-sidenav-container>
 </section>

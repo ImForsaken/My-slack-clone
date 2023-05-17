@@ -6,10 +6,15 @@ import { MainComponent } from './page/main/main.component';
 import { LegalNoticeComponent } from './components/info/legal-notice/legal-notice.component';
 import { DataProtectionComponent } from './components/info/data-protection/data-protection.component';
 import { LoginComponent } from './auth/login/login/login.component';
+import { ChannelComponent } from './components/sidenav/channel/channel.component';
 
 const routes: Routes = [
-  { path: '', component: LoginComponent },
-  { path: 'main', component: MainComponent },
+  { path: '', component: WelcomeComponent },
+  {
+    path: 'main',
+    component: MainComponent,
+    children: [{ path: ':name', component: ChannelComponent }],
+  },
   { path: 'legal-notice', component: LegalNoticeComponent },
   { path: 'data-protection', component: DataProtectionComponent },
   { path: '**', component: PageNotFoundComponent },

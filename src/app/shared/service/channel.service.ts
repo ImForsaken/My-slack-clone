@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ChannelNode } from '../interface/channelNode.interface';
+import { Router } from '@angular/router';
+import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -13,12 +15,20 @@ export class ChannelService {
         { name: 'allgemain' },
         { name: 'community' },
         { name: 'news' },
-        { name: 'news' },
       ],
     },
   ];
 
-  constructor() {}
+  activeChannel$ = new Subject<string>();
+
+  constructor(private router: Router) {}
+
+  ngOnInit() {}
+
+  openChannel(channel: string) {
+    this.activeChannel$.next(channel);
+    this.router.navigate(['main/' + channel]);
+  }
 
   /**
    * returns a copy of all channels from Firebase

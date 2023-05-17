@@ -1,6 +1,6 @@
-@import '../../shared/style/variables';
-
+@import "../../shared/style/variables";
 section {
-    padding: 12px 0;
-    background: $purple;
+  padding: 1rem 0;
+  background: $white;
+  height: $chat-area-height;
 }

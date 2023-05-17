@@ -1,7 +1,8 @@
 @import "../../shared/style/variables";
 section {
+  height: $main-height;
   mat-sidenav-container {
-    height: calc(100vh - 100px);
+    height: 100%;
     mat-sidenav {
       background-color: $purple;
       width: 18rem;
@@ -14,10 +15,19 @@ section {
       }
     }
     mat-sidenav-content {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
       mat-toolbar {
+        height: $chat-header-height;
         display: flex;
         flex-direction: row;
         justify-content: flex-start;
+      }
+      router-outlet {
+      }
+      app-chat-area {
+        height: $chat-area-height;
       }
     }
   }

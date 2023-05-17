@@ -1,0 +1,21 @@
+@use "../../../shared/style/variables" as *;
+:host {
+  padding: 1rem 2rem;
+  overflow-y: scroll;
+  min-height: $chat-content-height;
+}
+
+:host::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  background-color: $white;
+}
+
+:host::-webkit-scrollbar {
+  width: 10px;
+  background-color: $white;
+}
+
+:host::-webkit-scrollbar-thumb {
+  background-color: $purple;
+  border: 2px solid $grey;
+}
