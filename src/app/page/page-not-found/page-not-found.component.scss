@@ -1,3 +1,4 @@
+@use "../../shared/style/variables" as *;
 .error {
   height: 100vh;
   display: flex;
@@ -5,8 +6,8 @@
   justify-content: center;
   align-items: center;
   gap: 3rem;
-  background-color: purple;
-  color: whitesmoke;
+  background-color: $purple;
+  color: $white;
   text-shadow: 0 0 0.25rem black;
   .error__notification {
     display: flex;

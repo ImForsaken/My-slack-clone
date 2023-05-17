@@ -1,5 +1,4 @@
-@import '../../shared/style/variables';
-
+@import "../../shared/style/variables";
 .message {
     display: flex;
     gap: 8px;
@@ -7,7 +6,6 @@
     color: $grey;
     overflow: hidden;
     text-overflow: ellipsis;
-
 
     &:hover {
         background: rgba($color: #ffffff, $alpha: 0.05);
@@ -19,32 +17,32 @@
 }
 
 .message-header {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    white-space: nowrap;
-    cursor: default;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  white-space: nowrap;
+  cursor: default;
 
-    span:last-child {
-        font-size: 12px;
-    }
+  span:last-child {
+    font-size: 12px;
+  }
 }
 
 .message-body {
-    p {
-        margin: 6px 0;
-    }
+  p {
+    margin: 6px 0;
+  }
 }
 
 .message-footer {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 12px;
-    white-space: nowrap;
-
-    a {
-        color: #198ce4;
-        text-decoration: none;
-    }
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  white-space: nowrap;
+  
+  a {
+    color: #198ce4;
+    text-decoration: none;
+  }
 }

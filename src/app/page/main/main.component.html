@@ -1,25 +1,18 @@
 <section>
-  <mat-toolbar class="main__header" color="primary">
-    <p class="tst">asdfasdf</p>
-    <button mat-icon-button>
-      <mat-icon>help</mat-icon>
-    </button>
-    <button mat-icon-button>
-      <mat-icon>manage_accounts</mat-icon>
-    </button>
-  </mat-toolbar>
-
   <mat-sidenav-container>
     <!-- leftSide menu content -->
-    <mat-sidenav #sidenav mode="side" [(opened)]="opened">
+    <mat-sidenav #sidenav mode="side" [(opened)]="isSidenavOpened">
       <mat-toolbar class="sidenav__header" color="primary">
         <div>Slack-Clone</div>
       </mat-toolbar>
-      <app-channels></app-channels>
+      <app-channels (selectedChannel)="displayName($event)"></app-channels>
+      <hr />
+      <div>DirectMessages</div>
     </mat-sidenav>
 
     <!--rightSide main content -->
-    <mat-sidenav-content class="chat-content">
+    <mat-sidenav-content>
+      <!-- header -->
       <mat-toolbar>
         <button
           class="toggle__btn"
@@ -30,8 +23,11 @@
         >
           <mat-icon>menu_open</mat-icon>
         </button>
-        <div>#{{ channel.name }}</div>
+        <div>#{{ currentChannelName }}</div>
       </mat-toolbar>
+      <!-- chat display -->
+      <router-outlet></router-outlet>
+      <!-- inputbox -->
       <app-chat-area></app-chat-area>
     </mat-sidenav-content>
   </mat-sidenav-container>

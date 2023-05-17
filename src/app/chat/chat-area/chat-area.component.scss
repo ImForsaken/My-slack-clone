@@ -1,18 +1,6 @@
-@import '../../shared/style/variables';
-
-:host {
-    flex-grow: 1;
-}
-
+@import "../../shared/style/variables";
 section {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    padding: 12px 0;
-    background: $purple;
-}
-
-.message-container {
-    overflow-y: auto;
-    height: calc(100% - 173px);
+  padding: 1rem 0;
+  background: $white;
+  height: $chat-area-height;
 }

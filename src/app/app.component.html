@@ -1,1 +1,44 @@
-<router-outlet> </router-outlet>
+<section>
+  <header class="header">
+    <mat-toolbar class="header__content" color="primary">
+      <div class="header__logo" routerLink="/main" matTooltip="Home">
+        <img
+          class="header__logo-image"
+          src="../assets/icons/s-c-logo.jpg"
+          alt="Logo"
+        />
+      </div>
+      <div class="header__menu">
+        <!-- Info Menu -->
+        <button
+          mat-icon-button
+          [matMenuTriggerFor]="infoMenu"
+          matTooltip="Info"
+        >
+          <mat-icon>help</mat-icon>
+        </button>
+        <mat-menu #infoMenu="matMenu">
+          <button mat-menu-item routerLink="/legal-notice">
+            Legal Notice<mat-icon>copyright</mat-icon>
+          </button>
+          <button mat-menu-item routerLink="/data-protection">
+            Data Protection<mat-icon>security</mat-icon>
+          </button>
+        </mat-menu>
+        <!-- User Menu -->
+        <button
+          mat-icon-button
+          [matMenuTriggerFor]="userMenu"
+          matTooltip="User Menu"
+        >
+          <mat-icon>manage_accounts</mat-icon>
+        </button>
+        <mat-menu #userMenu="matMenu">
+          <button mat-menu-item>Settings<mat-icon>settings</mat-icon></button>
+          <button mat-menu-item>Logout<mat-icon>logout</mat-icon></button>
+        </mat-menu>
+      </div>
+    </mat-toolbar>
+  </header>
+  <router-outlet></router-outlet>
+</section>

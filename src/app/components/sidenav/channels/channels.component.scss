@@ -4,6 +4,7 @@ mat-tree {
   background-color: transparent;
   gap: 1rem;
   mat-tree-node {
+    min-height: 2rem;
     background-color: transparent;
     color: $white;
     .channel {
