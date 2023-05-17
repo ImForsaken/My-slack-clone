@@ -1,6 +1,18 @@
 @import '../../shared/style/variables';
 
+:host {
+    flex-grow: 1;
+}
+
 section {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
     padding: 12px 0;
     background: $purple;
+}
+
+.message-container {
+    overflow-y: auto;
+    height: calc(100% - 173px);
 }

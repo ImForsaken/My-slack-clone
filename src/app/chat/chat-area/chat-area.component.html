@@ -1,4 +1,6 @@
 <section>
-    <!-- <app-message *ngFor="let message of messages" [message]="message"></app-message> -->
-    <app-text-editor></app-text-editor>
+    <div class="message-container">
+        <app-message *ngFor="let message of messages | async" [message]="message"></app-message>
+    </div>
+    <app-text-editor [chatId]="chatId"></app-text-editor>
 </section>
