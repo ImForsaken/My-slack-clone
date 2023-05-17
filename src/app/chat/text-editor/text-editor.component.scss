@@ -1,7 +1,11 @@
 @import '../../shared/style/variables';
 
+:host {
+    display: block;
+}
+
 quill-editor {
     padding: 0 21px;
     width: 100%;
-    color: $color-gray;
+    color: $grey;
 }
