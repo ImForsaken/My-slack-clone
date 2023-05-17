@@ -25,6 +25,7 @@ section {
       }
     }
     mat-sidenav-content {
+      overflow: hidden;
       mat-toolbar {
         display: flex;
         flex-direction: row;
@@ -44,4 +45,13 @@ section {
   @media (max-width: $breakpoint-sm) {
     display: inline-flex;
   }
+}
+
+mat-toolbar {
+  flex-shrink: 0;
+}
+
+.chat-content {
+  display: flex;
+  flex-direction: column;
 }
