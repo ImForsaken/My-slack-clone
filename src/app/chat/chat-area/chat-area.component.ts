@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
+import { Observable, Subject, tap } from 'rxjs';
 import { ChatDbService } from 'src/app/shared/service/chat-db.service';
 import { UserDbService } from 'src/app/shared/service/user-db.service';
 import { Message } from 'src/app/shared/types/message';
@@ -17,6 +17,13 @@ export class ChatAreaComponent {
   messages!: Observable<Message[]>;
 
   constructor() {
-    this.messages = this.chatService.getMessages$(this.chatId)
+    this.messages = this.chatService.getMessages$(this.chatId).pipe(tap(this.scrollToLastMessage));
+  }
+
+  scrollToLastMessage() {
+    const messagesEl = document.querySelectorAll('.message');
+    const lastMessageEl = messagesEl[messagesEl.length - 1];
+
+    lastMessageEl?.scrollIntoView({block: 'center', behavior: 'smooth'});
   }
 }
