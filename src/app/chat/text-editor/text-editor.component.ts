@@ -11,12 +11,12 @@ import { Message } from 'src/app/shared/types/message';
   ]
 })
 export class TextEditorComponent {
-  @Input() chatId!: string;
   chatService: ChatDbService = inject(ChatDbService);
+  chatId: string = 'bHADuOvmaLFl970vTDFK';
   text!: string;
 
   quillStyle = {
-    border: '2px solid #cac0cb',
+    border: '2px solid #3f3b3f',
     borderTop: 'none',
     borderRadius: '0 0 10px 10px'
   }
@@ -32,9 +32,7 @@ export class TextEditorComponent {
       }
 
       this.chatService.addMessage(this.chatId, message);
-
       this.text = '';
     }
   }
-
 }

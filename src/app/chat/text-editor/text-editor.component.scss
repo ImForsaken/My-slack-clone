@@ -2,10 +2,11 @@
 
 :host {
     display: block;
+    padding-bottom: 16px;
 }
 
 quill-editor {
     padding: 0 21px;
     width: 100%;
-    color: $grey;
+    color: $dark-grey;
 }
