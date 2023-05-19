@@ -17,9 +17,9 @@ import { RegisterComponent } from './auth/register/register/register.component';
 import { DirectMessagesComponent } from './components/sidenav/direct-messages/direct-messages.component';
 import { ChannelsComponent } from './components/sidenav/channels/channels.component';
 import { ChannelComponent } from './components/sidenav/channel/channel.component';
-import { ChatAreaComponent } from './chat/chat-area/chat-area.component';
-import { MessageComponent } from './chat/message/message.component';
-import { TextEditorComponent } from './chat/text-editor/text-editor.component';
+import { ChatAreaComponent } from './components/chat-area/chat-area.component';
+import { MessageComponent } from './components/message/message.component';
+import { TextEditorComponent } from './components/text-editor/text-editor.component';
 import { DataProtectionComponent } from './components/info/data-protection/data-protection.component';
 import { LegalNoticeComponent } from './components/info/legal-notice/legal-notice.component';
 
