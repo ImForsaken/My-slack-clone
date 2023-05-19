@@ -1,26 +1,38 @@
 import { Injectable, inject } from '@angular/core';
-import { Firestore, collectionData, deleteDoc, doc, setDoc, updateDoc } from '@angular/fire/firestore';
+import {
+  Firestore,
+  collectionData,
+  deleteDoc,
+  doc,
+  setDoc,
+  updateDoc,
+} from '@angular/fire/firestore';
 import { collection, CollectionReference } from '@firebase/firestore';
 import { Observable } from 'rxjs';
 import { User } from '../types/user';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class UserDbService {
   private firestore: Firestore = inject(Firestore);
   private usersDbRef!: CollectionReference;
-  private users$!: Observable<User[]>;
+  users$!: Observable<User[]>;
   private users!: User[];
-  
+
   constructor() {
     this.users$ = this.getUsersData();
-    this.users$.subscribe(data => this.users = data);
+    this.users$.subscribe((data) => {
+      console.log('data: ', data);
+      this.users = data;
+    });
   }
 
   private getUsersData() {
     this.usersDbRef = collection(this.firestore, 'users');
-    return collectionData(this.usersDbRef, { idField: 'id' }) as Observable<User[]>;
+    return collectionData(this.usersDbRef, { idField: 'id' }) as Observable<
+      User[]
+    >;
   }
 
   createUser(userObj: User): Promise<void> {
@@ -28,7 +40,7 @@ export class UserDbService {
   }
 
   getUser(userEmail: string): User | undefined {
-    return this.users.find(user => user.email === userEmail);
+    return this.users.find((user) => user.email === userEmail);
   }
 
   updateUser(userId: string, userObj: User): Promise<void> {
