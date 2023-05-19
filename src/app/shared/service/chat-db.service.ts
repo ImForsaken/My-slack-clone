@@ -58,6 +58,6 @@ export class ChatDbService {
   getMessages$(chatId: string): Observable<Message[]> {
     const messageCollRef: CollectionReference = collection(this.firestore, `chats/${chatId}/messages`);
     const messageQueryRef: Query<DocumentData> = query(messageCollRef, orderBy('timestamp'));
-    return collectionData(messageQueryRef) as Observable<Message[]>;
+    return collectionData(messageQueryRef, { idField: 'id' }) as Observable<Message[]>;
   }
 }
