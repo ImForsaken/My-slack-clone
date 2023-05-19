@@ -20,21 +20,25 @@ body {
 
 // Quill Editor
 .ql-toolbar.ql-snow {
-  border: 2px solid $grey;
+  border: 2px solid $dark-grey;
   border-radius: 10px 10px 0 0;
   border-bottom: none;
-  color: $grey;
-  stroke: $grey;
+  color: $dark-grey;
+  stroke: $dark-grey;
 }
 
 .ql-snow .ql-picker {
-  color: $grey;
+  color: $dark-grey;
 }
 
 .ql-editor.ql-blank::before {
-  color: $grey;
+  color: $dark-grey;
+}
+
+.message .ql-editor {
+  padding: 8px 0;
 }
 
 .ql-snow .ql-stroke {
-  stroke: $grey;
+  stroke: $dark-grey;
 }
