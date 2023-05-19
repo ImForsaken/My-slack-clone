@@ -1,14 +1,19 @@
 @import "../../shared/style/variables";
 .message {
+  position: relative;
     display: flex;
     gap: 8px;
-    padding: 8px 21px;
-    color: $grey;
+    padding: 12px 56px;
+    color: $dark-grey;
     overflow: hidden;
     text-overflow: ellipsis;
 
     &:hover {
-        background: rgba($color: #ffffff, $alpha: 0.05);
+        background: rgba($color: #707070, $alpha: 0.05);
+
+        .btn {
+          display: flex;
+        }
     }
 
     img {
@@ -45,4 +50,11 @@
     color: #198ce4;
     text-decoration: none;
   }
+}
+
+.btn {
+  position: absolute;
+  right: 16px;
+  top: 6px;
+  display: none;
 }

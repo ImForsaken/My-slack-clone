@@ -13,4 +13,13 @@
             <span>Letze Antwort heute um 15:34</span>
         </div>
     </div>
+    <button mat-icon-button [matMenuTriggerFor]="menu" class="btn">
+        <mat-icon>more_vert</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item (click)="deleteMessage(message.id!)">
+          <mat-icon>delete</mat-icon>
+          <span>Delete Message</span>
+        </button>
+      </mat-menu>
 </div>
