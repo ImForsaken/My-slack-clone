@@ -11,26 +11,19 @@ import { Message } from '../types/message';
 export class ChatDbService {
   private firestore: Firestore = inject(Firestore);
   private chatsCollRef!: CollectionReference;
-  private chats$!: Observable<Chat[]>;
-  private chats!: Chat[];
 
-  constructor() {
-    this.chats$ = this.getChatsData();
-    this.chats$.subscribe(data => this.chats = data);
-  }
-
-  private getChatsData() {
+  getAllChats$() {
     this.chatsCollRef = collection(this.firestore, 'chats');
     return collectionData(this.chatsCollRef) as Observable<Chat[]>;
-  }
-
-  createChat(chatObj: Chat): Promise<void> {
-    return setDoc(doc(this.chatsCollRef), chatObj);
   }
 
   getChat$(chatId: string): Observable<DocumentData> {
     const chatsDocRef: DocumentReference<DocumentData> = doc(this.chatsCollRef, chatId);
     return docData(chatsDocRef);
+  }
+
+  createChat(chatObj: Chat): Promise<void> {
+    return setDoc(doc(this.chatsCollRef), chatObj);
   }
 
   updateChat(chatId: string, chatObj: Chat): Promise<void> {
@@ -39,10 +32,6 @@ export class ChatDbService {
 
   deleteChat(chatId: string): Promise<void> {
     return deleteDoc(doc(this.chatsCollRef, chatId));
-  }
-
-  getAllChats(): Chat[] {
-    return this.chats;
   }
 
   addMessage(chatId: string, message: Message): Promise<void> {
