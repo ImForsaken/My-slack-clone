@@ -1,7 +1,7 @@
 @use "../../../shared/style/variables" as *;
 :host {
+  flex-grow: 1;
   overflow-y: scroll;
-  min-height: $chat-content-height;
 }
 
 :host::-webkit-scrollbar-track {
