@@ -19,22 +19,22 @@ export class MainComponent implements OnInit, OnDestroy {
   channels: ChannelNode[] = [];
   currentChannelName: string = 'currentChannelName';
   allUsers$ = new Subscription();
-  allUsers: User[] = [
-    {
-      chats: [],
-      email: 'test@test.de',
-      firstname: 'gerog',
-      lastname: 'Tester',
-      profilePicture: 'testimg.png',
-    },
-    {
-      chats: [],
-      email: 'test@test.de',
-      firstname: 'heidi',
-      lastname: 'Tester',
-      profilePicture: 'testimg.png',
-    },
-  ];
+  // allUsers: User[] = [
+  //   {
+  //     chats: [],
+  //     email: 'test@test.de',
+  //     firstname: 'gerog',
+  //     lastname: 'Tester',
+  //     profilePicture: 'testimg.png',
+  //   },
+  //   {
+  //     chats: [],
+  //     email: 'test@test.de',
+  //     firstname: 'heidi',
+  //     lastname: 'Tester',
+  //     profilePicture: 'testimg.png',
+  //   },
+  // ];
 
   constructor(
     private channelservice: ChannelService,
@@ -44,18 +44,18 @@ export class MainComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.channels = this.channelservice.getAllChannels();
     // this.allUsers = this.userService.getAllUsers(); gibt mir ein leeres array zurück
-    this.getUsers();
+    // this.getUsers();
   }
 
   displayName(name: string) {
     this.currentChannelName = name;
   }
 
-  getUsers() {
-    this.allUsers$ = this.userService.users$.subscribe((users: User[]) => {
-      this.allUsers = users;
-    });
-  }
+  // getUsers() {
+  //   this.allUsers$ = this.userService.users$.subscribe((users: User[]) => {
+  //     this.allUsers = users;
+  //   });
+  // }
 
   ngOnDestroy() {
     this.allUsers$.unsubscribe();

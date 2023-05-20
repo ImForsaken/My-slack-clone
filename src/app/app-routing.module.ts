@@ -7,12 +7,14 @@ import { LegalNoticeComponent } from './components/info/legal-notice/legal-notic
 import { DataProtectionComponent } from './components/info/data-protection/data-protection.component';
 import { LoginComponent } from './auth/login/login/login.component';
 import { ChannelComponent } from './components/sidenav/channel/channel.component';
+import { AuthGuard } from './shared/service/auth.guard';
 
 const routes: Routes = [
   { path: '', component: WelcomeComponent },
   {
     path: 'main',
     component: MainComponent,
+    canActivate: [AuthGuard],
     children: [{ path: ':name', component: ChannelComponent }],
   },
   { path: 'legal-notice', component: LegalNoticeComponent },

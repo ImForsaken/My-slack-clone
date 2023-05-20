@@ -9,6 +9,7 @@ import {
   User,
 } from '@angular/fire/auth';
 import { Router } from '@angular/router';
+import { FormGroup } from '@angular/forms';
 
 @Injectable({
   providedIn: 'root',
@@ -33,7 +34,25 @@ export class StoreService {
     });
   }
 
-  signOutUser() {
+  loginUser(loginForm: FormGroup) {
+    signInWithEmailAndPassword(
+      this.auth,
+      loginForm.controls['userEmail'].value,
+      loginForm.controls['userPassword'].value
+    )
+      .then((userCredential) => {
+        const user = userCredential.user;
+        console.log('Login successful', user, user.uid);
+        this.router.navigate(['/main']);
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log('Error codes', errorCode, errorMessage);
+      });
+  }
+
+  logout() {
     signOut(this.auth)
       .then((result) => {
         // Sign-out successful.
@@ -44,5 +63,11 @@ export class StoreService {
         // An error happened.
         console.log('cant log out', error);
       });
+  }
+
+  autoLogout(expirationDuration: number) {
+    setTimeout(() => {
+      this.logout();
+    }, expirationDuration);
   }
 }
