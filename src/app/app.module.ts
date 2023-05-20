@@ -53,8 +53,10 @@ import { LegalNoticeComponent } from './components/info/legal-notice/legal-notic
           bindings: {
             customEnter: {
               key: 'Enter',
+              shiftKey: false,
               handler: () => {},
-            }
+            },
+
           }
         },
         toolbar: [
