@@ -16,6 +16,10 @@ input.example-right-align {
   -moz-appearance: textfield;
 }
 
-mat-card {
-  align-items: center;
+mat-card-header {
+  justify-content: center;
+}
+
+mat-form-field {
+  width: 100%;
 }

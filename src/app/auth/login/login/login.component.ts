@@ -10,7 +10,8 @@ import { StoreService } from 'src/app/shared/service/store.service';
 })
 export class LoginComponent implements OnInit {
   loginForm!: FormGroup;
-  hide = true;
+  hide: boolean = true;
+  errorMsg: string | null = null;
 
   constructor(public store: StoreService) {}
 
@@ -29,23 +30,5 @@ export class LoginComponent implements OnInit {
     return this.loginForm.controls['userEmail'].hasError('email')
       ? 'Not a valid email'
       : '';
-  }
-
-  loginUser() {
-    signInWithEmailAndPassword(
-      this.store.auth,
-      this.loginForm.controls['userEmail'].value,
-      this.loginForm.controls['userPassword'].value
-    )
-      .then((userCredential) => {
-        const user = userCredential.user;
-        console.log('Login successful', user, user.uid);
-        this.store.router.navigate(['/main']);
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        console.log('Error codes', errorCode, errorMessage);
-      });
   }
 }
