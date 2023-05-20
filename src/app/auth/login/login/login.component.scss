@@ -1,6 +1,25 @@
-@use "../../../shared/style/variables" as *;
+.example-container mat-form-field + mat-form-field {
+  margin-left: 8px;
+}
 
-section {
-  height: 100dvh;
-  background-color: $purple;
+.example-right-align {
+  text-align: right;
+}
+
+input.example-right-align::-webkit-outer-spin-button,
+input.example-right-align::-webkit-inner-spin-button {
+  display: none;
+}
+
+input.example-right-align {
+  appearance: textfield;
+  -moz-appearance: textfield;
+}
+
+mat-card-header {
+  justify-content: center;
+}
+
+mat-form-field {
+  width: 100%;
 }

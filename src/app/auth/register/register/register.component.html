@@ -1,1 +1,50 @@
-<p>register works!</p>
+<mat-card>
+    <mat-card-header>
+        <mat-card-title>Register to Slack</mat-card-title>
+    </mat-card-header>
+    <br>
+    <mat-error *ngIf="errorMsg">{{errorMsg}}</mat-error>
+    <form [formGroup]="registerForm" (ngSubmit)="signUp()">
+        <mat-card-content>
+            <div>
+                <mat-form-field appearance="fill">
+                    <mat-label>Enter your userName</mat-label>
+                    <input matInput placeholder="coolUser123" formControlName='userName' required>
+                    <!-- <mat-error *ngIf="this.loginForm.controls.userEmail.invalid">{{getErrorMessage()}}</mat-error> -->
+                </mat-form-field>
+                <mat-form-field appearance="fill">
+                    <mat-label>Enter your email</mat-label>
+                    <input matInput placeholder="pat@example.com" formControlName='userEmail' required>
+                    <!-- <mat-error *ngIf="this.loginForm.controls.userEmail.invalid">{{getErrorMessage()}}</mat-error> -->
+                </mat-form-field>
+            </div>
+            <div>
+                <mat-form-field appearance="fill">
+                    <mat-label>Enter your first name</mat-label>
+                    <input matInput placeholder="Max" formControlName='firstName' required>
+                    <!-- <mat-error *ngIf="this.loginForm.controls.userEmail.invalid">{{getErrorMessage()}}</mat-error> -->
+                </mat-form-field>
+                <mat-form-field appearance="fill">
+                    <mat-label>Enter your last name</mat-label>
+                    <input matInput placeholder="Mustermann" formControlName='lastName' required>
+                    <!-- <mat-error *ngIf="this.loginForm.controls.userEmail.invalid">{{getErrorMessage()}}</mat-error> -->
+                </mat-form-field>
+            </div>
+            <div>
+                <mat-form-field appearance="fill">
+                    <mat-label>Enter your password</mat-label>
+                    <input matInput [type]="hide ? 'password' : 'text'" formControlName='userPassword' required>
+                    <!-- <mat-error *ngIf="this.loginForm.controls.userPassword.invalid">{{getErrorMessage()}}</mat-error> -->
+                    <button type="button" matTextSuffix mat-icon-button (click)="hide = !hide"
+                        [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                        <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                    </button>
+                </mat-form-field>
+            </div>
+            <button type="submit" [disabled]="!registerForm.valid">Submit</button>
+        </mat-card-content>
+    </form>
+    <mat-card-actions>
+        <button (click)="store.logout()" mat-button>Logout</button>
+    </mat-card-actions>
+</mat-card>
