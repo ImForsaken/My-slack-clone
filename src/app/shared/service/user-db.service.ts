@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import { User } from '../types/user';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class UserDbService {
   private firestore: Firestore = inject(Firestore);
@@ -13,7 +13,9 @@ export class UserDbService {
 
   getAllUsers$(): Observable<User[]> {
     this.usersDbRef = collection(this.firestore, 'users');
-    return collectionData(this.usersDbRef, { idField: 'id' }) as Observable<User[]>;
+    return collectionData(this.usersDbRef, { idField: 'id' }) as Observable<
+      User[]
+    >;
   }
 
   getUserById$(userId: string): Observable<User> {

@@ -1,6 +1,6 @@
 @use "../../shared/style/variables" as *;
 .error {
-  height: 100vh;
+  height: $main-height;
   display: flex;
   flex-direction: column;
   justify-content: center;

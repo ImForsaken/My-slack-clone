@@ -22,6 +22,7 @@ import { MessageComponent } from './components/message/message.component';
 import { TextEditorComponent } from './components/text-editor/text-editor.component';
 import { DataProtectionComponent } from './components/info/data-protection/data-protection.component';
 import { LegalNoticeComponent } from './components/info/legal-notice/legal-notice.component';
+import { ChatLabelComponent } from './components/chat-label/chat-label.component';
 
 @NgModule({
   declarations: [
@@ -39,6 +40,7 @@ import { LegalNoticeComponent } from './components/info/legal-notice/legal-notic
     DataProtectionComponent,
     LegalNoticeComponent,
     ChannelComponent,
+    ChatLabelComponent,
   ],
   imports: [
     BrowserModule,

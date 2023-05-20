@@ -7,7 +7,13 @@
       </mat-toolbar>
       <app-channels (selectedChannel)="displayName($event)"></app-channels>
       <hr />
-      <div>DirectMessages</div>
+      <div>Direct Messages</div>
+      <div>
+        <app-chat-label
+          *ngFor="let user of allUsers"
+          [user]="user"
+        ></app-chat-label>
+      </div>
     </mat-sidenav>
 
     <!--rightSide main content -->
