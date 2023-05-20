@@ -17,14 +17,11 @@ section {
     mat-sidenav-content {
       display: flex;
       flex-direction: column;
-      justify-content: flex-end;
       mat-toolbar {
         min-height: $chat-header-height;
         display: flex;
         flex-direction: row;
         justify-content: flex-start;
-      }
-      router-outlet {
       }
       app-chat-area {
         height: $chat-area-height;
@@ -42,4 +39,13 @@ section {
   @media (max-width: $breakpoint-sm) {
     display: inline-flex;
   }
+}
+
+mat-toolbar {
+  flex-shrink: 0;
+}
+
+.chat-content {
+  display: flex;
+  flex-direction: column;
 }

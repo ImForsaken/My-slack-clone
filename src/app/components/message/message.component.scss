@@ -1,0 +1,64 @@
+@import "../../shared/style/variables";
+.message {
+  position: relative;
+    display: flex;
+    gap: 8px;
+    padding: 12px 56px;
+    color: $dark-grey;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    &:hover {
+        background: rgba($color: #707070, $alpha: 0.05);
+
+        .btn {
+          display: flex;
+        }
+    }
+
+    img {
+        flex-shrink: 0;
+    }
+}
+
+.message-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  white-space: nowrap;
+  cursor: default;
+
+  span:last-child {
+    font-size: 12px;
+  }
+}
+
+.message-body {
+  p {
+    margin: 6px 0;
+  }
+}
+
+.message-footer {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  white-space: nowrap;
+  
+  a {
+    color: #198ce4;
+    text-decoration: none;
+  }
+
+  span {
+    cursor: default;
+  }
+}
+
+.btn {
+  position: absolute;
+  right: 16px;
+  top: 6px;
+  display: none;
+}

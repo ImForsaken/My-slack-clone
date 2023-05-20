@@ -1,0 +1,25 @@
+<div class="message">
+    <img src="https://source.unsplash.com/random" width="30" height="30" draggable="false">
+    <div>
+        <div class="message-header">
+            <span><strong>{{ message.userName }}</strong></span>
+            <span>{{ message.timestamp | date:'dd.MM.yyyy HH:mm' }} Uhr</span>
+        </div>
+        <div class="message-body">
+            <quill-view-html [content]="message.text"></quill-view-html>
+        </div>
+        <div class="message-footer">
+            <a href="#"><strong>5 Antworten</strong></a>
+            <span>Letze Antwort heute um 15:34</span>
+        </div>
+    </div>
+    <button mat-icon-button [matMenuTriggerFor]="menu" class="btn">
+        <mat-icon>more_vert</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item (click)="deleteMessage(message.id!)">
+          <mat-icon>delete</mat-icon>
+          <span>Delete Message</span>
+        </button>
+      </mat-menu>
+</div>
