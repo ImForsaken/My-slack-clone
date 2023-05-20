@@ -1,3 +1,33 @@
-<section>
-    <p>login works!</p>
-</section>
+<mat-card>
+    <mat-card-header>
+        <mat-card-title>Login to Slack</mat-card-title>
+    </mat-card-header>
+    <br>
+    <form [formGroup]="loginForm" (ngSubmit)="loginUser()">
+        <mat-card-content>
+            <br>
+            <mat-form-field appearance="fill">
+                <mat-label>Enter your email</mat-label>
+                <input matInput placeholder="pat@example.com" formControlName='userEmail' required>
+                <mat-error *ngIf="this.loginForm.controls['userEmail'].invalid">{{getErrorMessage()}}</mat-error>
+            </mat-form-field>
+            <br>
+            <div>
+                <mat-form-field appearance="fill">
+                    <mat-label>Enter your password</mat-label>
+                    <input matInput [type]="hide ? 'password' : 'text'" formControlName='userPassword' required>
+                    <mat-error *ngIf="this.loginForm.controls['userPassword'].invalid">{{getErrorMessage()}}</mat-error>
+                </mat-form-field>
+                <button type="button" matTextSuffix mat-icon-button (click)="hide = !hide"
+                    [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                    <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                </button>
+            </div>
+            <button type="submit" [disabled]="!loginForm.valid">Submit</button>
+        </mat-card-content>
+    </form>
+    <mat-card-actions>
+        <button (click)="store.signOutUser()" mat-button>Logout</button>
+        <!-- <button routerLink="/register" mat-button>Register</button> -->
+    </mat-card-actions>
+</mat-card>

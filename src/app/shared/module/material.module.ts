@@ -9,6 +9,11 @@ import { MatTreeModule } from '@angular/material/tree';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatCommonModule } from '@angular/material/core';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatCardModule } from '@angular/material/card';
+import { MatTabsModule } from '@angular/material/tabs';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   imports: [
@@ -22,6 +27,11 @@ import { MatMenuModule } from '@angular/material/menu';
     MatDialogModule,
     MatCommonModule,
     MatMenuModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatCardModule,
+    MatTabsModule,
+    ReactiveFormsModule,
   ],
   exports: [
     BrowserAnimationsModule,
@@ -34,6 +44,11 @@ import { MatMenuModule } from '@angular/material/menu';
     MatDialogModule,
     MatCommonModule,
     MatMenuModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatCardModule,
+    MatTabsModule,
+    ReactiveFormsModule,
   ],
 })
 export class MaterialModule {}
