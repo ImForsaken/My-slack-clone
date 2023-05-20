@@ -31,6 +31,13 @@ body {
   color: $dark-grey;
 }
 
+.ql-editor {
+  img {
+    width: 150px;
+    height: 150px;
+  }
+}
+
 .ql-editor.ql-blank::before {
   color: $dark-grey;
 }
@@ -41,4 +48,9 @@ body {
 
 .ql-snow .ql-stroke {
   stroke: $dark-grey;
+}
+
+.ql-snow .ql-picker.ql-expanded .ql-picker-options {
+  top: auto;
+  bottom: 25px;
 }
