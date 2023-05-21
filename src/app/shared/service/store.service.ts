@@ -3,6 +3,7 @@ import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { UserDbService } from './user-db.service';
 import {
   Auth,
+  browserSessionPersistence,
   signInWithEmailAndPassword,
   signOut,
   user,
@@ -10,6 +11,7 @@ import {
 } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import { FormGroup } from '@angular/forms';
+import { setPersistence } from '@firebase/auth';
 
 @Injectable({
   providedIn: 'root',
@@ -35,20 +37,29 @@ export class StoreService {
   }
 
   loginUser(loginForm: FormGroup) {
-    signInWithEmailAndPassword(
+    setPersistence(this.auth, browserSessionPersistence)
+      .then(() => {
+        this.signUpUser(loginForm);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
+  signUpUser(loginForm: FormGroup) {
+    // Existing and future Auth states are now persisted in the current session only. Closing the window would clear any existing state even if a user forgets to sign out. New sign-in will be persisted with session persistence.
+    return signInWithEmailAndPassword(
       this.auth,
       loginForm.controls['userEmail'].value,
       loginForm.controls['userPassword'].value
     )
       .then((userCredential) => {
         const user = userCredential.user;
-        console.log('Login successful', user, user.uid);
+        console.log('Login successful', user);
         this.router.navigate(['/main']);
       })
       .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        console.log('Error codes', errorCode, errorMessage);
+        console.log('Error codes', error);
       });
   }
 
@@ -60,14 +71,13 @@ export class StoreService {
         this.router.navigate(['']);
       })
       .catch((error) => {
-        // An error happened.
         console.log('cant log out', error);
       });
   }
 
-  autoLogout(expirationDuration: number) {
-    setTimeout(() => {
-      this.logout();
-    }, expirationDuration);
-  }
+  // autoLogout(expirationDuration: number) {
+  //   setTimeout(() => {
+  //     this.logout();
+  //   }, expirationDuration);
+  // }
 }

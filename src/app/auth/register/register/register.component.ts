@@ -1,8 +1,9 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { createUserWithEmailAndPassword } from '@angular/fire/auth';
+import { User, createUserWithEmailAndPassword } from '@angular/fire/auth';
 import { Firestore, doc, setDoc } from '@angular/fire/firestore';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { StoreService } from 'src/app/shared/service/store.service';
+import { UserData } from 'src/app/shared/interface/user.interface';
 
 @Component({
   selector: 'app-register',
@@ -31,18 +32,6 @@ export class RegisterComponent implements OnInit {
     });
   }
 
-  createUserInterface(id: string) {
-    return {
-      userName: this.registerForm.controls['userName'].value,
-      userEmail: this.registerForm.controls['userEmail'].value,
-      firstName: this.registerForm.controls['firstName'].value,
-      lastName: this.registerForm.controls['lastName'].value,
-      userId: id,
-      isOnline: false,
-      profilePicture: 'imgUrl',
-    };
-  }
-
   signUp() {
     createUserWithEmailAndPassword(
       this.store.auth,
@@ -53,13 +42,32 @@ export class RegisterComponent implements OnInit {
         // Sign-Up
         const user = userCredential.user;
         console.log(user);
-        await setDoc(
-          doc(this.firestore, 'users', user.uid),
-          this.createUserInterface(user.uid)
-        );
+        this.addUserToCollection(user);
       })
-      .catch((error) => {
+      .catch(() => {
         this.errorMsg = 'Email already in use!';
       });
+  }
+
+  async addUserToCollection(user: User) {
+    await setDoc(
+      doc(this.firestore, 'users', user.uid),
+      this.createUserInterface(user.uid)
+    );
+  }
+
+  createUserInterface(id: string) {
+    const userData: UserData = {
+      userName: this.registerForm.controls['userName'].value,
+      userEmail: this.registerForm.controls['userEmail'].value,
+      firstName: this.registerForm.controls['firstName'].value,
+      lastName: this.registerForm.controls['lastName'].value,
+      userId: id,
+      isOnline: false,
+      profilePicture: 'imgUrl',
+      contacts: [],
+      chats: [],
+    };
+    return userData;
   }
 }
