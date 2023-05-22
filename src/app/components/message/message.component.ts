@@ -1,7 +1,7 @@
 import { Component, Input, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ChannelDbService } from 'src/app/shared/service/channels-db.service';
-import { Message } from 'src/app/shared/types/message';
+import { TMessage } from 'src/app/shared/types/message';
 
 @Component({
   selector: 'app-message',
@@ -12,7 +12,7 @@ export class MessageComponent {
   channelService: ChannelDbService = inject(ChannelDbService);
   route: ActivatedRoute = inject(ActivatedRoute);
   channelId!: string;
-  @Input() message!: Message;
+  @Input() message!: TMessage;
 
   constructor() {
     this.route.url.subscribe(route => {

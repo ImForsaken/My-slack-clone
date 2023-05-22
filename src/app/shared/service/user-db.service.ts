@@ -2,7 +2,7 @@ import { Injectable, inject } from '@angular/core';
 import { DocumentData, DocumentReference, Firestore, Query, collectionData, deleteDoc, doc, docData, query, setDoc, updateDoc, where } from '@angular/fire/firestore';
 import { collection, CollectionReference } from '@firebase/firestore';
 import { Observable } from 'rxjs';
-import { User } from '../types/user';
+import { TUser } from '../types/user';
 
 @Injectable({
   providedIn: 'root',
@@ -11,25 +11,25 @@ export class UserDbService {
   private firestore: Firestore = inject(Firestore);
   private usersCollRef: CollectionReference = collection(this.firestore, 'users');
 
-  getAllUsers$(): Observable<User[]> {
-    return collectionData(this.usersCollRef, { idField: 'id' }) as Observable<User[]>;
+  getAllUsers$(): Observable<TUser[]> {
+    return collectionData(this.usersCollRef, { idField: 'id' }) as Observable<TUser[]>;
   }
 
-  getUserById$(userId: string): Observable<User> {
+  getUserById$(userId: string): Observable<TUser> {
     const usersDocRef: DocumentReference = doc(this.usersCollRef, userId);
-    return docData(usersDocRef) as Observable<User>;
+    return docData(usersDocRef) as Observable<TUser>;
   }
 
-  getUserByEmail$(email: string): Observable<User[]> {
+  getUserByEmail$(email: string): Observable<TUser[]> {
     const userQueryRef: Query<DocumentData> = query(this.usersCollRef, where('email', '==', email));
-    return collectionData(userQueryRef, { idField: 'id' }) as Observable<User[]>;
+    return collectionData(userQueryRef, { idField: 'id' }) as Observable<TUser[]>;
   }
 
-  createUser(userId: string, userObj: User): Promise<void> {
+  createUser(userId: string, userObj: TUser): Promise<void> {
     return setDoc(doc(this.usersCollRef, userId), userObj);
   }
 
-  updateUser(userId: string, userObj: User): Promise<void> {
+  updateUser(userId: string, userObj: TUser): Promise<void> {
     return updateDoc(doc(this.usersCollRef, userId), userObj);
   }
 

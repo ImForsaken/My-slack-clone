@@ -1,4 +1,4 @@
-export type Message = {
+export type TMessage = {
     id?: string,
     userId: string,
     userName: string,

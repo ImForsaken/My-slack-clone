@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { UserDbService } from 'src/app/shared/service/user-db.service';
-import { User } from 'src/app/shared/types/user';
+import { TUser } from 'src/app/shared/types/user';
 
 @Component({
   selector: 'app-chat-label',
@@ -11,7 +11,7 @@ export class ChatLabelComponent {
   isOnline: boolean = true;
 
   username: string = 'Georg Strassberger';
-  @Input() user!: User;
+  @Input() user!: TUser;
 
   constructor(private userService: UserDbService) {}
 
