@@ -3,7 +3,7 @@
         <mat-card-title>Login to Slack</mat-card-title>
     </mat-card-header>
     <br>
-    <p></p>
+    <mat-error *ngIf="errorMsg">{{errorMsg}}</mat-error>
     <form [formGroup]="loginForm" (ngSubmit)="store.loginUser(this.loginForm)">
         <mat-card-content>
             <br>
@@ -29,6 +29,7 @@
     </form>
     <mat-card-actions>
         <button (click)="store.logout()" mat-button>Logout</button>
+        <button (click)="store.forgetForm()" mat-button>Forget password</button>
         <!-- <button routerLink="/register" mat-button>Register</button> -->
     </mat-card-actions>
 </mat-card>

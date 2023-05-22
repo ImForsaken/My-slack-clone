@@ -4,6 +4,7 @@ import { UserDbService } from './user-db.service';
 import {
   Auth,
   browserSessionPersistence,
+  sendPasswordResetEmail,
   signInWithEmailAndPassword,
   signOut,
   user,
@@ -37,6 +38,7 @@ export class StoreService {
   }
 
   loginUser(loginForm: FormGroup) {
+    console.log(loginForm);
     setPersistence(this.auth, browserSessionPersistence)
       .then(() => {
         this.signUpUser(loginForm);
@@ -72,6 +74,17 @@ export class StoreService {
       })
       .catch((error) => {
         console.log('cant log out', error);
+      });
+  }
+
+  forgetForm() {
+    const email = 'kevin-herbst1993@web.de';
+    sendPasswordResetEmail(this.auth, email)
+      .then((response) => {
+        console.log('success', response);
+      })
+      .catch((error) => {
+        console.log('error', error);
       });
   }
 
