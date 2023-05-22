@@ -1,5 +1,6 @@
 import { Component, Input, inject } from '@angular/core';
-import { ChatDbService } from 'src/app/shared/service/chat-db.service';
+import { ActivatedRoute } from '@angular/router';
+import { ChannelDbService } from 'src/app/shared/service/channels-db.service';
 import { Message } from 'src/app/shared/types/message';
 
 @Component({
@@ -8,10 +9,19 @@ import { Message } from 'src/app/shared/types/message';
   styleUrls: ['./message.component.scss']
 })
 export class MessageComponent {
-  chatService: ChatDbService = inject(ChatDbService);
+  channelService: ChannelDbService = inject(ChannelDbService);
+  route: ActivatedRoute = inject(ActivatedRoute);
+  channelId!: string;
   @Input() message!: Message;
 
+  constructor() {
+    this.route.url.subscribe(route => {
+      this.channelId = route[0].path;
+    });
+  }
+
   deleteMessage(messageId: string) {
-    this.chatService.deleteMessage('bHADuOvmaLFl970vTDFK', messageId);
+    
+    this.channelService.deleteMessage(this.channelId, messageId);
   }
 }
