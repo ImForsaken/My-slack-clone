@@ -6,7 +6,11 @@
   justify-content: center;
   align-items: center;
   gap: 1rem;
-  background-color: $purple;
-  color: $white;
+  // background-color: $purple;
+  // color: $white;
   text-align: center;
+}
+
+.mat-mdc-tab-group {
+  min-width: 50%;
 }
