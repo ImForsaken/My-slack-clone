@@ -9,36 +9,32 @@ import { User } from '../types/user';
 })
 export class UserDbService {
   private firestore: Firestore = inject(Firestore);
-  private usersDbRef!: CollectionReference;
+  private usersCollRef: CollectionReference = collection(this.firestore, 'users');
 
   getAllUsers$(): Observable<User[]> {
-    this.usersDbRef = collection(this.firestore, 'users');
-    return collectionData(this.usersDbRef, { idField: 'id' }) as Observable<
-      User[]
-    >;
+    return collectionData(this.usersCollRef, { idField: 'id' }) as Observable<User[]>;
   }
 
   getUserById$(userId: string): Observable<User> {
-    const usersDocRef: DocumentReference = doc(this.usersDbRef, userId);
+    const usersDocRef: DocumentReference = doc(this.usersCollRef, userId);
     return docData(usersDocRef) as Observable<User>;
   }
 
   getUserByEmail$(email: string): Observable<User[]> {
-    const userCollRef: CollectionReference = collection(this.firestore, `users`);
-    const userQueryRef: Query<DocumentData> = query(userCollRef, where('email', '==', email));
+    const userQueryRef: Query<DocumentData> = query(this.usersCollRef, where('email', '==', email));
     return collectionData(userQueryRef, { idField: 'id' }) as Observable<User[]>;
   }
 
   createUser(userId: string, userObj: User): Promise<void> {
-    return setDoc(doc(this.usersDbRef, userId), userObj);
+    return setDoc(doc(this.usersCollRef, userId), userObj);
   }
 
   updateUser(userId: string, userObj: User): Promise<void> {
-    return updateDoc(doc(this.usersDbRef, userId), userObj);
+    return updateDoc(doc(this.usersCollRef, userId), userObj);
   }
 
   deleteUser(userId: string): Promise<void> {
-    return deleteDoc(doc(this.usersDbRef, userId));
+    return deleteDoc(doc(this.usersCollRef, userId));
   }
 
   addContact(userId: string, contactId: string): Promise<void> {

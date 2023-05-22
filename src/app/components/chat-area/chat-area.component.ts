@@ -1,9 +1,9 @@
 import { Component, inject } from '@angular/core';
-import { Observable, Subject, tap } from 'rxjs';
-import { ChatDbService } from 'src/app/shared/service/chat-db.service';
+import { ActivatedRoute } from '@angular/router';
+import { Observable, tap } from 'rxjs';
+import { ChannelDbService } from 'src/app/shared/service/channels-db.service';
 import { UserDbService } from 'src/app/shared/service/user-db.service';
 import { Message } from 'src/app/shared/types/message';
-import { User } from 'src/app/shared/types/user';
 
 @Component({
   selector: 'app-chat-area',
@@ -11,13 +11,17 @@ import { User } from 'src/app/shared/types/user';
   styleUrls: ['./chat-area.component.scss']
 })
 export class ChatAreaComponent {
-  chatService: ChatDbService = inject(ChatDbService);
+  chatService: ChannelDbService = inject(ChannelDbService);
   userService: UserDbService = inject(UserDbService);
-  chatId: string = 'bHADuOvmaLFl970vTDFK'; // Wird bei Click auf Chat an Chat Komponente übergeben.
+  route: ActivatedRoute = inject(ActivatedRoute);
   messages!: Observable<Message[]>;
+  chatId: string = 'bHADuOvmaLFl970vTDFK'; // Wird später mit Subscription aus Route ausgelesen, siehe constructor.
 
   constructor() {
-    this.messages = this.chatService.getMessages$(this.chatId).pipe(tap(this.scrollToLastMessage));
+    this.route.url.subscribe(route => {
+      this.messages = this.chatService.getMessages$(route[0].path).pipe(tap(this.scrollToLastMessage));
+    });
+    // this.messages = this.chatService.getMessages$(this.chatId).pipe(tap(this.scrollToLastMessage)); // Bis Chat Id in Route -> danach über subscription.
   }
 
   scrollToLastMessage() {
