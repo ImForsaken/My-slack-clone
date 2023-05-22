@@ -2,8 +2,8 @@ import { Injectable, inject } from '@angular/core';
 import { DocumentData, DocumentReference, Firestore, Query, collectionData, deleteDoc, doc, docData, orderBy, query, setDoc, updateDoc } from '@angular/fire/firestore';
 import { collection, CollectionReference } from '@firebase/firestore';
 import { Observable } from 'rxjs';
-import { Chat } from '../types/chat';
-import { Message } from '../types/message';
+import { TChat } from '../types/chat';
+import { TMessage } from '../types/message';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +13,7 @@ export class ChannelDbService {
   private channelsCollRef: CollectionReference = collection(this.firestore, 'channels');
 
   getAllChannels$() {
-    return collectionData(this.channelsCollRef, { idField: 'id' }) as Observable<Chat[]>;
+    return collectionData(this.channelsCollRef, { idField: 'id' }) as Observable<TChat[]>;
   }
 
   getChannel$(chatId: string): Observable<DocumentData> {
@@ -21,11 +21,11 @@ export class ChannelDbService {
     return docData(channelsDocRef);
   }
 
-  createChannel(chatObj: Chat): Promise<void> {
+  createChannel(chatObj: TChat): Promise<void> {
     return setDoc(doc(this.channelsCollRef), chatObj);
   }
 
-  updateChannel(chatId: string, chatObj: Chat): Promise<void> {
+  updateChannel(chatId: string, chatObj: TChat): Promise<void> {
     return updateDoc(doc(this.channelsCollRef, chatId), chatObj);
   }
 
@@ -33,7 +33,7 @@ export class ChannelDbService {
     return deleteDoc(doc(this.channelsCollRef, chatId));
   }
 
-  addMessage(chatId: string, message: Message): Promise<void> {
+  addMessage(chatId: string, message: TMessage): Promise<void> {
     const messageCollRef: CollectionReference = collection(this.firestore, `channels/${chatId}/messages`);
     return setDoc(doc(messageCollRef), message);
   }
@@ -43,9 +43,9 @@ export class ChannelDbService {
     return deleteDoc(doc(messageCollRef, messageId));
   }
 
-  getMessages$(chatId: string): Observable<Message[]> {
+  getMessages$(chatId: string): Observable<TMessage[]> {
     const messageCollRef: CollectionReference = collection(this.firestore, `channels/${chatId}/messages`);
     const messageQueryRef: Query<DocumentData> = query(messageCollRef, orderBy('timestamp'));
-    return collectionData(messageQueryRef, { idField: 'id' }) as Observable<Message[]>;
+    return collectionData(messageQueryRef, { idField: 'id' }) as Observable<TMessage[]>;
   }
 }

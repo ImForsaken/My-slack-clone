@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
 import { UserDbService } from 'src/app/shared/service/user-db.service';
-import { User } from 'src/app/shared/types/user';
+import { TUser } from 'src/app/shared/types/user';
 
 @Component({
   selector: 'app-main',
@@ -14,10 +14,11 @@ export class MainComponent {
    * Hier den aktuellen Channel aud Firebase angeben
    */
   currentChannelName: string = 'currentChannelName';
-  allUsers$ = Observable<User[]>;
-  allUsers: User[] = [
+  allUsers$ = Observable<TUser[]>;
+  allUsers: TUser[] = [
     {
       channels: [],
+      username: '',
       directMessages: [],
       email: 'test@test.de',
       firstname: 'gerog',
@@ -27,6 +28,7 @@ export class MainComponent {
     },
     {
       channels: [],
+      username: '',
       directMessages: [],
       email: 'test@test.de',
       firstname: 'heidi',

@@ -3,7 +3,7 @@ import { User, createUserWithEmailAndPassword } from '@angular/fire/auth';
 import { Firestore, doc, setDoc } from '@angular/fire/firestore';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { StoreService } from 'src/app/shared/service/store.service';
-import { UserData } from 'src/app/shared/interface/user.interface';
+import { TUser } from 'src/app/shared/types/user';
 
 @Component({
   selector: 'app-register',
@@ -57,16 +57,16 @@ export class RegisterComponent implements OnInit {
   }
 
   createUserInterface(id: string) {
-    const userData: UserData = {
-      userName: this.registerForm.controls['userName'].value,
-      userEmail: this.registerForm.controls['userEmail'].value,
-      firstName: this.registerForm.controls['firstName'].value,
-      lastName: this.registerForm.controls['lastName'].value,
-      userId: id,
+    const userData: TUser = {
+      username: this.registerForm.controls['userName'].value,
+      email: this.registerForm.controls['userEmail'].value,
+      firstname: this.registerForm.controls['firstName'].value,
+      lastname: this.registerForm.controls['lastName'].value,
+      id: id,
       isOnline: false,
       profilePicture: 'imgUrl',
-      contacts: [],
-      chats: [],
+      channels: [],
+      directMessages: [],
     };
     return userData;
   }

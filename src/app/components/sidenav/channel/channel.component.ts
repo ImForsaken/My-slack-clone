@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ChannelNode } from 'src/app/shared/interface/channelNode.interface';
 
 @Component({
   selector: 'app-channel',
