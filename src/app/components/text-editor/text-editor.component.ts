@@ -1,8 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ChannelDbService } from 'src/app/shared/service/channels-db.service';
-import { Chat } from 'src/app/shared/types/chat';
-import { Message } from 'src/app/shared/types/message';
+import { TMessage } from 'src/app/shared/types/message';
 
 @Component({
   selector: 'app-text-editor',
@@ -47,7 +46,7 @@ export class TextEditorComponent {
 
   sendNewMessage() {
     const date = new Date();
-    const message: Message = {
+    const message: TMessage = {
       userId: 'xyz',
       userName: 'Dennis Ammen',
       profilePicture: 'url',

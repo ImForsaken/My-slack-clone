@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Observable, tap } from 'rxjs';
 import { ChannelDbService } from 'src/app/shared/service/channels-db.service';
 import { UserDbService } from 'src/app/shared/service/user-db.service';
-import { Message } from 'src/app/shared/types/message';
+import { TMessage } from 'src/app/shared/types/message';
 
 @Component({
   selector: 'app-chat-area',
@@ -14,7 +14,7 @@ export class ChatAreaComponent {
   chatService: ChannelDbService = inject(ChannelDbService);
   userService: UserDbService = inject(UserDbService);
   route: ActivatedRoute = inject(ActivatedRoute);
-  messages!: Observable<Message[]>;
+  messages!: Observable<TMessage[]>;
   chatId: string = 'bHADuOvmaLFl970vTDFK'; // Wird später mit Subscription aus Route ausgelesen, siehe constructor.
 
   constructor() {
