@@ -14,6 +14,8 @@ export class RegisterComponent implements OnInit {
   hide = true;
   registerForm!: FormGroup;
   errorMsg: string | null = null;
+  loginForm!: FormGroup;
+
   private firestore: Firestore = inject(Firestore);
 
   constructor(public store: StoreService) {}
@@ -32,6 +34,17 @@ export class RegisterComponent implements OnInit {
     });
   }
 
+  getLoginData(): FormGroup {
+    const loginForm = new FormGroup({
+      userEmail: new FormControl(this.registerForm.controls['userEmail'].value),
+      userPassword: new FormControl(
+        this.registerForm.controls['userPassword'].value
+      ),
+    });
+
+    return loginForm;
+  }
+
   signUp() {
     createUserWithEmailAndPassword(
       this.store.auth,
@@ -42,9 +55,10 @@ export class RegisterComponent implements OnInit {
         // Sign-Up
         const user = userCredential.user;
         console.log(user);
-        this.addUserToCollection(user);
+        await this.addUserToCollection(user);
+        this.store.loginUser(this.getLoginData());
       })
-      .catch(() => {
+      .catch((error) => {
         this.errorMsg = 'Email already in use!';
       });
   }

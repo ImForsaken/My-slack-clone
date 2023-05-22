@@ -1,11 +1,13 @@
 <section class="welcome">
-  <div class="welcome__text">
-    <h2>Welcome to our</h2>
-    <h1>Slack-Clone</h1>
+  <div class="loginForm">
+    <div class="welcome__text">
+      <h2>Welcome to our</h2>
+      <h1>Slack-Clone</h1>
+    </div>
+    <mat-tab-group dynamicHeight>
+      <mat-tab label="Login"><app-login></app-login></mat-tab>
+      <mat-tab label="Sign-Up"><app-register></app-register></mat-tab>
+    </mat-tab-group>
+    <!-- <button mat-raised-button routerLink="/main">Basic</button> -->
   </div>
-  <mat-tab-group dynamicHeight>
-    <mat-tab label="Login"> <app-login></app-login></mat-tab>
-    <mat-tab label="Sign-Up"><app-register></app-register></mat-tab>
-  </mat-tab-group>
-  <!-- <button mat-raised-button routerLink="/main">Basic</button> -->
 </section>
