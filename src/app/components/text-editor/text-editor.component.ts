@@ -1,5 +1,6 @@
-import { Component, Input, inject } from '@angular/core';
-import { ChatDbService } from 'src/app/shared/service/chat-db.service';
+import { Component, inject } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { ChannelDbService } from 'src/app/shared/service/channels-db.service';
 import { Chat } from 'src/app/shared/types/chat';
 import { Message } from 'src/app/shared/types/message';
 
@@ -11,14 +12,21 @@ import { Message } from 'src/app/shared/types/message';
   ]
 })
 export class TextEditorComponent {
-  chatService: ChatDbService = inject(ChatDbService);
-  chatId: string = 'bHADuOvmaLFl970vTDFK';
+  channelService: ChannelDbService = inject(ChannelDbService);
+  route: ActivatedRoute = inject(ActivatedRoute);
   text: string = '';
-
+  chatId!: string;
+  
   quillStyle = {
     border: '2px solid #3f3b3f',
     borderTop: 'none',
     borderRadius: '0 0 10px 10px'
+  }
+
+  constructor() {
+    this.route.url.subscribe(route => {
+      this.chatId = route[0].path;
+    });
   }
 
   onKeyDown(event: KeyboardEvent) {
@@ -26,23 +34,28 @@ export class TextEditorComponent {
       event.key === 'Enter' &&
       event.shiftKey == false &&
       this.text.length > 0
-      ) {
+    ) {
       const inputSize = new Blob([this.text]).size;
-      
-      if (inputSize < 1000000) {
-        const date = new Date();
-        const message: Message = {
-          userId: 'xyz',
-          userName: 'Dennis Ammen',
-          text: this.text,
-          timestamp: date.toUTCString()
-        }
 
-        this.chatService.addMessage(this.chatId, message);
-        this.text = '';
+      if (inputSize < 1000000) {
+        this.sendNewMessage();
       } else {
         console.log('File is to big');
       }
     }
+  }
+
+  sendNewMessage() {
+    const date = new Date();
+    const message: Message = {
+      userId: 'xyz',
+      userName: 'Dennis Ammen',
+      profilePicture: 'url',
+      text: this.text,
+      timestamp: date.toUTCString()
+    }
+
+    this.channelService.addMessage(this.chatId, message);
+    this.text = '';
   }
 }
