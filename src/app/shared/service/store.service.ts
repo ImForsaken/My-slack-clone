@@ -48,6 +48,22 @@ export class StoreService {
       });
   }
 
+  guestLogin() {
+    return signInWithEmailAndPassword(
+      this.auth,
+      'guestuser@guestuserslackclone.de',
+      '123456'
+    )
+      .then((userCredential) => {
+        const user = userCredential.user;
+        console.log('Login successful', user);
+        this.router.navigate(['/main']);
+      })
+      .catch((error) => {
+        console.log('Error codes', error);
+      });
+  }
+
   signUpUser(loginForm: FormGroup) {
     // Existing and future Auth states are now persisted in the current session only. Closing the window would clear any existing state even if a user forgets to sign out. New sign-in will be persisted with session persistence.
     return signInWithEmailAndPassword(

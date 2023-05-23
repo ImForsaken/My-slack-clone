@@ -16,10 +16,19 @@ input.example-right-align {
   -moz-appearance: textfield;
 }
 
-mat-card-header {
+.matCardButtonContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
   justify-content: center;
+  align-items: center;
 }
 
-mat-form-field {
-  width: 100%;
-}
+// mat-card-header {
+//   justify-content: center;
+// }
+
+// mat-form-field {
+//   width: 100%;
+// }

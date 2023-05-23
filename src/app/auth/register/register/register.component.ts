@@ -30,7 +30,10 @@ export class RegisterComponent implements OnInit {
       ]),
       firstName: new FormControl('', Validators.required),
       lastName: new FormControl('', Validators.required),
-      userPassword: new FormControl('', Validators.required),
+      userPassword: new FormControl('', [
+        Validators.required,
+        Validators.minLength(6),
+      ]),
     });
   }
 
@@ -83,5 +86,15 @@ export class RegisterComponent implements OnInit {
       directMessages: [],
     };
     return userData;
+  }
+
+  getErrorMessage() {
+    if (this.registerForm.controls['userPassword'].hasError('required')) {
+      return 'Password needs min 6 character length';
+    }
+
+    return this.loginForm.controls['userPassword'].hasError('userPassword')
+      ? 'Not a valid Password'
+      : '';
   }
 }
