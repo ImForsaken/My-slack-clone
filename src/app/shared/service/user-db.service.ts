@@ -1,5 +1,18 @@
 import { Injectable, inject } from '@angular/core';
-import { DocumentData, DocumentReference, Firestore, Query, collectionData, deleteDoc, doc, docData, query, setDoc, updateDoc, where } from '@angular/fire/firestore';
+import {
+  DocumentData,
+  DocumentReference,
+  Firestore,
+  Query,
+  collectionData,
+  deleteDoc,
+  doc,
+  docData,
+  query,
+  setDoc,
+  updateDoc,
+  where,
+} from '@angular/fire/firestore';
 import { collection, CollectionReference } from '@firebase/firestore';
 import { Observable } from 'rxjs';
 import { TUser } from '../types/user';
@@ -9,10 +22,15 @@ import { TUser } from '../types/user';
 })
 export class UserDbService {
   private firestore: Firestore = inject(Firestore);
-  private usersCollRef: CollectionReference = collection(this.firestore, 'users');
+  private usersCollRef: CollectionReference = collection(
+    this.firestore,
+    'users'
+  );
 
   getAllUsers$(): Observable<TUser[]> {
-    return collectionData(this.usersCollRef, { idField: 'id' }) as Observable<TUser[]>;
+    return collectionData(this.usersCollRef, { idField: 'id' }) as Observable<
+      TUser[]
+    >;
   }
 
   getUserById$(userId: string): Observable<TUser> {
@@ -21,8 +39,13 @@ export class UserDbService {
   }
 
   getUserByEmail$(email: string): Observable<TUser[]> {
-    const userQueryRef: Query<DocumentData> = query(this.usersCollRef, where('email', '==', email));
-    return collectionData(userQueryRef, { idField: 'id' }) as Observable<TUser[]>;
+    const userQueryRef: Query<DocumentData> = query(
+      this.usersCollRef,
+      where('email', '==', email)
+    );
+    return collectionData(userQueryRef, { idField: 'id' }) as Observable<
+      TUser[]
+    >;
   }
 
   createUser(userId: string, userObj: TUser): Promise<void> {
@@ -38,12 +61,18 @@ export class UserDbService {
   }
 
   addContact(userId: string, contactId: string): Promise<void> {
-    const contactsDbRef: CollectionReference = collection(this.firestore, `users/${userId}/contacts`);
+    const contactsDbRef: CollectionReference = collection(
+      this.firestore,
+      `users/${userId}/contacts`
+    );
     return setDoc(doc(contactsDbRef), { contactId });
   }
 
   deleteContact(userId: string, contactId: string): Promise<void> {
-    const contactsDbRef: CollectionReference = collection(this.firestore, `users/${userId}/contacts`);
+    const contactsDbRef: CollectionReference = collection(
+      this.firestore,
+      `users/${userId}/contacts`
+    );
     return deleteDoc(doc(contactsDbRef, contactId));
   }
 

@@ -4,9 +4,12 @@ import { ActivatedRouteSnapshot } from '@angular/router';
 import { CanActivate } from '@angular/router';
 import { Observable, map, take } from 'rxjs';
 import { StoreService } from './store.service';
+import { IdTokenResult, User } from '@angular/fire/auth';
 
 @Injectable({ providedIn: 'root' })
 export class AuthGuard implements CanActivate {
+  loggedUser!: User;
+
   constructor(public store: StoreService, private router: Router) {}
 
   canActivate(
@@ -16,7 +19,10 @@ export class AuthGuard implements CanActivate {
     return this.store.userAuth$.pipe(
       take(1),
       map((user) => {
-        const isAuth = !!user;
+        if (user) {
+          this.loggedUser = user;
+        }
+        const isAuth: boolean = !!user;
         if (isAuth) {
           return true;
         }
