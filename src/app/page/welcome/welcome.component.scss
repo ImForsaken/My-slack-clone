@@ -9,13 +9,63 @@
   // background-color: $purple;
   // color: $white;
   text-align: center;
+  background-color: #353330;
 }
 
-.mat-mdc-tab-group {
-  min-width: 50%;
+.welcome__text {
+  padding: 10px;
 }
 
-.loginForm app-login,
-.loginForm app-register {
-  background-color: black;
+.welcomeForm {
+  background-color: white;
+  border-radius: 10px;
+  height: 80%;
+  width: 40%;
+  min-width: 380px;
+  max-width: 590px;
+  max-height: 725px;
+  display: flex;
+  flex-direction: column;
+  mat-tab-group {
+    flex: 1;
+    .mat-mdc-tab-body-wrapper {
+      flex: 1;
+      margin-top: 25px;
+    }
+  }
+}
+
+.mat-mdc-card {
+  height: 100%;
+  form {
+    flex: 1;
+    mat-card-content {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+}
+
+.mdc-card {
+  background-color: transparent !important;
+}
+
+.mat-mdc-card-header {
+  justify-content: center;
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+.mat-mdc-raised-button {
+  width: 50%;
+}
+
+.mat-mdc-card-actions {
+  flex-direction: column !important;
+  gap: 10px;
 }
