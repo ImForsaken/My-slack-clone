@@ -1,10 +1,10 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { AfterContentInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { User } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { AuthGuard } from 'src/app/shared/service/auth.guard';
+import { StoreService } from 'src/app/shared/service/store.service';
 import { UserDbService } from 'src/app/shared/service/user-db.service';
-import { TChat } from 'src/app/shared/types/chat';
 import { TUser } from 'src/app/shared/types/user';
 
 @Component({
@@ -13,38 +13,41 @@ import { TUser } from 'src/app/shared/types/user';
   styleUrls: ['./channels.component.scss'],
 })
 export class ChannelsComponent implements OnInit, OnDestroy {
+  loggedInUserID: string = 'y2ggpSoT2SgZq7XRrP1QAPTh98B3';
   loggedUser!: TUser;
-  userLogginSubscrition$!: Subscription;
 
   constructor(
     private userService: UserDbService,
     private router: Router,
-    private authGuard: AuthGuard
-  ) {
-    this.getLoggedUser();
-  }
-
+    private authGuard: AuthGuard,
+    private storeServcie: StoreService
+  ) {}
   ngOnInit(): void {
-    // this.getLoggedUser();
-    console.log('loggedUser: ', this.loggedUser);
+    // this.getLoggedUserID();
+    this.getLoggedUser(this.loggedInUserID);
   }
 
   /**
-   * gets the currently logged in user from firebase auth
+   * get the current logged ID from firebase Auth
    */
-  getLoggedUser(): void {
-    const loggedUser: User = this.authGuard.loggedUser;
-    if (loggedUser) {
-      this.userLogginSubscrition$ = this.userService
-        .getUserByEmail$(`${loggedUser.email}`)
-        .subscribe((users: TUser[]): void => {
-          // User kommt vom auth Service
-          this.loggedUser = users[0];
-          console.log('subscriptionUser: ', this.loggedUser);
-        });
-    }
+  getLoggedUserID() {
+    this.storeServcie.loggedInUserID$.subscribe((id) => {
+      console.log('id', id);
+      this.loggedInUserID = id;
+    });
   }
 
+  /**
+   * gets the currently logged user from firebase auth
+   */
+  getLoggedUser(userID: string): void {
+    this.userService.getUserById$(userID).subscribe((user) => {
+      this.loggedUser = user;
+      console.log('this.loggedUser', this.loggedUser);
+    });
+  }
+
+  ngAfterContentInit() {}
   /**
    * displays the current channel chat by writing the channelID into the url
    * @param channelID
@@ -65,6 +68,6 @@ export class ChannelsComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.userLogginSubscrition$.unsubscribe();
+    // this.userLogginSubscrition$.unsubscribe();
   }
 }

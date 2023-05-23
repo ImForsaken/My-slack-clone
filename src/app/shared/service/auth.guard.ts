@@ -4,7 +4,7 @@ import { ActivatedRouteSnapshot } from '@angular/router';
 import { CanActivate } from '@angular/router';
 import { Observable, map, take } from 'rxjs';
 import { StoreService } from './store.service';
-import { User } from '@angular/fire/auth';
+import { IdTokenResult, User } from '@angular/fire/auth';
 
 @Injectable({ providedIn: 'root' })
 export class AuthGuard implements CanActivate {
@@ -21,7 +21,6 @@ export class AuthGuard implements CanActivate {
       map((user) => {
         if (user) {
           this.loggedUser = user;
-          console.log('loggedUserIs: ', user);
         }
         const isAuth: boolean = !!user;
         if (isAuth) {

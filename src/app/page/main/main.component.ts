@@ -1,7 +1,5 @@
 import { Component } from '@angular/core';
-import { Observable } from 'rxjs';
-import { UserDbService } from 'src/app/shared/service/user-db.service';
-import { TUser } from 'src/app/shared/types/user';
+import { ChannelDbService } from 'src/app/shared/service/channels-db.service';
 
 @Component({
   selector: 'app-main',
@@ -12,4 +10,8 @@ export class MainComponent {
   isSidenavOpened: boolean = true;
   isDirectMessageOpen: boolean = true;
   isChannelsOpen: boolean = true;
+
+  channels: any[] = [];
+
+  constructor(private channelService: ChannelDbService) {}
 }

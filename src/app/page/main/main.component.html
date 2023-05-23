@@ -22,6 +22,12 @@
         ></app-channels>
       </div>
       <hr />
+      <!-- musterliste -->
+      <div class="muster">
+        <h4>ListOfChannels</h4>
+        <div *ngFor="let channel of channels">{{ channel.name }}</div>
+      </div>
+      <hr />
       <!-- DirectMessages -->
       <div class="dm__container">
         <div

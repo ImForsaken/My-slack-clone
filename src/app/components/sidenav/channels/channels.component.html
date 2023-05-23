@@ -1,12 +1,14 @@
-<div *ngFor="let channel of loggedUser.channels" class="channel">
-  <div class="channel__name">
-    <span>#</span>
-    <span (click)="displayChannel(channel.id)">{{ channel.name }}</span>
+<div *ngIf="loggedUser">
+  <div *ngFor="let channel of loggedUser.channels" class="channel">
+    <div class="channel__name">
+      <span>#</span>
+      <span (click)="displayChannel(channel.id)">{{ channel.name }}</span>
+    </div>
+    <span
+      class="channel__close-btn"
+      (click)="leaveChannel(channel.id)"
+      matTooltip="leave channel"
+      >X</span
+    >
   </div>
-  <span
-    class="channel__close-btn"
-    (click)="leaveChannel(channel.id)"
-    matTooltip="leave channel"
-    >X</span
-  >
 </div>
