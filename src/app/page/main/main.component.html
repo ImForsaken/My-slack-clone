@@ -5,14 +5,38 @@
       <mat-toolbar class="sidenav__header" color="primary">
         <div>Slack-Clone</div>
       </mat-toolbar>
-      <app-channels (selectedChannel)="displayName($event)"></app-channels>
+      <!-- Channels -->
+      <div class="channels__container">
+        <div
+          (click)="isChannelsOpen = !isChannelsOpen"
+          class="channels__header"
+        >
+          <mat-icon>
+            {{ isChannelsOpen ? "arrow_drop_down" : "arrow_right" }}
+          </mat-icon>
+          <span>Channels</span>
+        </div>
+        <app-channels
+          class="channels__list"
+          *ngIf="isChannelsOpen"
+        ></app-channels>
+      </div>
       <hr />
-      <div>Direct Messages</div>
-      <div>
-        <!-- <app-chat-label
-          *ngFor="let user of allUsers"
-          [user]="user"
-        ></app-chat-label> -->
+      <!-- DirectMessages -->
+      <div class="dm__container">
+        <div
+          class="dm__header"
+          (click)="isDirectMessageOpen = !isDirectMessageOpen"
+        >
+          <mat-icon>
+            {{ isDirectMessageOpen ? "arrow_drop_down" : "arrow_right" }}
+          </mat-icon>
+          <span>Direct Messages</span>
+        </div>
+        <app-direct-messages
+          class="dm__list"
+          *ngIf="isDirectMessageOpen"
+        ></app-direct-messages>
       </div>
     </mat-sidenav>
 
@@ -20,10 +44,16 @@
     <mat-sidenav-content>
       <!-- header -->
       <mat-toolbar>
-        <button class="toggle__btn" type="button" mat-button (click)="sidenav.toggle()" matTooltip="Toggle Menu">
+        <button
+          class="toggle__btn"
+          type="button"
+          mat-button
+          (click)="sidenav.toggle()"
+          matTooltip="Toggle Menu"
+        >
           <mat-icon>menu_open</mat-icon>
         </button>
-        <div>#{{ currentChannelName }}</div>
+        <div># currentChatName</div>
       </mat-toolbar>
       <!-- chat display -->
       <router-outlet></router-outlet>

@@ -1,5 +1,5 @@
 export type TChat = {
-    id?: string,
-    name: string,
-    createdOn?: string
-}
+  id: string;
+  name: string;
+  createdOn?: string;
+};
