@@ -21,6 +21,7 @@ export class StoreService {
   userService: UserDbService = inject(UserDbService);
   public auth: Auth = inject(Auth);
   userSubscription!: Subscription;
+  loggedInUserID$ = new BehaviorSubject<string>('');
 
   userAuth$ = user(this.auth);
   loggedInUser$!: User;
@@ -73,6 +74,7 @@ export class StoreService {
     )
       .then((userCredential) => {
         const user = userCredential.user;
+        this.loggedInUserID$.next(user.uid); // Wenn login erfolgreich, wird der neue wert weitergereicht.
         console.log('Login successful', user);
         this.router.navigate(['/main']);
       })

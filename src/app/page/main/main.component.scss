@@ -13,6 +13,33 @@ section {
         border-top: $grey 1px solid;
         border-bottom: $grey 1px solid;
       }
+      .channels__container {
+        padding: 0.5rem 1rem;
+        color: $white;
+        .channels__header {
+          cursor: pointer;
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+        }
+        .channels__list {
+          display: flex;
+          flex-direction: column;
+          gap: 0.5rem;
+        }
+      }
+      .dm__container {
+        padding: 0.5rem 1rem;
+        color: $white;
+        .dm__header {
+          cursor: pointer;
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+        }
+        .dm__list {
+        }
+      }
     }
     mat-sidenav-content {
       display: flex;
@@ -22,9 +49,6 @@ section {
         display: flex;
         flex-direction: row;
         justify-content: flex-start;
-      }
-      app-chat-area {
-        height: $chat-area-height;
       }
     }
   }
@@ -48,4 +72,10 @@ mat-toolbar {
 .chat-content {
   display: flex;
   flex-direction: column;
+}
+
+.muster {
+  color: $white;
+  text-align: center;
+  padding: 1rem;
 }

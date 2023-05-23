@@ -1,18 +1,23 @@
 @import "../../../shared/style/variables";
-mat-tree {
-  padding-inline: 0.5rem;
-  background-color: transparent;
-  gap: 1rem;
-  mat-tree-node {
-    min-height: 2rem;
-    background-color: transparent;
-    color: $white;
-    .channel {
-      cursor: pointer;
-    }
+.channel {
+  display: flex;
+  padding: 0.5rem 1rem;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 0.25rem;
+  border: 1px solid pink;
+  &:hover {
+    opacity: 0.8;
   }
-  mat-tree-node:hover {
-    border-radius: 50rem;
-    background-color: $purple-hover;
-  }
+}
+
+.channel__name {
+  display: flex;
+  gap: 0.5rem;
+  cursor: pointer;
+}
+
+.channel__close-btn {
+  cursor: pointer;
 }
