@@ -16,6 +16,7 @@ import {
 import { collection, CollectionReference } from '@firebase/firestore';
 import { Observable } from 'rxjs';
 import { TUser } from '../types/user';
+import { ActivatedRoute } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
@@ -26,6 +27,8 @@ export class UserDbService {
     this.firestore,
     'users'
   );
+
+  activeChatName: string = '';
 
   getAllUsers$(): Observable<TUser[]> {
     return collectionData(this.usersCollRef, { idField: 'id' }) as Observable<

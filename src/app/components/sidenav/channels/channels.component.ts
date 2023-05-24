@@ -1,10 +1,9 @@
-import { AfterContentInit, Component, OnDestroy, OnInit } from '@angular/core';
-import { User } from '@angular/fire/auth';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
 import { AuthGuard } from 'src/app/shared/service/auth.guard';
 import { StoreService } from 'src/app/shared/service/store.service';
 import { UserDbService } from 'src/app/shared/service/user-db.service';
+import { TChat } from 'src/app/shared/types/chat';
 import { TUser } from 'src/app/shared/types/user';
 
 @Component({
@@ -32,7 +31,6 @@ export class ChannelsComponent implements OnInit, OnDestroy {
    */
   getLoggedUserID() {
     this.storeServcie.loggedInUserID$.subscribe((id) => {
-      console.log('id', id);
       this.loggedInUserID = id;
     });
   }
@@ -47,13 +45,13 @@ export class ChannelsComponent implements OnInit, OnDestroy {
     });
   }
 
-  ngAfterContentInit() {}
   /**
    * displays the current channel chat by writing the channelID into the url
    * @param channelID
    */
-  displayChannel(channelID: string) {
-    this.router.navigateByUrl(`main/${channelID}`);
+  displayChannel(channel: TChat) {
+    this.router.navigateByUrl(`main/${channel.id}`);
+    this.userService.activeChatName = channel.name;
   }
 
   /**
