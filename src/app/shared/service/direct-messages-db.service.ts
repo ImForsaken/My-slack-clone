@@ -4,7 +4,6 @@ import { Observable } from 'rxjs';
 import { TMessage } from '../types/message';
 import { TDirectMessages } from '../types/dm';
 import { UserDbService } from './user-db.service';
-import { TUser } from '../types/user';
 
 @Injectable({
   providedIn: 'root'
