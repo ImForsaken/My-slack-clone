@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ChatLabelComponent } from './chat-label.component';
+import { DmLabelComponent } from './dm-label.component';
 
 describe('ChatLabelComponent', () => {
-  let component: ChatLabelComponent;
-  let fixture: ComponentFixture<ChatLabelComponent>;
+  let component: DmLabelComponent;
+  let fixture: ComponentFixture<DmLabelComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ChatLabelComponent],
+      declarations: [DmLabelComponent],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(ChatLabelComponent);
+    fixture = TestBed.createComponent(DmLabelComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

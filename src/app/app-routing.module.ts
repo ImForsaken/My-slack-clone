@@ -5,9 +5,9 @@ import { PageNotFoundComponent } from './page/page-not-found/page-not-found.comp
 import { MainComponent } from './page/main/main.component';
 import { LegalNoticeComponent } from './components/info/legal-notice/legal-notice.component';
 import { DataProtectionComponent } from './components/info/data-protection/data-protection.component';
-import { LoginComponent } from './auth/login/login/login.component';
-import { ChannelComponent } from './components/sidenav/channel/channel.component';
+
 import { AuthGuard } from './shared/service/auth.guard';
+import { ChatContentComponent } from './chat/chat-content/chat-content.component';
 
 const routes: Routes = [
   { path: '', component: WelcomeComponent },
@@ -15,7 +15,7 @@ const routes: Routes = [
     path: 'main',
     component: MainComponent,
     canActivate: [AuthGuard],
-    children: [{ path: ':name', component: ChannelComponent }],
+    children: [{ path: ':name', component: ChatContentComponent }],
   },
   { path: 'legal-notice', component: LegalNoticeComponent },
   { path: 'data-protection', component: DataProtectionComponent },
