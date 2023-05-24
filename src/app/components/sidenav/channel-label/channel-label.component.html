@@ -1,1 +1,6 @@
-<p>channel-label works!</p>
+<div class="channel__name">
+    <span>#</span>
+    <span (click)="displayChannel(channel)">{{ channel.name }}</span>
+</div>
+<span class="channel__close-btn" (click)="leaveChannel('channel.id')" matTooltip="leave channel">X</span
+>

@@ -6,22 +6,9 @@
                 <div>Slack-Clone</div>
             </mat-toolbar>
             <!-- Channels -->
-            <div class="channels__container">
-                <div (click)="isChannelsOpen = !isChannelsOpen" class="channels__header">
-                    <mat-icon>
-                        {{ isChannelsOpen ? "arrow_drop_down" : "arrow_right" }}
-                    </mat-icon>
-                    <span>Channels</span>
-                </div>
-                <app-channels class="channels__list" *ngIf="isChannelsOpen"></app-channels>
-            </div>
+            <app-channels></app-channels>
             <hr />
-            <!-- musterliste -->
-            <div class="muster">
-                <h4>ListOfChannels</h4>
-                <div *ngFor="let channel of channels">{{ channel.name }}</div>
-            </div>
-            <hr />
+
             <!-- DirectMessages -->
             <div class="dm__container">
                 <div class="dm__header" (click)="isDirectMessageOpen = !isDirectMessageOpen">
@@ -41,7 +28,7 @@
                 <button class="toggle__btn" type="button" mat-button (click)="sidenav.toggle()" matTooltip="Toggle Menu">
           <mat-icon>menu_open</mat-icon>
         </button>
-                <div># {{ this.userServcie.activeChatName }}</div>
+                <div># {{ this.userServcie.activeChatName | titlecase }}</div>
             </mat-toolbar>
             <!-- chat display -->
             <router-outlet></router-outlet>

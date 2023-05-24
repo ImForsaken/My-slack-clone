@@ -2,7 +2,7 @@
  * Channels
  */
 export type TChat = {
-  id: string;
+  id?: string; // update with DocumentID
   name: string;
-  createdOn?: string;
+  createdOn?: string; // createdFromUserID = ID
 };

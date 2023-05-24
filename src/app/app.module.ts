@@ -31,6 +31,8 @@ import { AppComponent } from './app.component';
 import { PageNotFoundComponent } from './page/page-not-found/page-not-found.component';
 import { WelcomeComponent } from './page/welcome/welcome.component';
 import { MainComponent } from './page/main/main.component';
+import { NewChannelComponent } from './components/sidenav/new-channel/new-channel.component';
+import { AllChannelsComponent } from './components/sidenav/all-channels/all-channels.component';
 
 @NgModule({
   declarations: [
@@ -51,6 +53,8 @@ import { MainComponent } from './page/main/main.component';
     ChannelsComponent,
     DirectMessagesComponent,
     DmLabelComponent,
+    NewChannelComponent,
+    AllChannelsComponent,
   ],
   imports: [
     BrowserModule,
