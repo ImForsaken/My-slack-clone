@@ -1,5 +1,8 @@
-import { TChat } from './chat';
+import { TChannel, TDirectMessage } from './chat';
 
+/**
+ * Type for a user of the application.
+ */
 export type TUser = {
   id?: string;
   username: string;
@@ -8,6 +11,7 @@ export type TUser = {
   email: string;
   profilePicture: string;
   isOnline: boolean;
-  channels: TChat[];
-  directMessages: TChat[];
+  channels: TChannel[];
+  directMessages: TDirectMessage[];
 };
+
