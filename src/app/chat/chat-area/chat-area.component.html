@@ -1,5 +1,1 @@
-<section>
-    <div class="message-container">
-        <app-message *ngFor="let message of messages | async" [message]="message"></app-message>
-    </div>
-</section>
+<app-message *ngFor="let message of messages | async" [message]="message"></app-message>

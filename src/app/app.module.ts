@@ -26,7 +26,6 @@ import { ChannelLabelComponent } from './components/sidenav/channel-label/channe
 import { ChannelsComponent } from './components/sidenav/channels/channels.component';
 import { DirectMessagesComponent } from './components/sidenav/direct-messages/direct-messages.component';
 import { DmLabelComponent } from './components/sidenav/dm-label/dm-label.component';
-
 // Page
 import { AppComponent } from './app.component';
 import { PageNotFoundComponent } from './page/page-not-found/page-not-found.component';
