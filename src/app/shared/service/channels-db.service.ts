@@ -16,7 +16,7 @@ import {
 } from '@angular/fire/firestore';
 import { collection, CollectionReference } from '@firebase/firestore';
 import { Observable } from 'rxjs';
-import { TChat } from '../types/chat';
+import { TChannel } from '../types/chat';
 import { TMessage } from '../types/message';
 
 @Injectable({
@@ -32,7 +32,7 @@ export class ChannelDbService {
   getAllChannels$() {
     return collectionData(this.channelsCollRef, {
       idField: 'id',
-    }) as Observable<TChat[]>;
+    }) as Observable<TChannel[]>;
   }
 
   getChannel$(chatId: string): Observable<DocumentData> {
@@ -43,11 +43,11 @@ export class ChannelDbService {
     return docData(channelsDocRef);
   }
 
-  createChannel(chatObj: TChat) {
+  createChannel(chatObj: TChannel): Promise<void> {
     return setDoc(doc(this.channelsCollRef), chatObj);
   }
 
-  updateChannel(chatId: string, chatObj: TChat): Promise<void> {
+  updateChannel(chatId: string, chatObj: TChannel): Promise<void> {
     return updateDoc(doc(this.channelsCollRef, chatId), chatObj);
   }
 

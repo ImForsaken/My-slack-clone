@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { DirectMessagesServiceService } from 'src/app/shared/service/direct-messages-service.service';
+import { DirectMessageDbService } from 'src/app/shared/service/direct-messages-db.service';
 
 @Component({
   selector: 'app-direct-messages',
@@ -8,5 +8,5 @@ import { DirectMessagesServiceService } from 'src/app/shared/service/direct-mess
 })
 export class DirectMessagesComponent {
   allUsers: any[] = [];
-  constructor(private dmService: DirectMessagesServiceService) {}
+  constructor(private dmService: DirectMessageDbService) {}
 }

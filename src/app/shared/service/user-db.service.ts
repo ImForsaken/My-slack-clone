@@ -8,6 +8,7 @@ import {
   deleteDoc,
   doc,
   docData,
+  getDoc,
   query,
   setDoc,
   updateDoc,
@@ -16,7 +17,8 @@ import {
 import { collection, CollectionReference } from '@firebase/firestore';
 import { Observable } from 'rxjs';
 import { TUser } from '../types/user';
-import { ActivatedRoute } from '@angular/router';
+import { TDirectMessage } from '../types/chat';
+import { TDirectMessages } from '../types/dm';
 
 @Injectable({
   providedIn: 'root',
@@ -38,7 +40,7 @@ export class UserDbService {
 
   getUserById$(userId: string): Observable<TUser> {
     const usersDocRef: DocumentReference = doc(this.usersCollRef, userId);
-    return docData(usersDocRef) as Observable<TUser>;
+    return docData(usersDocRef, { idField: 'id' }) as Observable<TUser>;
   }
 
   getUserByEmail$(email: string): Observable<TUser[]> {
@@ -61,6 +63,60 @@ export class UserDbService {
 
   deleteUser(userId: string): Promise<void> {
     return deleteDoc(doc(this.usersCollRef, userId));
+  }
+
+  async addDirectMessageChat(
+    userId: string,
+    partnerId: string,
+    docId: string
+  ): Promise<void> {
+    const user: TUser = (await getDoc(doc(this.usersCollRef, userId)).then(
+      (user) => user.data()
+    )) as TUser;
+    const partner: TUser = (await getDoc(
+      doc(this.usersCollRef, partnerId)
+    ).then((user) => user.data())) as TUser;
+
+    user?.['directMessages'].push({
+      chatPartnerId: partnerId,
+      chatPartnerName: partner.username,
+      dmDocId: docId,
+    });
+    this.updateUser(user?.['id']!, user);
+
+    partner?.['directMessages'].push({
+      chatPartnerId: userId,
+      chatPartnerName: user.username,
+      dmDocId: docId,
+    });
+    this.updateUser(partner?.['id']!, partner);
+  }
+
+  async deleteDirectMessagesChat(dmId: string) {
+    const directMessagesCollRef: CollectionReference = collection(
+      this.firestore,
+      'directMessages'
+    );
+    const directMessageChat: TDirectMessages = (await getDoc(
+      doc(directMessagesCollRef, dmId)
+    ).then((dmChat) => dmChat.data())) as TDirectMessages;
+    const user: TUser = (await getDoc(
+      doc(this.usersCollRef, directMessageChat.userIDs[0])
+    ).then((user) => user.data())) as TUser;
+    const partner: TUser = (await getDoc(
+      doc(this.usersCollRef, directMessageChat.userIDs[1])
+    ).then((user) => user.data())) as TUser;
+    const userDmIndex = user?.['directMessages'].findIndex(
+      (dm) => dm.dmDocId === dmId
+    );
+    const partnerDmIndex = partner?.['directMessages'].findIndex(
+      (dm) => dm.dmDocId === dmId
+    );
+    user?.['directMessages'].splice(userDmIndex, 1);
+    partner?.['directMessages'].splice(partnerDmIndex, 1);
+
+    this.updateUser(user?.['id']!, user);
+    this.updateUser(partner?.['id']!, partner);
   }
 
   addContact(userId: string, contactId: string): Promise<void> {
