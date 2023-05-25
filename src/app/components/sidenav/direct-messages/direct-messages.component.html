@@ -12,12 +12,12 @@
       </mat-icon>
     </button>
     <!-- Titel Button -->
+    <button mat-button [matMenuTriggerFor]="menu">Direct Messages</button>
     <mat-menu #menu="matMenu">
       <button mat-menu-item (click)="openUsersDialog()">
         <mat-icon>group</mat-icon>Users
       </button>
     </mat-menu>
-    <span>Direct Messages</span>
   </div>
 
   <div class="channels__list" *ngIf="isDirectMessageOpen">
