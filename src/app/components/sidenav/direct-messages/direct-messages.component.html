@@ -1,3 +1,15 @@
-<section>
-    <app-dm-label class="dm__list_item" *ngFor="let user of allUsers" [user]="user"></app-dm-label>
-</section>
+<!-- DM Header -->
+<div class="dm__container">
+  <div class="dm__header" (click)="isDirectMessageOpen = !isDirectMessageOpen">
+    <mat-icon>
+      {{ isDirectMessageOpen ? "arrow_drop_down" : "arrow_right" }}
+    </mat-icon>
+    <span>Direct Messages</span>
+  </div>
+  <!-- DM Liste -->
+  <!-- <app-dm-label
+    class="dm__list_item"
+    *ngFor="let user of allUsers"
+    [user]="user"
+  ></app-dm-label> -->
+</div>

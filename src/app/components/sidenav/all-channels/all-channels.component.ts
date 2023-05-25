@@ -42,7 +42,7 @@ export class AllChannelsComponent implements OnInit, OnDestroy {
    */
   getLoggedUserInfo() {
     this.subLoggedUser$ = this.storeService.currentUser$.subscribe((user) => {
-      console.log('user:', user);
+      console.log('user:', user); // Später rauslöschen
       this.loggedUser = user;
     });
   }
@@ -54,7 +54,7 @@ export class AllChannelsComponent implements OnInit, OnDestroy {
     this.subAllChannels$ = this.channelService
       .getAllChannels$()
       .subscribe((channls: TChannel[]): void => {
-        console.log('channels: ', channls);
+        console.log('channels: ', channls); // Später rauslöschen
         this.allChannels = channls;
       });
   }
@@ -75,10 +75,17 @@ export class AllChannelsComponent implements OnInit, OnDestroy {
     this.isSelected = false;
   }
 
+  /**
+   * close Dialog
+   */
   onNoClick(): void {
     this.dialogRef.close();
   }
 
+  /**
+   * set selectedChannel
+   * @param channel
+   */
   selectChannel(channel: TChannel): void {
     if (channel) {
       this.selectedChannel = channel;
