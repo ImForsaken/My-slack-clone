@@ -1,0 +1,31 @@
+@import "../../../shared/style/variables";
+:host {
+  display: flex;
+  padding: 0.5rem 1rem;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 0.25rem;
+  height: 2.5rem;
+  &:hover {
+    // opacity: 0.8;
+    background-color: $purple-hover;
+    .channel__close-btn {
+      display: flex;
+      &:hover {
+        color: $grey;
+      }
+    }
+  }
+}
+
+.channel__name {
+  display: flex;
+  gap: 0.5rem;
+  cursor: pointer;
+}
+
+.channel__close-btn {
+  display: none;
+  cursor: pointer;
+}

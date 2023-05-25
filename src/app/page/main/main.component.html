@@ -6,46 +6,11 @@
         <div>Slack-Clone</div>
       </mat-toolbar>
       <!-- Channels -->
-      <div class="channels__container">
-        <div
-          (click)="isChannelsOpen = !isChannelsOpen"
-          class="channels__header"
-        >
-          <mat-icon>
-            {{ isChannelsOpen ? "arrow_drop_down" : "arrow_right" }}
-          </mat-icon>
-          <span>Channels</span>
-        </div>
-        <app-channels
-          class="channels__list"
-          *ngIf="isChannelsOpen"
-        ></app-channels>
-      </div>
-      <hr />
-      <!-- musterliste -->
-      <div class="muster">
-        <h4>ListOfChannels</h4>
-        <div *ngFor="let channel of channels">{{ channel.name }}</div>
-      </div>
+      <app-channels></app-channels>
       <hr />
       <!-- DirectMessages -->
-      <div class="dm__container">
-        <div
-          class="dm__header"
-          (click)="isDirectMessageOpen = !isDirectMessageOpen"
-        >
-          <mat-icon>
-            {{ isDirectMessageOpen ? "arrow_drop_down" : "arrow_right" }}
-          </mat-icon>
-          <span>Direct Messages</span>
-        </div>
-        <app-direct-messages
-          class="dm__list"
-          *ngIf="isDirectMessageOpen"
-        ></app-direct-messages>
-      </div>
+      <app-direct-messages></app-direct-messages>
     </mat-sidenav>
-
     <!--rightSide main content -->
     <mat-sidenav-content>
       <!-- header -->
@@ -59,7 +24,7 @@
         >
           <mat-icon>menu_open</mat-icon>
         </button>
-        <div># currentChatName</div>
+        <div># {{ this.userServcie.activeChatName | uppercase }}</div>
       </mat-toolbar>
       <!-- chat display -->
       <router-outlet></router-outlet>

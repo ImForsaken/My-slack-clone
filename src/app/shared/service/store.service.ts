@@ -1,5 +1,5 @@
 import { Injectable, inject } from '@angular/core';
-import { BehaviorSubject, Observable, Subscription } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { UserDbService } from './user-db.service';
 import {
   Auth,
@@ -9,6 +9,7 @@ import {
   signOut,
   user,
   User,
+  UserCredential,
 } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import { FormGroup } from '@angular/forms';
@@ -21,36 +22,15 @@ import { TUser } from '../types/user';
 export class StoreService {
   userService: UserDbService = inject(UserDbService);
   public auth: Auth = inject(Auth);
-  userSubscription!: Subscription;
+  currentUser$!: Observable<TUser>;
   loggedInUserID$ = new BehaviorSubject<string>('');
   userAuth$ = user(this.auth);
   loggedInUser$!: User;
   currentChat$!: Observable<string>;
 
-  loggedInUserObservable!: Observable<TUser>;
-  loggedInUserInformation!: TUser;
+  constructor(public router: Router) {}
 
-  constructor(public router: Router, private userDB: UserDbService) {
-    // this.userService.getUserByEmail$('tester@testmail.com').subscribe(user => {
-    //   this.loggedInUser$ = user[0];
-    //   this.currentChat$ = new BehaviorSubject<string>(this.loggedInUser$.chats[0]).asObservable();
-    // });
-    this.userSubscription = this.userAuth$.subscribe((aUser: User | null) => {
-      //handle user state changes here. Note, that user will be null if there is no currently logged in user.
-      console.log('userSubscription', aUser!.uid);
-      this.getUserInformation(aUser!.uid);
-    });
-  }
-
-  getUserInformation(uid: string) {
-    this.loggedInUserObservable = this.userDB.getUserById$(uid);
-    this.loggedInUserObservable.subscribe((userInformation) => {
-      console.log(userInformation);
-      this.loggedInUserInformation = userInformation;
-    });
-  }
-
-  loginUser(loginForm: FormGroup) {
+  loginUser(loginForm: FormGroup): void {
     console.log(loginForm);
     setPersistence(this.auth, browserSessionPersistence)
       .then(() => {
@@ -67,9 +47,9 @@ export class StoreService {
       'guestuser@guestuserslackclone.de',
       '123456'
     )
-      .then((userCredential) => {
+      .then((userCredential: UserCredential): void => {
         const user = userCredential.user;
-        console.log('Login successful', user);
+        console.log('Guest Login successful', user);
         this.router.navigate(['/main']);
       })
       .catch((error) => {
@@ -84,10 +64,11 @@ export class StoreService {
       loginForm.controls['userEmail'].value,
       loginForm.controls['userPassword'].value
     )
-      .then((userCredential) => {
+      .then((userCredential: UserCredential) => {
         const user = userCredential.user;
+        this.currentUser$ = this.userService.getUserById$(user.uid);
         this.loggedInUserID$.next(user.uid); // Wenn login erfolgreich, wird der neue wert weitergereicht.
-        console.log('Login successful', user);
+        console.log('Login successful for User:', user);
         this.router.navigate(['/main']);
       })
       .catch((error) => {
@@ -95,7 +76,7 @@ export class StoreService {
       });
   }
 
-  logout() {
+  logout(): void {
     signOut(this.auth)
       .then((result) => {
         // Sign-out successful.

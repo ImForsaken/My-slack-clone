@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
-  selector: 'app-channel',
-  templateUrl: './channel.component.html',
-  styleUrls: ['./channel.component.scss'],
+  selector: 'app-chat-content',
+  templateUrl: './chat-content.component.html',
+  styleUrls: ['./chat-content.component.scss'],
 })
-export class ChannelComponent implements OnInit {
+export class ChatContentComponent implements OnInit {
   currentRoute: string = '';
 
   constructor(private route: ActivatedRoute) {}

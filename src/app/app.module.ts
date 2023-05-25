@@ -7,23 +7,34 @@ import { MaterialModule } from './shared/module/material.module';
 import { FirebaseModule } from './shared/module/firebase.module';
 import { QuillModule } from 'ngx-quill';
 import { QuillConfigModule } from 'ngx-quill/config';
+// Auth
+import { ForgotPasswordDialogComponent } from './auth/forgot-password-dialog/forgot-password-dialog.component';
+import { LoginFormComponent } from './auth/login-form/login-form.component';
+import { RegisterFormComponent } from './auth/register-form/register-form.component';
+// Chat
+import { ChatAreaComponent } from './chat/chat-area/chat-area.component';
+import { ChatContentComponent } from './chat/chat-content/chat-content.component';
+import { MessageComponent } from './chat/message/message.component';
+import { TextEditorComponent } from './chat/text-editor/text-editor.component';
 // Components
+// Header
+import { HeaderComponent } from './components/header/header.component';
+// Info
+import { DataProtectionComponent } from './components/info/data-protection/data-protection.component';
+import { LegalNoticeComponent } from './components/info/legal-notice/legal-notice.component';
+// Sidenav
+import { ChannelLabelComponent } from './components/sidenav/channel-label/channel-label.component';
+import { ChannelsComponent } from './components/sidenav/channels/channels.component';
+import { DirectMessagesComponent } from './components/sidenav/direct-messages/direct-messages.component';
+import { DmLabelComponent } from './components/sidenav/dm-label/dm-label.component';
+// Page
 import { AppComponent } from './app.component';
 import { PageNotFoundComponent } from './page/page-not-found/page-not-found.component';
 import { WelcomeComponent } from './page/welcome/welcome.component';
 import { MainComponent } from './page/main/main.component';
-import { DirectMessagesComponent } from './components/sidenav/direct-messages/direct-messages.component';
-import { ChannelsComponent } from './components/sidenav/channels/channels.component';
-import { ChannelComponent } from './components/sidenav/channel/channel.component';
-import { ChatAreaComponent } from './components/chat-area/chat-area.component';
-import { MessageComponent } from './components/message/message.component';
-import { TextEditorComponent } from './components/text-editor/text-editor.component';
-import { DataProtectionComponent } from './components/info/data-protection/data-protection.component';
-import { LegalNoticeComponent } from './components/info/legal-notice/legal-notice.component';
-import { ChatLabelComponent } from './components/chat-label/chat-label.component';
-import { ForgotPasswordDialogComponent } from './auth/forgot-password-dialog/forgot-password-dialog.component';
-import { LoginFormComponent } from './auth/login-form/login-form.component';
-import { RegisterFormComponent } from './auth/register-form/register-form.component';
+import { NewChannelComponent } from './components/sidenav/new-channel/new-channel.component';
+import { AllChannelsComponent } from './components/sidenav/all-channels/all-channels.component';
+import { AllDirectMessagesComponent } from './components/sidenav/all-direct-messages/all-direct-messages.component';
 
 @NgModule({
   declarations: [
@@ -31,18 +42,23 @@ import { RegisterFormComponent } from './auth/register-form/register-form.compon
     PageNotFoundComponent,
     WelcomeComponent,
     MainComponent,
-    DirectMessagesComponent,
-    ChannelsComponent,
-    ChatAreaComponent,
-    MessageComponent,
-    TextEditorComponent,
-    DataProtectionComponent,
-    LegalNoticeComponent,
-    ChannelComponent,
-    ChatLabelComponent,
     ForgotPasswordDialogComponent,
     LoginFormComponent,
     RegisterFormComponent,
+    ChatAreaComponent,
+    ChatContentComponent,
+    MessageComponent,
+    TextEditorComponent,
+    HeaderComponent,
+    DataProtectionComponent,
+    LegalNoticeComponent,
+    ChannelLabelComponent,
+    ChannelsComponent,
+    DirectMessagesComponent,
+    DmLabelComponent,
+    NewChannelComponent,
+    AllChannelsComponent,
+    AllDirectMessagesComponent,
   ],
   imports: [
     BrowserModule,

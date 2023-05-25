@@ -1,14 +1,38 @@
-<div *ngIf="loggedUser">
-  <div *ngFor="let channel of loggedUser.channels" class="channel">
-    <div class="channel__name">
-      <span>#</span>
-      <span (click)="displayChannel(channel.id)">{{ channel.name }}</span>
-    </div>
-    <span
-      class="channel__close-btn"
-      (click)="leaveChannel(channel.id)"
-      matTooltip="leave channel"
-      >X</span
+<section class="channels__container">
+  <!-- Channel Header -->
+  <div class="channels__header">
+    <!-- Arrow Drop Button -->
+    <button
+      mat-icon-button
+      (click)="isChannelsOpen = !isChannelsOpen"
+      matTooltip="{{ isChannelsOpen ? 'close' : 'open' }}"
     >
+      <mat-icon>
+        {{ isChannelsOpen ? "arrow_drop_down" : "arrow_right" }}
+      </mat-icon>
+    </button>
+    <!-- Titel Dialog Button -->
+    <button mat-button [matMenuTriggerFor]="menu" matTooltip="Channel menu">
+      Channels
+    </button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item (click)="openNewDialog()">
+        <mat-icon>edit_note</mat-icon>Create Channel
+      </button>
+      <button mat-menu-item (click)="openListDialog()">
+        <mat-icon>open_in_new</mat-icon>Open Channels
+      </button>
+    </mat-menu>
   </div>
-</div>
+  <!-- List of Channels -->
+  <div class="channels__list" *ngIf="isChannelsOpen">
+    <ng-container *ngIf="loggedUser">
+      <app-channel-label
+        *ngFor="let channel of loggedUser.channels; let i = index"
+        class="channel"
+        [index]="i"
+        [channel]="channel"
+      ></app-channel-label>
+    </ng-container>
+  </div>
+</section>
