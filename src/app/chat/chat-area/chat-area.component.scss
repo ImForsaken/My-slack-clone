@@ -1,0 +1,5 @@
+@import "../../shared/style/variables";
+:host {
+    flex-grow: 1;
+    height: $chat-area-height;
+}

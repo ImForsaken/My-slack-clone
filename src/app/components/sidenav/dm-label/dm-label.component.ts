@@ -3,11 +3,11 @@ import { UserDbService } from 'src/app/shared/service/user-db.service';
 import { TUser } from 'src/app/shared/types/user';
 
 @Component({
-  selector: 'app-chat-label',
-  templateUrl: './chat-label.component.html',
-  styleUrls: ['./chat-label.component.scss'],
+  selector: 'app-dm-label',
+  templateUrl: './dm-label.component.html',
+  styleUrls: ['./dm-label.component.scss'],
 })
-export class ChatLabelComponent {
+export class DmLabelComponent {
   isOnline: boolean = true;
 
   username: string = 'Georg Strassberger';

@@ -1,23 +1,21 @@
 @import "../../../shared/style/variables";
-.channel {
-  display: flex;
-  padding: 0.5rem 1rem;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  border-radius: 0.25rem;
-  border: 1px solid pink;
-  &:hover {
-    opacity: 0.8;
-  }
+.channels__container {
+    padding: 0.5rem 1rem;
+    color: $white;
+    .channels__header {
+        cursor: pointer;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 0.5rem;
+    }
+    .channels__list {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
 }
 
-.channel__name {
-  display: flex;
-  gap: 0.5rem;
-  cursor: pointer;
-}
-
-.channel__close-btn {
-  cursor: pointer;
+.mat-mdc-button:not(:disabled) {
+    color: $white;
 }

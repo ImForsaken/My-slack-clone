@@ -1,5 +1,5 @@
 import { Injectable, inject } from '@angular/core';
-import { BehaviorSubject, Observable, Subscription } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { UserDbService } from './user-db.service';
 import {
   Auth,
@@ -13,6 +13,7 @@ import {
 import { Router } from '@angular/router';
 import { FormGroup } from '@angular/forms';
 import { setPersistence } from '@firebase/auth';
+import { TUser } from '../types/user';
 
 @Injectable({
   providedIn: 'root',
@@ -20,7 +21,7 @@ import { setPersistence } from '@firebase/auth';
 export class StoreService {
   userService: UserDbService = inject(UserDbService);
   public auth: Auth = inject(Auth);
-  userSubscription!: Subscription;
+  currentUser$!: Observable<TUser>;
   loggedInUserID$ = new BehaviorSubject<string>('');
 
   userAuth$ = user(this.auth);
@@ -28,11 +29,7 @@ export class StoreService {
   currentChat$!: Observable<string>;
 
   constructor(public router: Router) {
-    // this.userService.getUserByEmail$('tester@testmail.com').subscribe(user => {
-    //   this.loggedInUser$ = user[0];
-    //   this.currentChat$ = new BehaviorSubject<string>(this.loggedInUser$.chats[0]).asObservable();
-    // });
-    this.userSubscription = this.userAuth$.subscribe((aUser: User | null) => {
+    this.userAuth$.subscribe((aUser: User | null) => {
       //handle user state changes here. Note, that user will be null if there is no currently logged in user.
       console.log('userSubscription', aUser);
     });
@@ -74,6 +71,7 @@ export class StoreService {
     )
       .then((userCredential) => {
         const user = userCredential.user;
+        this.currentUser$ = this.userService.getUserById$(user.uid);
         this.loggedInUserID$.next(user.uid); // Wenn login erfolgreich, wird der neue wert weitergereicht.
         console.log('Login successful', user);
         this.router.navigate(['/main']);
