@@ -65,7 +65,7 @@ export class UserDbService {
 
   async addDirectMessageChat(userId: string, partnerId: string, docId: string): Promise<void> {
     const user: TUser = await getDoc(doc(this.usersCollRef, userId)).then(user => user.data()) as TUser;
-    const partner: TUser = await getDoc(doc(this.usersCollRef, userId)).then(user => user.data()) as TUser;
+    const partner: TUser = await getDoc(doc(this.usersCollRef, partnerId)).then(user => user.data()) as TUser;
 
     user?.['directMessages'].push({
       chatPartnerId: partnerId,
@@ -75,7 +75,7 @@ export class UserDbService {
     this.updateUser(user?.['id']!, user);
 
     partner?.['directMessages'].push({
-      chatPartnerId: partnerId,
+      chatPartnerId: userId,
       chatPartnerName: user.username,
       dmDocId: docId
     });
@@ -84,14 +84,11 @@ export class UserDbService {
 
   async deleteDirectMessagesChat(dmId: string) {
     const directMessagesCollRef: CollectionReference = collection(this.firestore, 'directMessages');
-    const directMessageChat: TDirectMessages = await getDoc(doc(directMessagesCollRef, dmId)).then(dmChat => console.log(dmChat.data())) as TDirectMessages;
-    // console.log(directMessagesCollRef);
+    const directMessageChat: TDirectMessages = await getDoc(doc(directMessagesCollRef, dmId)).then(dmChat => dmChat.data()) as TDirectMessages;
     const user: TUser = await getDoc(doc(this.usersCollRef, directMessageChat.userIDs[0])).then(user => user.data()) as TUser;
     const partner: TUser = await getDoc(doc(this.usersCollRef, directMessageChat.userIDs[1])).then(user => user.data()) as TUser;
     const userDmIndex = user?.['directMessages'].findIndex(dm => dm.dmDocId === dmId);
     const partnerDmIndex = partner?.['directMessages'].findIndex(dm => dm.dmDocId === dmId);
-    // console.log('user', user);
-    // console.log('partner', partner);
     user?.['directMessages'].splice(userDmIndex, 1);
     partner?.['directMessages'].splice(partnerDmIndex, 1);
 

@@ -23,7 +23,7 @@ export class ChatAreaComponent {
       this.messages = this.chatService.getMessages$(route[0].path).pipe(tap(this.scrollToLastMessage));
     });
     // this.dmService.createDirectMessage('E7VEbgwn0gTz5HYikQzuKqpRo8b2', 'iJ4qDD1kFNV3qRnPFh5laGbXjaI2');
-    // this.dmService.deleteDirectMessage('qWApp3HL5zaYwVHGn7UI');
+    // this.dmService.deleteDirectMessage('h7AadiXPcgbZtl3s9LH5');
   }
 
   scrollToLastMessage() {
