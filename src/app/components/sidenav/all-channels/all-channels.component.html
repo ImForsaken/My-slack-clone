@@ -1,0 +1,12 @@
+<h1 mat-dialog-title>Channellist</h1>
+<div mat-dialog-content class="channel__wrapper">
+    <div *ngFor="let channel of allChannels; let i = index" (click)="selectChannel(channel)" class="channel">
+        {{ channel.name | titlecase }}
+    </div>
+</div>
+<div mat-dialog-actions>
+    <button mat-button color="warn" (click)="onNoClick()">Chancel</button>
+    <button mat-button color="primary" [disabled]="!isSelected" (click)="onAddChannel()">
+    Ok
+  </button>
+</div>

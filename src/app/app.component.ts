@@ -7,7 +7,7 @@ import { StoreService } from './shared/service/store.service';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  constructor(public store: StoreService) {}
+  constructor() {}
 
   title = 'slackClone';
 }
