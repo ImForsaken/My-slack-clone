@@ -43,10 +43,9 @@ export class DirectMessageDbService {
     const docId = docRef.id;
 
     this.userDbService.addDirectMessageChat(userId, partnerId, docId);
-    this.userDbService.addDirectMessageChat(partnerId, userId, docId);
 
     setDoc(docRef, {
-      userIds: [
+      userIDs: [
         userId,
         partnerId
       ]
@@ -70,8 +69,8 @@ export class DirectMessageDbService {
    * @param dmId Direct message document id.
    * @returns deleteDoc promise.
    */
-  deleteDirectMessage(dmId: string): Promise<void> {
-    this.userDbService.deleteDirectMessagesChat(dmId);
+  async deleteDirectMessage(dmId: string): Promise<void> {
+    await this.userDbService.deleteDirectMessagesChat(dmId);
     return deleteDoc(doc(this.directMessagesCollRef, dmId));
   }
 
