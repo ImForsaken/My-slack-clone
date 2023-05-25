@@ -30,4 +30,8 @@ export class AuthGuard implements CanActivate {
       })
     );
   }
+
+  getAuthUser(): User {
+    return this.loggedUser;
+  }
 }

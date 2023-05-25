@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { User } from '@angular/fire/auth';
 import { MatDialog } from '@angular/material/dialog';
-import { NewChannelComponent } from 'src/app/components/sidenav/new-channel/new-channel.component';
-import { ChannelDbService } from 'src/app/shared/service/channels-db.service';
+import { Subscription } from 'rxjs';
+import { AuthGuard } from 'src/app/shared/service/auth.guard';
 import { UserDbService } from 'src/app/shared/service/user-db.service';
-import { TChannel } from 'src/app/shared/types/chat';
+import { TUser } from 'src/app/shared/types/user';
 
 @Component({
   selector: 'app-main',
@@ -11,38 +12,32 @@ import { TChannel } from 'src/app/shared/types/chat';
   styleUrls: ['./main.component.scss'],
 })
 export class MainComponent implements OnInit {
+  loggedUser$!: Subscription;
+  loggedUser!: TUser;
   isSidenavOpened: boolean = true;
-  isDirectMessageOpen: boolean = true;
-
-  allChannels: TChannel[] = [];
 
   constructor(
-    private channelService: ChannelDbService,
     public userServcie: UserDbService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private authGuard: AuthGuard,
+    private userService: UserDbService
   ) {}
 
   ngOnInit(): void {
-    this.showAllChannelsFromDB();
+    this.getLoggedUser();
   }
 
   /**
-   * show All Channels how are stored in Firebase
+   * observe with user are logged in
    */
-  showAllChannelsFromDB() {
-    const allChannels = this.channelService.getAllChannels$();
-    allChannels.subscribe((channels: TChannel[]) => {
-      console.log('channels: ', channels);
-      this.allChannels = channels;
-    });
-  }
-
-  openDialog(): void {
-    // open NewChannel component
-    const dialogRef = this.dialog.open(NewChannelComponent);
-    // by Closeing Dialog get result data
-    dialogRef.afterClosed().subscribe((result) => {
-      console.log('The dialog was closed:', result);
-    });
+  getLoggedUser(): void {
+    const authUser: User = this.authGuard.getAuthUser();
+    const authUserID: string = authUser.uid;
+    this.loggedUser$ = this.userService
+      .getUserById$(authUserID)
+      .subscribe((user: TUser): void => {
+        this.loggedUser = user;
+        console.log('loggedUserIs: ', user);
+      });
   }
 }

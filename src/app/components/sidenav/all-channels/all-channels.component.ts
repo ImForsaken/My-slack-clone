@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { User } from '@angular/fire/auth';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 import { AuthGuard } from 'src/app/shared/service/auth.guard';
@@ -33,18 +34,21 @@ export class AllChannelsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.getLoggedUserInfo();
+    this.getLoggedUser();
     this.getAllChannelsFromDB();
   }
 
   /**
    * get the current logged user from Auth
    */
-  getLoggedUserInfo() {
-    this.subLoggedUser$ = this.storeService.currentUser$.subscribe((user) => {
-      console.log('user:', user);
-      this.loggedUser = user;
-    });
+  getLoggedUser(): void {
+    const authUser: User = this.authGuard.getAuthUser();
+    const authUserID: string = authUser.uid;
+    this.subLoggedUser$ = this.userService
+      .getUserById$(authUserID)
+      .subscribe((user: TUser): void => {
+        this.loggedUser = user;
+      });
   }
 
   /**
@@ -54,7 +58,6 @@ export class AllChannelsComponent implements OnInit, OnDestroy {
     this.subAllChannels$ = this.channelService
       .getAllChannels$()
       .subscribe((channls: TChannel[]): void => {
-        console.log('channels: ', channls);
         this.allChannels = channls;
       });
   }
@@ -75,10 +78,17 @@ export class AllChannelsComponent implements OnInit, OnDestroy {
     this.isSelected = false;
   }
 
+  /**
+   * close Dialog
+   */
   onNoClick(): void {
     this.dialogRef.close();
   }
 
+  /**
+   * set selectedChannel
+   * @param channel
+   */
   selectChannel(channel: TChannel): void {
     if (channel) {
       this.selectedChannel = channel;

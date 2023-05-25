@@ -33,6 +33,7 @@ import { WelcomeComponent } from './page/welcome/welcome.component';
 import { MainComponent } from './page/main/main.component';
 import { NewChannelComponent } from './components/sidenav/new-channel/new-channel.component';
 import { AllChannelsComponent } from './components/sidenav/all-channels/all-channels.component';
+import { AllDirectMessagesComponent } from './components/sidenav/all-direct-messages/all-direct-messages.component';
 
 @NgModule({
   declarations: [
@@ -55,6 +56,7 @@ import { AllChannelsComponent } from './components/sidenav/all-channels/all-chan
     DmLabelComponent,
     NewChannelComponent,
     AllChannelsComponent,
+    AllDirectMessagesComponent,
   ],
   imports: [
     BrowserModule,
