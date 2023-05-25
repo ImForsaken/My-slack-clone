@@ -17,7 +17,6 @@ import {
 import { collection, CollectionReference } from '@firebase/firestore';
 import { Observable } from 'rxjs';
 import { TUser } from '../types/user';
-import { TDirectMessage } from '../types/chat';
 import { TDirectMessages } from '../types/dm';
 
 @Injectable({
