@@ -24,7 +24,6 @@ export class StoreService {
   public auth: Auth = inject(Auth);
   currentUser$!: Observable<TUser>;
   loggedInUserID$ = new BehaviorSubject<string>('');
-
   userAuth$ = user(this.auth);
   loggedInUser$!: User;
   currentChat$!: Observable<string>;
@@ -89,8 +88,7 @@ export class StoreService {
       });
   }
 
-  forgetForm(): void {
-    const email = 'kevin-herbst1993@web.de';
+  forgotForm(email: string) {
     sendPasswordResetEmail(this.auth, email)
       .then((response) => {
         console.log('success', response);

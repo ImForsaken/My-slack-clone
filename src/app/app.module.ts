@@ -8,8 +8,9 @@ import { FirebaseModule } from './shared/module/firebase.module';
 import { QuillModule } from 'ngx-quill';
 import { QuillConfigModule } from 'ngx-quill/config';
 // Auth
-import { LoginComponent } from './auth/login/login/login.component';
-import { RegisterComponent } from './auth/register/register/register.component';
+import { ForgotPasswordDialogComponent } from './auth/forgot-password-dialog/forgot-password-dialog.component';
+import { LoginFormComponent } from './auth/login-form/login-form.component';
+import { RegisterFormComponent } from './auth/register-form/register-form.component';
 // Chat
 import { ChatAreaComponent } from './chat/chat-area/chat-area.component';
 import { ChatContentComponent } from './chat/chat-content/chat-content.component';
@@ -41,8 +42,9 @@ import { AllDirectMessagesComponent } from './components/sidenav/all-direct-mess
     PageNotFoundComponent,
     WelcomeComponent,
     MainComponent,
-    LoginComponent,
-    RegisterComponent,
+    ForgotPasswordDialogComponent,
+    LoginFormComponent,
+    RegisterFormComponent,
     ChatAreaComponent,
     ChatContentComponent,
     MessageComponent,
