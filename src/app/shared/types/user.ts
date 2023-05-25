@@ -14,4 +14,3 @@ export type TUser = {
   channels: TChannel[];
   directMessages: TDirectMessage[];
 };
-

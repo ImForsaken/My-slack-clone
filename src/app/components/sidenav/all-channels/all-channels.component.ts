@@ -5,7 +5,7 @@ import { AuthGuard } from 'src/app/shared/service/auth.guard';
 import { ChannelDbService } from 'src/app/shared/service/channels-db.service';
 import { StoreService } from 'src/app/shared/service/store.service';
 import { UserDbService } from 'src/app/shared/service/user-db.service';
-import { TChat } from 'src/app/shared/types/chat';
+import { TChannel } from 'src/app/shared/types/chat';
 import { TUser } from 'src/app/shared/types/user';
 
 @Component({
@@ -17,20 +17,9 @@ export class AllChannelsComponent implements OnInit, OnDestroy {
   private subLoggedUser$!: Subscription;
   private subAllChannels$!: Subscription;
   loggedUser!: TUser;
-  allChannels: TChat[] = [];
-  selectedChannel!: TChat;
+  allChannels: TChannel[] = [];
+  selectedChannel!: TChannel;
   isSelected: boolean = false;
-
-  user: TUser = {
-    username: '',
-    firstname: '',
-    lastname: '',
-    email: '',
-    profilePicture: '',
-    isOnline: false,
-    channels: [],
-    directMessages: [],
-  };
 
   constructor(
     public dialogRef: MatDialogRef<AllChannelsComponent>,
@@ -64,7 +53,7 @@ export class AllChannelsComponent implements OnInit, OnDestroy {
   getAllChannelsFromDB() {
     this.subAllChannels$ = this.channelService
       .getAllChannels$()
-      .subscribe((channls: TChat[]): void => {
+      .subscribe((channls: TChannel[]): void => {
         console.log('channels: ', channls);
         this.allChannels = channls;
       });
@@ -90,7 +79,7 @@ export class AllChannelsComponent implements OnInit, OnDestroy {
     this.dialogRef.close();
   }
 
-  selectChannel(channel: TChat): void {
+  selectChannel(channel: TChannel): void {
     if (channel) {
       this.selectedChannel = channel;
       this.isSelected = true;

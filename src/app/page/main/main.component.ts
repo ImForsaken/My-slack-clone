@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { ActivatedRoute, Router } from '@angular/router';
 import { NewChannelComponent } from 'src/app/components/sidenav/new-channel/new-channel.component';
 import { ChannelDbService } from 'src/app/shared/service/channels-db.service';
 import { UserDbService } from 'src/app/shared/service/user-db.service';
-import { TChat } from 'src/app/shared/types/chat';
+import { TChannel } from 'src/app/shared/types/chat';
 
 @Component({
   selector: 'app-main',
@@ -15,7 +14,7 @@ export class MainComponent implements OnInit {
   isSidenavOpened: boolean = true;
   isDirectMessageOpen: boolean = true;
 
-  allChannels: TChat[] = [];
+  allChannels: TChannel[] = [];
 
   constructor(
     private channelService: ChannelDbService,
@@ -32,9 +31,9 @@ export class MainComponent implements OnInit {
    */
   showAllChannelsFromDB() {
     const allChannels = this.channelService.getAllChannels$();
-    allChannels.subscribe((channls) => {
-      console.log('channels: ', channls);
-      this.allChannels = channls;
+    allChannels.subscribe((channels: TChannel[]) => {
+      console.log('channels: ', channels);
+      this.allChannels = channels;
     });
   }
 

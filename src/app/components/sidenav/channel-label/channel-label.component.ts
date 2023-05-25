@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { AuthGuard } from 'src/app/shared/service/auth.guard';
 import { StoreService } from 'src/app/shared/service/store.service';
 import { UserDbService } from 'src/app/shared/service/user-db.service';
-import { TChat } from 'src/app/shared/types/chat';
+import { TChannel } from 'src/app/shared/types/chat';
 import { TUser } from 'src/app/shared/types/user';
 
 @Component({
@@ -12,7 +12,7 @@ import { TUser } from 'src/app/shared/types/user';
   styleUrls: ['./channel-label.component.scss'],
 })
 export class ChannelLabelComponent implements OnInit, OnDestroy {
-  @Input() channel!: TChat;
+  @Input() channel!: TChannel;
 
   constructor(private userService: UserDbService, private router: Router) {}
 
@@ -22,7 +22,7 @@ export class ChannelLabelComponent implements OnInit, OnDestroy {
    * displays the current channel chat by writing the channelID into the url
    * @param channelID
    */
-  displayChannel(channel: TChat) {
+  displayChannel(channel: TChannel) {
     this.router.navigateByUrl(`main/${channel.id}`);
     this.userService.activeChatName = channel.name;
   }

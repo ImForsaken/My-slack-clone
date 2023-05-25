@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { ChannelDbService } from 'src/app/shared/service/channels-db.service';
-import { TChat } from 'src/app/shared/types/chat';
+import { TChannel } from 'src/app/shared/types/chat';
 
 @Component({
   selector: 'app-new-channel',
@@ -24,7 +24,7 @@ export class NewChannelComponent {
     // Abfragen ob der name schon vorhanden ist.
 
     if (this.value.trim().length >= 3) {
-      const newChannel: TChat = {
+      const newChannel: TChannel = {
         name: this.value, // textfield value = channelname
         createdOn: this.activeUserName, // muss noch im service angelegt werden.
       };

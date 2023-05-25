@@ -2,7 +2,7 @@
  * Channels type used in the user type.
  */
 export type TChannel = {
-  id: string;
+  id?: string;
   name: string;
   createdOn?: string; // createdFromUserID = ID
 };
