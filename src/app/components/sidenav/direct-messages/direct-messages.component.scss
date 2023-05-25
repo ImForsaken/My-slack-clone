@@ -2,17 +2,16 @@
 .dm__container {
   padding: 0.5rem 1rem;
   color: $white;
+  margin-bottom: 1rem;
   .dm__header {
     cursor: pointer;
     display: flex;
     flex-direction: row;
     align-items: center;
-    gap: 0.5rem;
   }
   .dm__list {
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
   }
 }
 

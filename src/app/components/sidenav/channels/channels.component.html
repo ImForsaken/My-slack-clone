@@ -12,7 +12,9 @@
       </mat-icon>
     </button>
     <!-- Titel Dialog Button -->
-    <button mat-button [matMenuTriggerFor]="menu">Channels</button>
+    <button mat-button [matMenuTriggerFor]="menu" matTooltip="Channel menu">
+      Channels
+    </button>
     <mat-menu #menu="matMenu">
       <button mat-menu-item (click)="openNewDialog()">
         <mat-icon>edit_note</mat-icon>Create Channel
@@ -26,8 +28,9 @@
   <div class="channels__list" *ngIf="isChannelsOpen">
     <ng-container *ngIf="loggedUser">
       <app-channel-label
-        *ngFor="let channel of loggedUser.channels"
+        *ngFor="let channel of loggedUser.channels; let i = index"
         class="channel"
+        [index]="i"
         [channel]="channel"
       ></app-channel-label>
     </ng-container>

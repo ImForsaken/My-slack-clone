@@ -1,6 +1,13 @@
 <div class="channel__name">
-    <span>#</span>
-    <span (click)="displayChannel(channel)">{{ channel.name }}</span>
+  <div class="channel__status">
+    <span matTooltip="public">#</span>
+    <!-- <span matTooltip="private">[]</span> -->
+  </div>
+  <span (click)="displayChannel(channel)">{{ channel.name }}</span>
 </div>
-<span class="channel__close-btn" (click)="leaveChannel('channel.id')" matTooltip="leave channel">X</span
+<mat-icon
+  class="channel__close-btn"
+  (click)="leaveChannel()"
+  matTooltip="leave channel"
+  >close</mat-icon
 >
