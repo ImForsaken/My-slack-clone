@@ -1,6 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { Subscription } from 'rxjs';
+import { AuthGuard } from 'src/app/shared/service/auth.guard';
 import { ChannelDbService } from 'src/app/shared/service/channels-db.service';
+import { StoreService } from 'src/app/shared/service/store.service';
 import { UserDbService } from 'src/app/shared/service/user-db.service';
 import { TChat } from 'src/app/shared/types/chat';
 import { TUser } from 'src/app/shared/types/user';
@@ -10,11 +13,15 @@ import { TUser } from 'src/app/shared/types/user';
   templateUrl: './all-channels.component.html',
   styleUrls: ['./all-channels.component.scss'],
 })
-export class AllChannelsComponent implements OnInit {
+export class AllChannelsComponent implements OnInit, OnDestroy {
+  private subLoggedUser$!: Subscription;
+  private subAllChannels$!: Subscription;
+  loggedUser!: TUser;
   allChannels: TChat[] = [];
-  isSelected: boolean = false;
   selectedChannel!: TChat;
-  loggedUser: TUser = {
+  isSelected: boolean = false;
+
+  user: TUser = {
     username: '',
     firstname: '',
     lastname: '',
@@ -29,31 +36,49 @@ export class AllChannelsComponent implements OnInit {
     public dialogRef: MatDialogRef<AllChannelsComponent>,
     public dialog: MatDialog,
     private channelService: ChannelDbService,
-    private userService: UserDbService
-  ) {}
+    private userService: UserDbService,
+    private storeService: StoreService,
+    private authGuard: AuthGuard
+  ) {
+    console.log('storeS', this.authGuard.loggedUser);
+  }
 
   ngOnInit(): void {
-    this.showAllChannelsFromDB();
-    // eingeloggten User laden
+    this.getLoggedUserInfo();
+    this.getAllChannelsFromDB();
   }
 
   /**
-   * show All Channels how are stored in Firebase
+   * get the current logged user from Auth
    */
-  showAllChannelsFromDB() {
-    const allChannels = this.channelService.getAllChannels$();
-    allChannels.subscribe((channls) => {
-      console.log('channels: ', channls);
-      this.allChannels = channls;
+  getLoggedUserInfo() {
+    this.subLoggedUser$ = this.storeService.currentUser$.subscribe((user) => {
+      console.log('user:', user);
+      this.loggedUser = user;
     });
   }
 
-  onAddChannel() {
+  /**
+   * get all existing channels, how are stored in Firebase
+   */
+  getAllChannelsFromDB() {
+    this.subAllChannels$ = this.channelService
+      .getAllChannels$()
+      .subscribe((channls: TChat[]): void => {
+        console.log('channels: ', channls);
+        this.allChannels = channls;
+      });
+  }
+
+  /**
+   * when a channel is selected it will be added to the user and updated Firebase
+   */
+  onAddChannel(): void {
     if (this.selectedChannel) {
-      // add channel to user
-      // this.loggedUser.channels.push(this.selectedChannel);
-      // update user
-      console.log('füge channel hinzu', this.selectedChannel);
+      if (this.loggedUser.id) {
+        this.loggedUser.channels.push(this.selectedChannel);
+        this.userService.updateUser(this.loggedUser.id, this.loggedUser);
+      }
     } else {
       console.log('es wurde kein channel ausgewählt');
     }
@@ -61,14 +86,19 @@ export class AllChannelsComponent implements OnInit {
     this.isSelected = false;
   }
 
-  onNoClick() {
+  onNoClick(): void {
     this.dialogRef.close();
   }
 
-  selectChannel(channel: TChat) {
+  selectChannel(channel: TChat): void {
     if (channel) {
       this.selectedChannel = channel;
       this.isSelected = true;
     }
+  }
+
+  ngOnDestroy(): void {
+    this.subLoggedUser$.unsubscribe();
+    this.subAllChannels$.unsubscribe();
   }
 }
