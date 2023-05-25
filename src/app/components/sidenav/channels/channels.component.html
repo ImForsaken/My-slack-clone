@@ -1,24 +1,34 @@
 <section class="channels__container">
-    <div class="channels__header">
-        <button mat-icon-button (click)="isChannelsOpen = !isChannelsOpen" matTooltip="{{ isChannelsOpen ? 'close' : 'open' }}">
+  <div class="channels__header">
+    <!-- Arrow Button -->
+    <button
+      mat-icon-button
+      (click)="isChannelsOpen = !isChannelsOpen"
+      matTooltip="{{ isChannelsOpen ? 'close' : 'open' }}"
+    >
       <mat-icon>
         {{ isChannelsOpen ? "arrow_drop_down" : "arrow_right" }}
       </mat-icon>
     </button>
-        <button mat-button [matMenuTriggerFor]="menu">Channels</button>
-        <mat-menu #menu="matMenu">
-            <button mat-menu-item (click)="openNewDialog()">
+    <!-- Titel Button -->
+    <button mat-button [matMenuTriggerFor]="menu">Channels</button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item (click)="openNewDialog()">
         <mat-icon>edit_note</mat-icon>Create Channel
       </button>
-            <button mat-menu-item (click)="openListDialog()">
+      <button mat-menu-item (click)="openListDialog()">
         <mat-icon>open_in_new</mat-icon>Open Channels
       </button>
-        </mat-menu>
-    </div>
+    </mat-menu>
+  </div>
 
-    <div class="channels__list" *ngIf="isChannelsOpen">
-        <ng-container *ngIf="loggedUser">
-            <app-channel-label *ngFor="let channel of loggedUser.channels" class="channel" [channel]="channel"></app-channel-label>
-        </ng-container>
-    </div>
+  <div class="channels__list" *ngIf="isChannelsOpen">
+    <ng-container *ngIf="loggedUser">
+      <app-channel-label
+        *ngFor="let channel of loggedUser.channels"
+        class="channel"
+        [channel]="channel"
+      ></app-channel-label>
+    </ng-container>
+  </div>
 </section>

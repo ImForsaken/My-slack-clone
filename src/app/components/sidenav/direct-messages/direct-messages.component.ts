@@ -9,28 +9,36 @@ import { TUser } from 'src/app/shared/types/user';
   styleUrls: ['./direct-messages.component.scss'],
 })
 export class DirectMessagesComponent {
-  allUsers$!: Subscription;
+  subAllUsers$!: Subscription;
   allUsers: TUser[] = [];
-
+  loggedUser!: TUser;
   isDirectMessageOpen: boolean = true;
 
   constructor(private userService: UserDbService) {}
 
   ngOnInit(): void {
-    this.allUsers$ = this.userService
-      .getAllUsers$()
-      .subscribe((users: TUser[]) => {
-        console.log('users: ', users);
-      });
+    this.getAllUsers();
   }
 
+  /**
+   * observe all users from Firestore
+   */
+  getAllUsers(): void {
+    this.subAllUsers$ = this.userService
+      .getAllUsers$()
+      .subscribe((users: TUser[]): void => {
+        console.log('subAllUsers: ', users);
+      });
+  }
   //alle User aus der DB laden
 
   // meine dmUser abgleichen
 
   // und diese rendern
 
+  openUsersDialog() {}
+
   ngOnDestroy() {
-    this.allUsers$.unsubscribe();
+    this.subAllUsers$.unsubscribe();
   }
 }
