@@ -1,7 +1,7 @@
-<!-- DM Header -->
 <section class="dm__container">
+  <!-- DM Header -->
   <div class="dm__header">
-    <!-- Arrow Button -->
+    <!-- Arrow Drop Button -->
     <button
       mat-icon-button
       (click)="isDirectMessageOpen = !isDirectMessageOpen"
@@ -11,7 +11,7 @@
         {{ isDirectMessageOpen ? "arrow_drop_down" : "arrow_right" }}
       </mat-icon>
     </button>
-    <!-- Titel Button -->
+    <!-- Titel Dialog Button -->
     <button mat-button [matMenuTriggerFor]="menu">Direct Messages</button>
     <mat-menu #menu="matMenu">
       <button mat-menu-item (click)="openUsersDialog()">
@@ -19,8 +19,8 @@
       </button>
     </mat-menu>
   </div>
-
-  <div class="channels__list" *ngIf="isDirectMessageOpen">
+  <!-- List of DirectMessages -->
+  <div class="dm__list" *ngIf="isDirectMessageOpen">
     <ng-container *ngIf="loggedUser">
       <app-dm-label
         class="dm__list_item"
@@ -29,5 +29,4 @@
       ></app-dm-label>
     </ng-container>
   </div>
-  <!-- DM Liste -->
 </section>

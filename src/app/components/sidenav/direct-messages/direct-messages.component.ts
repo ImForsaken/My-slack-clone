@@ -50,7 +50,7 @@ export class DirectMessagesComponent {
     this.subAllUsers$ = this.userService
       .getAllUsers$()
       .subscribe((users: TUser[]): void => {
-        console.log('subAllUsers: ', users);
+        this.allUsers = users;
       });
   }
   //alle User aus der DB laden

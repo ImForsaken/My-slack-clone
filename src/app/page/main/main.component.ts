@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { User } from '@angular/fire/auth';
 import { MatDialog } from '@angular/material/dialog';
-import { LoggedUser } from 'src/app/shared/service/loggedUser.service';
+import { Subscription } from 'rxjs';
+import { AuthGuard } from 'src/app/shared/service/auth.guard';
 import { UserDbService } from 'src/app/shared/service/user-db.service';
 import { TUser } from 'src/app/shared/types/user';
 
@@ -10,9 +12,32 @@ import { TUser } from 'src/app/shared/types/user';
   styleUrls: ['./main.component.scss'],
 })
 export class MainComponent implements OnInit {
+  loggedUser$!: Subscription;
+  loggedUser!: TUser;
   isSidenavOpened: boolean = true;
 
-  constructor(public userServcie: UserDbService, public dialog: MatDialog) {}
+  constructor(
+    public userServcie: UserDbService,
+    public dialog: MatDialog,
+    private authGuard: AuthGuard,
+    private userService: UserDbService
+  ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.getLoggedUser();
+  }
+
+  /**
+   * observe with user are logged in
+   */
+  getLoggedUser(): void {
+    const authUser: User = this.authGuard.getAuthUser();
+    const authUserID: string = authUser.uid;
+    this.loggedUser$ = this.userService
+      .getUserById$(authUserID)
+      .subscribe((user: TUser): void => {
+        this.loggedUser = user;
+        console.log('loggedUserIs: ', user);
+      });
+  }
 }

@@ -58,7 +58,6 @@ export class AllChannelsComponent implements OnInit, OnDestroy {
     this.subAllChannels$ = this.channelService
       .getAllChannels$()
       .subscribe((channls: TChannel[]): void => {
-        console.log('channels: ', channls); // Später rauslöschen
         this.allChannels = channls;
       });
   }

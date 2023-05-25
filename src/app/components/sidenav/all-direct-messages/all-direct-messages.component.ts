@@ -54,7 +54,6 @@ export class AllDirectMessagesComponent implements OnInit, OnDestroy {
     this.subAllUsers$ = this.userService
       .getAllUsers$()
       .subscribe((users: TUser[]): void => {
-        console.log('subAllUsers: ', users);
         this.allUsers = users;
       });
   }
@@ -65,10 +64,9 @@ export class AllDirectMessagesComponent implements OnInit, OnDestroy {
   onAddUser(): void {
     if (this.selectedUser) {
       console.log('user ausgewählt');
-      // if (this.loggedUser.id) {
-      // this.loggedUser.directMessages.push(this.selectedUser);
-      // this.userService.updateUser(this.loggedUser.id, this.loggedUser);
-      // }
+      // build new DirectMessageObject
+      // push it to user
+      // update database
     } else {
       console.log('es wurde kein channel ausgewählt');
     }

@@ -1,6 +1,7 @@
 <section class="channels__container">
+  <!-- Channel Header -->
   <div class="channels__header">
-    <!-- Arrow Button -->
+    <!-- Arrow Drop Button -->
     <button
       mat-icon-button
       (click)="isChannelsOpen = !isChannelsOpen"
@@ -10,8 +11,7 @@
         {{ isChannelsOpen ? "arrow_drop_down" : "arrow_right" }}
       </mat-icon>
     </button>
-    <!-- Titel Button -->
-
+    <!-- Titel Dialog Button -->
     <button mat-button [matMenuTriggerFor]="menu">Channels</button>
     <mat-menu #menu="matMenu">
       <button mat-menu-item (click)="openNewDialog()">
@@ -22,7 +22,7 @@
       </button>
     </mat-menu>
   </div>
-
+  <!-- List of Channels -->
   <div class="channels__list" *ngIf="isChannelsOpen">
     <ng-container *ngIf="loggedUser">
       <app-channel-label
