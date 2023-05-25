@@ -13,7 +13,7 @@ import { TUser } from 'src/app/shared/types/user';
   styleUrls: ['./channels.component.scss'],
 })
 export class ChannelsComponent implements OnInit, OnDestroy {
-  loggedInUserID: string = 'y2ggpSoT2SgZq7XRrP1QAPTh98B3';
+  // loggedInUserID: string = 'y2ggpSoT2SgZq7XRrP1QAPTh98B3';
   loggedUser!: TUser;
 
   constructor(
@@ -23,8 +23,11 @@ export class ChannelsComponent implements OnInit, OnDestroy {
     private storeServcie: StoreService
   ) {}
   ngOnInit(): void {
+    this.storeServcie.loggedInUserObservable.subscribe((user) => {
+      console.log('channels user', user);
+    });
     // this.getLoggedUserID();
-    this.getLoggedUser(this.loggedInUserID);
+    // this.getLoggedUser(this.loggedInUserID);
   }
 
   /**
@@ -33,7 +36,7 @@ export class ChannelsComponent implements OnInit, OnDestroy {
   getLoggedUserID() {
     this.storeServcie.loggedInUserID$.subscribe((id) => {
       console.log('id', id);
-      this.loggedInUserID = id;
+      // this.loggedInUserID = id;
     });
   }
 

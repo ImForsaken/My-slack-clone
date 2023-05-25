@@ -13,6 +13,7 @@ import {
 import { Router } from '@angular/router';
 import { FormGroup } from '@angular/forms';
 import { setPersistence } from '@firebase/auth';
+import { TUser } from '../types/user';
 
 @Injectable({
   providedIn: 'root',
@@ -22,19 +23,30 @@ export class StoreService {
   public auth: Auth = inject(Auth);
   userSubscription!: Subscription;
   loggedInUserID$ = new BehaviorSubject<string>('');
-
   userAuth$ = user(this.auth);
   loggedInUser$!: User;
   currentChat$!: Observable<string>;
 
-  constructor(public router: Router) {
+  loggedInUserObservable!: Observable<TUser>;
+  loggedInUserInformation!: TUser;
+
+  constructor(public router: Router, private userDB: UserDbService) {
     // this.userService.getUserByEmail$('tester@testmail.com').subscribe(user => {
     //   this.loggedInUser$ = user[0];
     //   this.currentChat$ = new BehaviorSubject<string>(this.loggedInUser$.chats[0]).asObservable();
     // });
     this.userSubscription = this.userAuth$.subscribe((aUser: User | null) => {
       //handle user state changes here. Note, that user will be null if there is no currently logged in user.
-      console.log('userSubscription', aUser);
+      console.log('userSubscription', aUser!.uid);
+      this.getUserInformation(aUser!.uid);
+    });
+  }
+
+  getUserInformation(uid: string) {
+    this.loggedInUserObservable = this.userDB.getUserById$(uid);
+    this.loggedInUserObservable.subscribe((userInformation) => {
+      console.log(userInformation);
+      this.loggedInUserInformation = userInformation;
     });
   }
 
@@ -95,8 +107,7 @@ export class StoreService {
       });
   }
 
-  forgetForm() {
-    const email = 'kevin-herbst1993@web.de';
+  forgotForm(email: string) {
     sendPasswordResetEmail(this.auth, email)
       .then((response) => {
         console.log('success', response);

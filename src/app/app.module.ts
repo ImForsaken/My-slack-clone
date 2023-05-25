@@ -12,8 +12,6 @@ import { AppComponent } from './app.component';
 import { PageNotFoundComponent } from './page/page-not-found/page-not-found.component';
 import { WelcomeComponent } from './page/welcome/welcome.component';
 import { MainComponent } from './page/main/main.component';
-import { LoginComponent } from './auth/login/login/login.component';
-import { RegisterComponent } from './auth/register/register/register.component';
 import { DirectMessagesComponent } from './components/sidenav/direct-messages/direct-messages.component';
 import { ChannelsComponent } from './components/sidenav/channels/channels.component';
 import { ChannelComponent } from './components/sidenav/channel/channel.component';
@@ -23,6 +21,9 @@ import { TextEditorComponent } from './components/text-editor/text-editor.compon
 import { DataProtectionComponent } from './components/info/data-protection/data-protection.component';
 import { LegalNoticeComponent } from './components/info/legal-notice/legal-notice.component';
 import { ChatLabelComponent } from './components/chat-label/chat-label.component';
+import { ForgotPasswordDialogComponent } from './auth/forgot-password-dialog/forgot-password-dialog.component';
+import { LoginFormComponent } from './auth/login-form/login-form.component';
+import { RegisterFormComponent } from './auth/register-form/register-form.component';
 
 @NgModule({
   declarations: [
@@ -30,8 +31,6 @@ import { ChatLabelComponent } from './components/chat-label/chat-label.component
     PageNotFoundComponent,
     WelcomeComponent,
     MainComponent,
-    LoginComponent,
-    RegisterComponent,
     DirectMessagesComponent,
     ChannelsComponent,
     ChatAreaComponent,
@@ -41,6 +40,9 @@ import { ChatLabelComponent } from './components/chat-label/chat-label.component
     LegalNoticeComponent,
     ChannelComponent,
     ChatLabelComponent,
+    ForgotPasswordDialogComponent,
+    LoginFormComponent,
+    RegisterFormComponent,
   ],
   imports: [
     BrowserModule,
@@ -58,19 +60,17 @@ import { ChatLabelComponent } from './components/chat-label/chat-label.component
               shiftKey: false,
               handler: () => {},
             },
-
-          }
+          },
         },
         toolbar: [
           [{ header: [1, 2, false] }],
           ['bold', 'italic', 'underline'],
           ['image', 'code-block'],
-        ]
+        ],
       },
       placeholder: 'Write a message.',
       theme: 'snow',
-    })
-
+    }),
   ],
   providers: [],
   bootstrap: [AppComponent],

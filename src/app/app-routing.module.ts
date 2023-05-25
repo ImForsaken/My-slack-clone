@@ -5,7 +5,6 @@ import { PageNotFoundComponent } from './page/page-not-found/page-not-found.comp
 import { MainComponent } from './page/main/main.component';
 import { LegalNoticeComponent } from './components/info/legal-notice/legal-notice.component';
 import { DataProtectionComponent } from './components/info/data-protection/data-protection.component';
-import { LoginComponent } from './auth/login/login/login.component';
 import { ChannelComponent } from './components/sidenav/channel/channel.component';
 import { AuthGuard } from './shared/service/auth.guard';
 
