@@ -25,7 +25,6 @@ export class StoreService {
   public auth: Auth = inject(Auth);
   currentUser$!: Observable<TUser>;
   loggedInUserID$ = new BehaviorSubject<string>('');
-  loggedUser!: TUser;
   userAuth$ = user(this.auth);
   loggedInUser$!: User;
   currentChat$!: Observable<string>;
