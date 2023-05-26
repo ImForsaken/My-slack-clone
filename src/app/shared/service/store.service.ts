@@ -9,11 +9,13 @@ import {
   signOut,
   user,
   User,
+  UserCredential,
 } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import { FormGroup } from '@angular/forms';
 import { setPersistence } from '@firebase/auth';
 import { TUser } from '../types/user';
+import { AuthGuard } from './auth.guard';
 
 @Injectable({
   providedIn: 'root',
@@ -23,19 +25,14 @@ export class StoreService {
   public auth: Auth = inject(Auth);
   currentUser$!: Observable<TUser>;
   loggedInUserID$ = new BehaviorSubject<string>('');
-
+  loggedUser!: TUser;
   userAuth$ = user(this.auth);
   loggedInUser$!: User;
   currentChat$!: Observable<string>;
 
-  constructor(public router: Router) {
-    this.userAuth$.subscribe((aUser: User | null) => {
-      //handle user state changes here. Note, that user will be null if there is no currently logged in user.
-      console.log('userSubscription', aUser);
-    });
-  }
+  constructor(public router: Router) {}
 
-  loginUser(loginForm: FormGroup) {
+  loginUser(loginForm: FormGroup): void {
     console.log(loginForm);
     setPersistence(this.auth, browserSessionPersistence)
       .then(() => {
@@ -52,9 +49,9 @@ export class StoreService {
       'guestuser@guestuserslackclone.de',
       '123456'
     )
-      .then((userCredential) => {
+      .then((userCredential: UserCredential): void => {
         const user = userCredential.user;
-        console.log('Login successful', user);
+        console.log('Guest Login successful', user);
         this.router.navigate(['/main']);
       })
       .catch((error) => {
@@ -69,11 +66,11 @@ export class StoreService {
       loginForm.controls['userEmail'].value,
       loginForm.controls['userPassword'].value
     )
-      .then((userCredential) => {
+      .then((userCredential: UserCredential) => {
         const user = userCredential.user;
         this.currentUser$ = this.userService.getUserById$(user.uid);
         this.loggedInUserID$.next(user.uid); // Wenn login erfolgreich, wird der neue wert weitergereicht.
-        console.log('Login successful', user);
+        console.log('Login successful for User:', user);
         this.router.navigate(['/main']);
       })
       .catch((error) => {
@@ -81,7 +78,7 @@ export class StoreService {
       });
   }
 
-  logout() {
+  logout(): void {
     signOut(this.auth)
       .then((result) => {
         // Sign-out successful.
@@ -93,7 +90,7 @@ export class StoreService {
       });
   }
 
-  forgetForm() {
+  forgetForm(): void {
     const email = 'kevin-herbst1993@web.de';
     sendPasswordResetEmail(this.auth, email)
       .then((response) => {

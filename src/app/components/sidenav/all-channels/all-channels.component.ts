@@ -1,8 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { User } from '@angular/fire/auth';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 import { AuthGuard } from 'src/app/shared/service/auth.guard';
 import { ChannelDbService } from 'src/app/shared/service/channels-db.service';
+import { DirectMessageDbService } from 'src/app/shared/service/direct-messages-db.service';
 import { StoreService } from 'src/app/shared/service/store.service';
 import { UserDbService } from 'src/app/shared/service/user-db.service';
 import { TChannel } from 'src/app/shared/types/chat';
@@ -14,7 +16,7 @@ import { TUser } from 'src/app/shared/types/user';
   styleUrls: ['./all-channels.component.scss'],
 })
 export class AllChannelsComponent implements OnInit, OnDestroy {
-  private subLoggedUser$!: Subscription;
+  // private subLoggedUser$!: Subscription;
   private subAllChannels$!: Subscription;
   loggedUser!: TUser;
   allChannels: TChannel[] = [];
@@ -26,35 +28,21 @@ export class AllChannelsComponent implements OnInit, OnDestroy {
     public dialog: MatDialog,
     private channelService: ChannelDbService,
     private userService: UserDbService,
-    private storeService: StoreService,
-    private authGuard: AuthGuard
-  ) {
-    console.log('storeS', this.authGuard.loggedUser);
-  }
+    private dmService: DirectMessageDbService
+  ) {}
 
   ngOnInit(): void {
-    this.getLoggedUserInfo();
     this.getAllChannelsFromDB();
-  }
-
-  /**
-   * get the current logged user from Auth
-   */
-  getLoggedUserInfo() {
-    this.subLoggedUser$ = this.storeService.currentUser$.subscribe((user) => {
-      console.log('user:', user);
-      this.loggedUser = user;
-    });
+    this.logChannels();
   }
 
   /**
    * get all existing channels, how are stored in Firebase
    */
-  getAllChannelsFromDB() {
+  getAllChannelsFromDB(): void {
     this.subAllChannels$ = this.channelService
       .getAllChannels$()
       .subscribe((channls: TChannel[]): void => {
-        console.log('channels: ', channls);
         this.allChannels = channls;
       });
   }
@@ -75,10 +63,17 @@ export class AllChannelsComponent implements OnInit, OnDestroy {
     this.isSelected = false;
   }
 
+  /**
+   * close Dialog
+   */
   onNoClick(): void {
     this.dialogRef.close();
   }
 
+  /**
+   * set selectedChannel
+   * @param channel
+   */
   selectChannel(channel: TChannel): void {
     if (channel) {
       this.selectedChannel = channel;
@@ -86,8 +81,15 @@ export class AllChannelsComponent implements OnInit, OnDestroy {
     }
   }
 
+  logChannels(): void {
+    console.log('loggedUser', this.userService.loggedUser);
+    console.log('userChannels', this.userService.loggedUser.channels);
+    console.log('allChannels', this.channelService.allChannels);
+    console.log('allDMs', this.dmService.addDirectMessages);
+    console.log('allUsers', this.userService.allUsers);
+  }
+
   ngOnDestroy(): void {
-    this.subLoggedUser$.unsubscribe();
     this.subAllChannels$.unsubscribe();
   }
 }
