@@ -1,25 +1,29 @@
 import { Component, OnInit } from '@angular/core';
-import { signInWithEmailAndPassword } from '@angular/fire/auth';
 import { FormControl, FormGroup } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { StoreService } from 'src/app/shared/service/store.service';
-
+import { ForgotPasswordDialogComponent } from '../forgot-password-dialog/forgot-password-dialog.component';
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss'],
+  selector: 'app-login-form',
+  templateUrl: './login-form.component.html',
+  styleUrls: ['./login-form.component.scss'],
 })
-export class LoginComponent implements OnInit {
+export class LoginFormComponent {
   loginForm!: FormGroup;
   hide: boolean = true;
   errorMsg: string | null = null;
 
-  constructor(public store: StoreService) {}
+  constructor(public store: StoreService, public dialog: MatDialog) {}
 
   ngOnInit(): void {
     this.loginForm = new FormGroup({
       userEmail: new FormControl(''),
       userPassword: new FormControl(''),
     });
+  }
+
+  openDialog() {
+    this.dialog.open(ForgotPasswordDialogComponent);
   }
 
   getErrorMessage() {

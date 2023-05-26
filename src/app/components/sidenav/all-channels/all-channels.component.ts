@@ -52,9 +52,12 @@ export class AllChannelsComponent implements OnInit, OnDestroy {
    */
   onAddChannel(): void {
     if (this.selectedChannel) {
-      if (this.loggedUser.id) {
-        this.loggedUser.channels.push(this.selectedChannel);
-        this.userService.updateUser(this.loggedUser.id, this.loggedUser);
+      if (this.userService.loggedUser.id) {
+        this.userService.loggedUser.channels.push(this.selectedChannel);
+        this.userService.updateUser(
+          this.userService.loggedUser.id,
+          this.userService.loggedUser
+        );
       }
     } else {
       console.log('es wurde kein channel ausgewählt');
