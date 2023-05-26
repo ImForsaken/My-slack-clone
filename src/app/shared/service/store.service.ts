@@ -90,8 +90,7 @@ export class StoreService {
       });
   }
 
-  forgetForm(): void {
-    const email = 'kevin-herbst1993@web.de';
+  forgotForm(email: string) {
     sendPasswordResetEmail(this.auth, email)
       .then((response) => {
         console.log('success', response);
