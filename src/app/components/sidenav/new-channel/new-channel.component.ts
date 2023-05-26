@@ -25,7 +25,9 @@ export class NewChannelComponent implements OnInit {
     private userService: UserDbService
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.getLoggedUser();
+  }
 
   /**
    * observe with user are logged in
@@ -45,17 +47,13 @@ export class NewChannelComponent implements OnInit {
    */
   onNewChannel(): void {
     // Abfragen ob der name schon vorhanden ist.
-
-    if (this.value.trim().length >= 3) {
+    console.log('this.loggedUser:', this.loggedUser);
+    if (this.value.trim().length >= 3 && this.loggedUser) {
       const newChannel: TChannel = {
         name: this.value, // textfield value = channelname
         createdOn: this.loggedUser.id,
       };
-      console.log('newChannel: ', newChannel);
       this.channelService.createChannel(newChannel);
-    } else {
-      // show error
-      console.warn('Eingabe ist falsch');
     }
     this.dialogRef.close();
   }

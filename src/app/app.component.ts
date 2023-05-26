@@ -9,5 +9,5 @@ import { StoreService } from './shared/service/store.service';
 export class AppComponent {
   constructor() {}
 
-  title = 'slackClone';
+  title: string = 'slackClone';
 }

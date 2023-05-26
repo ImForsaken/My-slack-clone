@@ -15,6 +15,7 @@ import { Router } from '@angular/router';
 import { FormGroup } from '@angular/forms';
 import { setPersistence } from '@firebase/auth';
 import { TUser } from '../types/user';
+import { AuthGuard } from './auth.guard';
 
 @Injectable({
   providedIn: 'root',
@@ -24,7 +25,7 @@ export class StoreService {
   public auth: Auth = inject(Auth);
   currentUser$!: Observable<TUser>;
   loggedInUserID$ = new BehaviorSubject<string>('');
-
+  loggedUser!: TUser;
   userAuth$ = user(this.auth);
   loggedInUser$!: User;
   currentChat$!: Observable<string>;
