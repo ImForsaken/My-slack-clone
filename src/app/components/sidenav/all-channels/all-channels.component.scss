@@ -14,7 +14,6 @@
   cursor: pointer;
   &:hover {
     background-color: $purple-hover;
-    // color: $grey;
   }
   &.selected-channel,
   .channel:not(.selected-channel):hover {

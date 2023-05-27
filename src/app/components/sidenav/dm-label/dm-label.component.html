@@ -1,4 +1,5 @@
 <div class="user__container">
+  <!-- ProfilePicture -->
   <div class="user__image-container">
     <img
       class="user__image"
@@ -22,12 +23,13 @@
       ></div>
     </div>
   </div>
+  <!-- UserName -->
   <div class="user__name">{{ user.firstname }} {{ user.lastname }}</div>
-  <button
-    class="user__btn-close"
-    matTooltip="close"
-    (click)="onDeleteUser(user.id)"
-  >
-    X
-  </button>
 </div>
+<!-- Close DM Button -->
+<mat-icon
+  class="user__btn-close"
+  (click)="leaveChannel()"
+  matTooltip="leave chat"
+  >close</mat-icon
+>

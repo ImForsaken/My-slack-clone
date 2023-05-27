@@ -3,15 +3,18 @@
   <div
     *ngFor="let user of allUsers; let i = index"
     (click)="selectUser(user)"
+    [ngClass]="{
+      'selected-dm': isSelected && selectedUser === user
+    }"
     class="dm"
   >
     {{ user.username | titlecase }}
   </div>
 </div>
 <div mat-dialog-actions>
-  <button mat-button color="warn" (click)="onNoClick()">Chancel</button>
+  <button mat-raised-button color="warn" (click)="onNoClick()">Chancel</button>
   <button
-    mat-button
+    mat-raised-button
     color="primary"
     [disabled]="!isSelected"
     (click)="onAddUser()"

@@ -20,4 +20,6 @@ export class DmLabelComponent {
       this.userService.deleteUser(userID);
     }
   }
+
+  leaveChannel(): void {}
 }
