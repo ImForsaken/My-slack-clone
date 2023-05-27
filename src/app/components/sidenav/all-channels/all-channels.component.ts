@@ -1,14 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { User } from '@angular/fire/auth';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
-import { AuthGuard } from 'src/app/shared/service/auth.guard';
 import { ChannelDbService } from 'src/app/shared/service/channels-db.service';
-import { DirectMessageDbService } from 'src/app/shared/service/direct-messages-db.service';
-import { StoreService } from 'src/app/shared/service/store.service';
 import { UserDbService } from 'src/app/shared/service/user-db.service';
 import { TChannel } from 'src/app/shared/types/chat';
-import { TUser } from 'src/app/shared/types/user';
 
 @Component({
   selector: 'app-all-channels',
@@ -16,7 +11,6 @@ import { TUser } from 'src/app/shared/types/user';
   styleUrls: ['./all-channels.component.scss'],
 })
 export class AllChannelsComponent implements OnInit, OnDestroy {
-  // private subLoggedUser$!: Subscription;
   private subAllChannels$!: Subscription;
   allChannels: TChannel[] = [];
   selectedChannel!: TChannel;
@@ -26,13 +20,11 @@ export class AllChannelsComponent implements OnInit, OnDestroy {
     public dialogRef: MatDialogRef<AllChannelsComponent>,
     public dialog: MatDialog,
     private channelService: ChannelDbService,
-    private userService: UserDbService,
-    private dmService: DirectMessageDbService
+    private userService: UserDbService
   ) {}
 
   ngOnInit(): void {
     this.getAllChannelsFromDB();
-    this.logInfos();
     this.filterChannelList();
   }
 
@@ -55,14 +47,15 @@ export class AllChannelsComponent implements OnInit, OnDestroy {
     const allChannels: TChannel[] = this.channelService.allChannels;
     const userChannels: TChannel[] = this.userService.loggedUser.channels;
     const otherChannels: TChannel[] = allChannels.filter(
-      (channel) =>
+      (channel: TChannel): boolean =>
         !userChannels.some(
-          (existingChannel) =>
+          (existingChannel: TChannel): boolean =>
             existingChannel.name.toLowerCase() === channel.name.toLowerCase()
         )
     );
     return otherChannels;
   }
+
   /**
    * set selected Channel
    * @param channel
@@ -91,14 +84,6 @@ export class AllChannelsComponent implements OnInit, OnDestroy {
     }
     this.dialogRef.close();
     this.isSelected = false;
-  }
-
-  logInfos(): void {
-    console.log('loggedUser', this.userService.loggedUser);
-    console.log('userChannels', this.userService.loggedUser.channels);
-    console.log('allChannels', this.channelService.allChannels);
-    console.log('allDMs', this.dmService.addDirectMessages);
-    console.log('allUsers', this.userService.allUsers);
   }
 
   /**
