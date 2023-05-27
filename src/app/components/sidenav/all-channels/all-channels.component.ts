@@ -18,7 +18,6 @@ import { TUser } from 'src/app/shared/types/user';
 export class AllChannelsComponent implements OnInit, OnDestroy {
   // private subLoggedUser$!: Subscription;
   private subAllChannels$!: Subscription;
-  loggedUser!: TUser;
   allChannels: TChannel[] = [];
   selectedChannel!: TChannel;
   isSelected: boolean = false;
@@ -33,7 +32,8 @@ export class AllChannelsComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.getAllChannelsFromDB();
-    this.logChannels();
+    this.logInfos();
+    this.filterChannelList();
   }
 
   /**
@@ -45,6 +45,33 @@ export class AllChannelsComponent implements OnInit, OnDestroy {
       .subscribe((channls: TChannel[]): void => {
         this.allChannels = channls;
       });
+  }
+
+  /**
+   * all other existing channels
+   * @returns
+   */
+  filterChannelList(): TChannel[] {
+    const allChannels: TChannel[] = this.channelService.allChannels;
+    const userChannels: TChannel[] = this.userService.loggedUser.channels;
+    const otherChannels: TChannel[] = allChannels.filter(
+      (channel) =>
+        !userChannels.some(
+          (existingChannel) =>
+            existingChannel.name.toLowerCase() === channel.name.toLowerCase()
+        )
+    );
+    return otherChannels;
+  }
+  /**
+   * set selected Channel
+   * @param channel
+   */
+  selectChannel(channel: TChannel): void {
+    if (channel) {
+      this.selectedChannel = channel;
+      this.isSelected = true;
+    }
   }
 
   /**
@@ -66,30 +93,19 @@ export class AllChannelsComponent implements OnInit, OnDestroy {
     this.isSelected = false;
   }
 
-  /**
-   * close Dialog
-   */
-  onNoClick(): void {
-    this.dialogRef.close();
-  }
-
-  /**
-   * set selectedChannel
-   * @param channel
-   */
-  selectChannel(channel: TChannel): void {
-    if (channel) {
-      this.selectedChannel = channel;
-      this.isSelected = true;
-    }
-  }
-
-  logChannels(): void {
+  logInfos(): void {
     console.log('loggedUser', this.userService.loggedUser);
     console.log('userChannels', this.userService.loggedUser.channels);
     console.log('allChannels', this.channelService.allChannels);
     console.log('allDMs', this.dmService.addDirectMessages);
     console.log('allUsers', this.userService.allUsers);
+  }
+
+  /**
+   * close Dialog
+   */
+  onNoClick(): void {
+    this.dialogRef.close();
   }
 
   ngOnDestroy(): void {
