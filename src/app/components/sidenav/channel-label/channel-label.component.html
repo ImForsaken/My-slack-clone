@@ -1,3 +1,4 @@
+<!-- Channel Name -->
 <div class="channel__name">
   <div class="channel__status">
     <span matTooltip="public">#</span>
@@ -5,6 +6,7 @@
   </div>
   <span (click)="displayChannel(channel)">{{ channel.name }}</span>
 </div>
+<!-- Close Button -->
 <mat-icon
   class="channel__close-btn"
   (click)="leaveChannel()"

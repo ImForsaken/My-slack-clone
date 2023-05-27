@@ -15,11 +15,13 @@ export class DmLabelComponent {
 
   constructor(private userService: UserDbService) {}
 
-  onDeleteUser(userID: string | undefined) {
+  onDeleteUser(userID: string | undefined): void {
     if (userID) {
       this.userService.deleteUser(userID);
     }
   }
 
-  leaveChannel(): void {}
+  leaveDMChat(): void {
+    console.log('dm Chat verlassen');
+  }
 }
