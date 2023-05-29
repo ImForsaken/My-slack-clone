@@ -51,6 +51,7 @@ export class DirectMessagesComponent {
       .getAllUsers$()
       .subscribe((users: TUser[]): void => {
         this.allUsers = users;
+        console.log('allUsers: ', users);
       });
   }
   //alle User aus der DB laden
