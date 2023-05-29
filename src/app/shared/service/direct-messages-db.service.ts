@@ -29,6 +29,7 @@ export class DirectMessageDbService {
     this.firestore,
     'directMessages'
   );
+  addDirectMessages: TDirectMessages[] = [];
 
   /**
    * Returns an observable for all stored direct messages in the 'directMessages' collection.

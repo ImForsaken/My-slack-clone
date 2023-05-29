@@ -69,11 +69,11 @@ export class RegisterFormComponent {
   async addUserToCollection(user: User) {
     await setDoc(
       doc(this.firestore, 'users', user.uid),
-      this.createUserInterface(user.uid)
+      this.createNewUser(user.uid)
     );
   }
 
-  createUserInterface(id: string) {
+  createNewUser(id: string) {
     const userData: TUser = {
       username: this.registerForm.controls['userName'].value,
       email: this.registerForm.controls['userEmail'].value,

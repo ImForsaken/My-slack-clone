@@ -10,7 +10,7 @@ import { AuthGuard } from 'src/app/shared/service/auth.guard';
 })
 export class WelcomeComponent {
   constructor(private router: Router, private authGuard: AuthGuard) {
-    if (this.authGuard.loggedUser) {
+    if (this.authGuard.canActivate()) {
       this.router.navigate(['/main']);
     }
   }

@@ -1,24 +1,36 @@
 @import "../../../shared/style/variables";
+.channel__title {
+  background-color: $purple;
+  color: $white;
+}
+
 .channel__wrapper {
-    width: 20rem;
-    display: flex;
-    flex-direction: column;
-    gap: 0.25rem;
+  width: 20rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  background-color: $purple;
 }
 
 .channel {
-    color: $purple;
-    border: 1px solid $purple;
-    border-radius: 0.5rem;
-    padding: 0.5rem 1rem;
-    cursor: pointer;
-    &:hover {
-        opacity: 0.7;
-    }
+  color: $white;
+  background-color: $purple;
+  border-radius: 0.5rem;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  &:hover {
+    background-color: $purple-hover;
+  }
+  &.selected-channel,
+  .channel:not(.selected-channel):hover {
+    color: $white;
+    background-color: $blue-active;
+  }
 }
 
-.mat-mdc-dialog-actions {
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-end;
+.channels__buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  background-color: $purple;
 }

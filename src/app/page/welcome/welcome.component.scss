@@ -1,11 +1,15 @@
 @use "../../shared/style/variables" as *;
 .welcome {
-  height: $main-height;
+  height: 100dvh;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   gap: 1rem;
+  background-image: url("../../../assets/images/slackBgrRgb.jpg");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
   // background-color: $purple;
   // color: $white;
   text-align: center;

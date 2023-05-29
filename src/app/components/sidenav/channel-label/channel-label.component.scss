@@ -7,8 +7,8 @@
   justify-content: space-between;
   border-radius: 0.25rem;
   height: 2.5rem;
+  color: $white;
   &:hover {
-    // opacity: 0.8;
     background-color: $purple-hover;
     .channel__close-btn {
       display: flex;
@@ -19,10 +19,14 @@
   }
 }
 
-.channel__name {
+.channel__content {
   display: flex;
   gap: 0.5rem;
   cursor: pointer;
+  flex-grow: 1;
+}
+
+.channel__name {
 }
 
 .channel__close-btn {

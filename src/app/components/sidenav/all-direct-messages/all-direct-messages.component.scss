@@ -1,24 +1,36 @@
 @import "../../../shared/style/variables";
+.dm__title {
+  background-color: $purple;
+  color: $white;
+}
+
 .dm__wrapper {
   width: 20rem;
   display: flex;
   flex-direction: column;
   gap: 0.25rem;
+  background-color: $purple;
 }
 
 .dm {
-  color: $purple;
-  border: 1px solid $purple;
+  color: $white;
+  background-color: $purple;
   border-radius: 0.5rem;
   padding: 0.5rem 1rem;
   cursor: pointer;
   &:hover {
-    opacity: 0.7;
+    background-color: $purple-hover;
+  }
+  &.selected-dm,
+  .channel:not(.selected-dm):hover {
+    color: $white;
+    background-color: $blue-active;
   }
 }
 
-.mat-mdc-dialog-actions {
+.dm__buttons {
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
+  background-color: $purple;
 }

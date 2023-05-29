@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { StoreService } from './shared/service/store.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -7,7 +7,9 @@ import { StoreService } from './shared/service/store.service';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  constructor() {}
-
-  title = 'slackClone';
+  constructor(private router: Router) {}
+  isRootUrl(): boolean {
+    return this.router.url === '/';
+  }
+  title: string = 'slackClone';
 }

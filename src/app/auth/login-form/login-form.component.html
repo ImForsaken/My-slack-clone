@@ -3,28 +3,36 @@
     <mat-card-title>Login to Slack</mat-card-title>
     <mat-card-subtitle>Communicate with Friends or Business Partners</mat-card-subtitle>
   </mat-card-header>
-  <mat-error *ngIf="errorMsg">{{errorMsg}}</mat-error>
+  <mat-error *ngIf="errorMsg">{{ errorMsg }}</mat-error>
   <form [formGroup]="loginForm" (ngSubmit)="store.loginUser(this.loginForm)">
     <mat-card-content>
-      <br>
+      <br />
       <mat-form-field appearance="fill">
         <mat-label>Enter your email</mat-label>
-        <input matInput placeholder="pat@example.com" formControlName='userEmail' required>
-        <mat-error *ngIf="this.loginForm.controls['userEmail'].invalid">{{getErrorMessage()}}</mat-error>
+        <input matInput placeholder="pat@example.com" formControlName="userEmail" required />
+        <mat-error *ngIf="this.loginForm.controls['userEmail'].invalid">{{
+          getErrorMessage()
+          }}</mat-error>
       </mat-form-field>
-      <br>
+      <br />
       <mat-form-field appearance="fill">
         <mat-label>Enter your password</mat-label>
-        <input matInput [type]="hide ? 'password' : 'text'" formControlName='userPassword' required>
-        <mat-error *ngIf="this.loginForm.controls['userPassword'].invalid">{{getErrorMessage()}}</mat-error>
+        <input matInput [type]="hide ? 'password' : 'text'" formControlName="userPassword" required />
+        <mat-error *ngIf="this.loginForm.controls['userPassword'].invalid">{{
+          getErrorMessage()
+          }}</mat-error>
         <button type="button" matTextSuffix mat-icon-button (click)="hide = !hide" [attr.aria-label]="'Hide password'"
           [attr.aria-pressed]="hide">
-          <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+          <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
         </button>
       </mat-form-field>
       <div class="matCardButtonContainer">
-        <button mat-raised-button color="accent" type="submit" [disabled]="!loginForm.valid">Submit</button>
-        <button mat-raised-button (click)="store.guestLogin()" type="button" color="accent">Guest Login</button>
+        <button mat-raised-button color="accent" type="submit" [disabled]="!loginForm.valid">
+          Login
+        </button>
+        <button mat-raised-button (click)="store.guestLogin()" type="button" color="accent">
+          Guest Login
+        </button>
       </div>
     </mat-card-content>
   </form>
