@@ -21,7 +21,7 @@
   border-radius: 10px;
   height: 80%;
   width: 40%;
-  min-width: 380px;
+  min-width: 300px;
   max-width: 590px;
   max-height: 725px;
   display: flex;
@@ -38,9 +38,7 @@
 .mat-mdc-card {
   height: 100%;
   form {
-    flex: 1;
     mat-card-content {
-      height: 100%;
       display: flex;
       flex-direction: column;
       justify-content: center;
