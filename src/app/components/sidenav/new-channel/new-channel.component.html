@@ -1,13 +1,37 @@
 <h1 mat-dialog-title>Create New Channel</h1>
-<div mat-dialog-content class="content">
-    <mat-form-field appearance="outline">
-        <mat-label>Channel name</mat-label>
-        <input matInput type="text" [(ngModel)]="value" />
-    </mat-form-field>
+<div mat-dialog-content class="content" [formGroup]="channelForm">
+  <mat-form-field appearance="outline">
+    <mat-label>Name:</mat-label>
+    <input
+      matInput
+      formControlName="name"
+      placeholder="Name"
+      type="text"
+      [class.invalid]="isInvalid('name')"
+    />
+    <mat-hint align="end" [class.invalid]="isInvalid('name')">
+      {{ getErrorMessage("name") }}
+    </mat-hint>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Status</mat-label>
+    <mat-select formControlName="status">
+      <mat-option value="public"
+        >public
+        <mat-icon>tag</mat-icon>
+      </mat-option>
+      <mat-option value="private"
+        >private
+        <mat-icon>locked</mat-icon>
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
 </div>
+
 <div mat-dialog-actions>
-    <button mat-button color="warn" (click)="onNoClick()">Chancel</button>
-    <button mat-button cdkFocusInitial color="primary" (click)="onNewChannel()">
+  <button mat-button color="warn" (click)="onNoClick()">Chancel</button>
+  <button mat-button cdkFocusInitial color="primary" (click)="onNewChannel()">
     Ok
   </button>
 </div>

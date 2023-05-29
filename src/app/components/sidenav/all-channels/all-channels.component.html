@@ -3,7 +3,7 @@
 <!-- Dialog List  -->
 <div mat-dialog-content class="channel__wrapper">
   <div
-    *ngFor="let channel of filterChannelList(); let i = index"
+    *ngFor="let channel of channels; let i = index"
     (click)="selectChannel(channel)"
     [ngClass]="{
       'selected-channel': isSelected && selectedChannel === channel

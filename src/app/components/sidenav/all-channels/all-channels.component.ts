@@ -13,6 +13,7 @@ import { TChannel } from 'src/app/shared/types/chat';
 export class AllChannelsComponent implements OnInit, OnDestroy {
   private subAllChannels$!: Subscription;
   allChannels: TChannel[] = [];
+  channels: TChannel[] = [];
   selectedChannel!: TChannel;
   isSelected: boolean = false;
 
@@ -25,7 +26,20 @@ export class AllChannelsComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.getAllChannelsFromDB();
-    this.filterChannelList();
+    this.sortAndFilterChannels();
+  }
+
+  /**
+   * get current Channels sorted and filterd to render list
+   * @returns
+   */
+  sortAndFilterChannels(): TChannel[] {
+    const allChannels: TChannel[] = this.channelService.allChannels;
+    const userChannels: TChannel[] = this.userService.loggedUser.channels;
+    this.channels = this.sortChannelList(
+      this.filterChannelList(allChannels, userChannels)
+    );
+    return this.channels;
   }
 
   /**
@@ -43,9 +57,10 @@ export class AllChannelsComponent implements OnInit, OnDestroy {
    * all other existing channels
    * @returns
    */
-  filterChannelList(): TChannel[] {
-    const allChannels: TChannel[] = this.channelService.allChannels;
-    const userChannels: TChannel[] = this.userService.loggedUser.channels;
+  filterChannelList(
+    allChannels: TChannel[],
+    userChannels: TChannel[]
+  ): TChannel[] {
     const otherChannels: TChannel[] = allChannels.filter(
       (channel: TChannel): boolean =>
         !userChannels.some(
@@ -54,6 +69,23 @@ export class AllChannelsComponent implements OnInit, OnDestroy {
         )
     );
     return otherChannels;
+  }
+
+  /**
+   * sorts the list of Channels alphabetically
+   * @param channelList
+   */
+  sortChannelList(channelList: TChannel[]): TChannel[] {
+    channelList.sort((a, b) => {
+      if (a.name < b.name) {
+        return -1;
+      }
+      if (a.name > b.name) {
+        return 1;
+      }
+      return 0;
+    });
+    return channelList;
   }
 
   /**

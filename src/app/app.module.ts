@@ -2,7 +2,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from './shared/module/material.module';
 import { FirebaseModule } from './shared/module/firebase.module';
 import { QuillModule } from 'ngx-quill';
@@ -64,6 +64,7 @@ import { AllDirectMessagesComponent } from './components/sidenav/all-direct-mess
     BrowserModule,
     AppRoutingModule,
     FormsModule,
+    ReactiveFormsModule,
     MaterialModule,
     FirebaseModule,
     QuillModule.forRoot(),
