@@ -1,11 +1,18 @@
 <!-- Channel Label -->
 <div class="channel__content" (click)="openChannel(channel)">
   <div class="channel__status">
-    <span matTooltip="public">#</span>
-    <!-- <span matTooltip="private">[]</span> -->
+    <mat-icon
+      class="icon"
+      *ngIf="channel.status === 'public'; else privateBlock"
+      matTooltip="public"
+      >tag</mat-icon
+    >
+    <ng-template #privateBlock>
+      <mat-icon matTooltip="private">locked</mat-icon>
+    </ng-template>
   </div>
   <!-- Channel Name -->
-  <span class="channel__name">{{ channel.name }}</span>
+  <div class="channel__name">{{ channel.name }}</div>
 </div>
 <!-- Close Button -->
 <mat-icon

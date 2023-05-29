@@ -52,6 +52,7 @@ export class NewChannelComponent implements OnInit {
       const newChannel: TChannel = {
         name: this.value, // textfield value = channelname
         createdOn: this.loggedUser.id,
+        status: 'public',
       };
       this.channelService.createChannel(newChannel);
     }

@@ -1,13 +1,15 @@
 <h1 mat-dialog-title>Create New Channel</h1>
 <div mat-dialog-content class="content">
-    <mat-form-field appearance="outline">
-        <mat-label>Channel name</mat-label>
-        <input matInput type="text" [(ngModel)]="value" />
-    </mat-form-field>
+  <mat-form-field appearance="outline">
+    <mat-label>Channel name</mat-label>
+    <input matInput type="text" [(ngModel)]="value" />
+  </mat-form-field>
+  <!-- adding an new field to select between public & private status -->
+  <div><b>Status:</b> public</div>
 </div>
 <div mat-dialog-actions>
-    <button mat-button color="warn" (click)="onNoClick()">Chancel</button>
-    <button mat-button cdkFocusInitial color="primary" (click)="onNewChannel()">
+  <button mat-button color="warn" (click)="onNoClick()">Chancel</button>
+  <button mat-button cdkFocusInitial color="primary" (click)="onNewChannel()">
     Ok
   </button>
 </div>

@@ -19,14 +19,15 @@
   }
 }
 
+.icon {
+  display: flex;
+}
+
 .channel__content {
   display: flex;
   gap: 0.5rem;
   cursor: pointer;
   flex-grow: 1;
-}
-
-.channel__name {
 }
 
 .channel__close-btn {
