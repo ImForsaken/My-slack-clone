@@ -2,7 +2,7 @@
 <div class="channel__content" (click)="openChannel(channel)">
   <div class="channel__status">
     <mat-icon
-      class="icon"
+      class="channel__status-icon"
       *ngIf="channel.status === 'public'; else privateBlock"
       matTooltip="public"
       >tag</mat-icon

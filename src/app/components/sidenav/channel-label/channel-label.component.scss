@@ -19,7 +19,12 @@
   }
 }
 
-.icon {
+.channel__name {
+  display: flex;
+  align-items: center;
+}
+
+.channel__status-icon {
   display: flex;
 }
 
