@@ -8,6 +8,7 @@ import { AllChannelsComponent } from '../all-channels/all-channels.component';
 import { User } from '@angular/fire/auth';
 import { AuthGuard } from 'src/app/shared/service/auth.guard';
 import { Subscription } from 'rxjs';
+import { TChannel } from 'src/app/shared/types/chat';
 
 @Component({
   selector: 'app-channels',
@@ -18,6 +19,8 @@ export class ChannelsComponent implements OnInit, OnDestroy {
   private subLoggedUser$!: Subscription;
   loggedUser!: TUser;
   isChannelsOpen: boolean = true;
+  selectedChannel!: TChannel;
+  isSelected: boolean = false;
 
   constructor(
     public dialog: MatDialog,
@@ -41,6 +44,17 @@ export class ChannelsComponent implements OnInit, OnDestroy {
       .subscribe((user: TUser): void => {
         this.loggedUser = user;
       });
+  }
+
+  /**
+   * set selected Channel
+   * @param channel
+   */
+  selectChannel(channel: TChannel): void {
+    if (channel) {
+      this.selectedChannel = channel;
+      this.isSelected = true;
+    }
   }
 
   /**
