@@ -45,7 +45,9 @@
                     <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
                 </button>
             </mat-form-field>
-            <button mat-raised-button color="accent" type="submit" [disabled]="!registerForm.valid">Submit</button>
         </mat-card-content>
+        <mat-card-actions>
+            <button mat-raised-button color="accent" type="submit" [disabled]="!registerForm.valid">Submit</button>
+        </mat-card-actions>
     </form>
 </mat-card>

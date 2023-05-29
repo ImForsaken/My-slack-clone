@@ -12,7 +12,7 @@ import {
   UserCredential,
 } from '@angular/fire/auth';
 import { Router } from '@angular/router';
-import { FormGroup } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 import { setPersistence } from '@firebase/auth';
 import { TUser } from '../types/user';
 import { AuthGuard } from './auth.guard';
@@ -24,15 +24,18 @@ export class StoreService {
   userService: UserDbService = inject(UserDbService);
   public auth: Auth = inject(Auth);
   currentUser$!: Observable<TUser>;
-  loggedInUserID$ = new BehaviorSubject<string>('');
-  userAuth$ = user(this.auth);
-  loggedInUser$!: User;
   currentChat$!: Observable<string>;
+  loggedInUserID$ = new BehaviorSubject<string>('');
+  loggedInUser$!: User;
+
+  guestLoginCredentials = new FormGroup({
+    userEmail: new FormControl('guestuser@guestuserslackclone.de'),
+    userPassword: new FormControl('123456'),
+  });
 
   constructor(public router: Router) {}
 
   loginUser(loginForm: FormGroup): void {
-    console.log(loginForm);
     setPersistence(this.auth, browserSessionPersistence)
       .then(() => {
         this.signUpUser(loginForm);
@@ -43,19 +46,7 @@ export class StoreService {
   }
 
   guestLogin() {
-    return signInWithEmailAndPassword(
-      this.auth,
-      'guestuser@guestuserslackclone.de',
-      '123456'
-    )
-      .then((userCredential: UserCredential): void => {
-        const user = userCredential.user;
-        console.log('Guest Login successful', user);
-        this.router.navigate(['/main']);
-      })
-      .catch((error) => {
-        console.log('Error codes', error);
-      });
+    this.loginUser(this.guestLoginCredentials);
   }
 
   signUpUser(loginForm: FormGroup) {
@@ -98,10 +89,4 @@ export class StoreService {
         console.log('error', error);
       });
   }
-
-  // autoLogout(expirationDuration: number) {
-  //   setTimeout(() => {
-  //     this.logout();
-  //   }, expirationDuration);
-  // }
 }
