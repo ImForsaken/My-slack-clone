@@ -1,9 +1,15 @@
 @import "../../../shared/style/variables";
+.dm__title {
+  background-color: $purple;
+  color: $white;
+}
+
 .dm__wrapper {
   width: 20rem;
   display: flex;
   flex-direction: column;
   gap: 0.25rem;
+  background-color: $purple;
 }
 
 .dm {
@@ -22,8 +28,9 @@
   }
 }
 
-.mat-mdc-dialog-actions {
+.dm__buttons {
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
+  background-color: $purple;
 }

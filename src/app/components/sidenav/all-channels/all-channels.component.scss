@@ -1,9 +1,15 @@
 @import "../../../shared/style/variables";
+.channel__title {
+  background-color: $purple;
+  color: $white;
+}
+
 .channel__wrapper {
   width: 20rem;
   display: flex;
   flex-direction: column;
   gap: 0.25rem;
+  background-color: $purple;
 }
 
 .channel {
@@ -22,8 +28,9 @@
   }
 }
 
-.mat-mdc-dialog-actions {
+.channels__buttons {
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
+  background-color: $purple;
 }

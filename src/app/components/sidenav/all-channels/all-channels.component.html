@@ -1,5 +1,5 @@
 <!-- Dialog Headline -->
-<h1 mat-dialog-title>Channellist</h1>
+<h1 class="channel__title" mat-dialog-title>Channels</h1>
 <!-- Dialog List  -->
 <div mat-dialog-content class="channel__wrapper">
   <div
@@ -14,14 +14,14 @@
   </div>
 </div>
 <!-- Dialog Action Buttons -->
-<div mat-dialog-actions>
+<div mat-dialog-actions class="channels__buttons">
   <button mat-raised-button color="warn" (click)="onNoClick()">Chancel</button>
   <button
     mat-raised-button
-    color="primary"
+    color="accent"
     [disabled]="!isSelected"
     (click)="onAddChannel()"
   >
-    Ok
+    Join
   </button>
 </div>
