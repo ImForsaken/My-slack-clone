@@ -45,7 +45,7 @@ export class ChannelLabelComponent implements OnInit, OnDestroy {
    * displays the current channel chat by writing the channelID into the url
    * @param channel
    */
-  displayChannel(channel: TChannel): void {
+  openChannel(channel: TChannel): void {
     this.router.navigateByUrl(`main/${channel.id}`);
     this.userService.activeChatName = channel.name;
   }

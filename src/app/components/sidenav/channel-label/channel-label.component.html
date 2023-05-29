@@ -1,10 +1,11 @@
-<!-- Channel Name -->
-<div class="channel__name">
+<!-- Channel Label -->
+<div class="channel__content" (click)="openChannel(channel)">
   <div class="channel__status">
     <span matTooltip="public">#</span>
     <!-- <span matTooltip="private">[]</span> -->
   </div>
-  <span (click)="displayChannel(channel)">{{ channel.name }}</span>
+  <!-- Channel Name -->
+  <span class="channel__name">{{ channel.name }}</span>
 </div>
 <!-- Close Button -->
 <mat-icon

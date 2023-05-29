@@ -20,12 +20,10 @@ export class ChannelsComponent implements OnInit, OnDestroy {
   loggedUser!: TUser;
   isChannelsOpen: boolean = true;
   selectedChannel!: TChannel;
-  isSelected: boolean = false;
 
   constructor(
     public dialog: MatDialog,
     private userService: UserDbService,
-    private storeService: StoreService,
     private authGuard: AuthGuard
   ) {}
 
@@ -47,13 +45,13 @@ export class ChannelsComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * set selected Channel
+   * set Channel,
+   * to hightlight the selected channel
    * @param channel
    */
   selectChannel(channel: TChannel): void {
     if (channel) {
       this.selectedChannel = channel;
-      this.isSelected = true;
     }
   }
 
