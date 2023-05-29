@@ -3,11 +3,7 @@
   <div class="user__image-container">
     <img
       class="user__image"
-      [src]="
-        user.profilePicture === '{{ placholer 4 ifelse }}.png'
-          ? user.profilePicture
-          : '../../../assets/images/georg.webp'
-      "
+      [src]="user.profilePicture"
       alt="profile_picture"
     />
     <div class="user__status">
@@ -24,7 +20,9 @@
     </div>
   </div>
   <!-- UserName -->
-  <div class="user__name">{{ user.firstname }} {{ user.lastname }}</div>
+  <div class="user__name">
+    {{ user.firstname | titlecase }} {{ user.lastname | titlecase }}
+  </div>
 </div>
 <!-- Close DM Button -->
 <mat-icon
