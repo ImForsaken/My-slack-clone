@@ -14,6 +14,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
 import { MatTabsModule } from '@angular/material/tabs';
 import { ReactiveFormsModule } from '@angular/forms';
+import { MatSelectModule } from '@angular/material/select';
 
 @NgModule({
   imports: [
@@ -32,6 +33,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     MatCardModule,
     MatTabsModule,
     ReactiveFormsModule,
+    MatSelectModule,
   ],
   exports: [
     BrowserAnimationsModule,
@@ -49,6 +51,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     MatCardModule,
     MatTabsModule,
     ReactiveFormsModule,
+    MatSelectModule,
   ],
 })
 export class MaterialModule {}

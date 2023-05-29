@@ -1,5 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from '@angular/fire/auth';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 import { AuthGuard } from 'src/app/shared/service/auth.guard';
@@ -14,7 +20,7 @@ import { TUser } from 'src/app/shared/types/user';
   styleUrls: ['./new-channel.component.scss'],
 })
 export class NewChannelComponent implements OnInit {
-  value: string = '';
+  channelForm!: FormGroup;
   loggedUser$!: Subscription;
   loggedUser!: TUser;
 
@@ -22,8 +28,14 @@ export class NewChannelComponent implements OnInit {
     public dialogRef: MatDialogRef<NewChannelComponent>,
     private channelService: ChannelDbService,
     private authGuard: AuthGuard,
-    private userService: UserDbService
-  ) {}
+    private userService: UserDbService,
+    private formBuilder: FormBuilder
+  ) {
+    this.channelForm = this.formBuilder.group({
+      name: ['', [Validators.required, Validators.minLength(3)]],
+      status: ['public', [Validators.required]],
+    });
+  }
 
   ngOnInit(): void {
     this.getLoggedUser();
@@ -42,20 +54,36 @@ export class NewChannelComponent implements OnInit {
       });
   }
 
+  isInvalid(controlName: string): boolean {
+    const control = this.channelForm.get(controlName);
+    return control ? control.invalid && control.touched : false;
+  }
+
+  getErrorMessage(controlName: string): string {
+    const control = this.channelForm.get(controlName);
+    if (control && control.errors) {
+      if (control.errors['required']) {
+        return 'This field is required.';
+      } else if (control.errors['minlength']) {
+        return `Min. ${control.errors['minlength'].requiredLength} characters required.`;
+      }
+    }
+    return '';
+  }
+
   /**
    * Create a new channel and push it to Firestore
    */
   onNewChannel(): void {
-    // Abfragen ob der name schon vorhanden ist.
-    console.log('this.loggedUser:', this.loggedUser);
-    if (this.value.trim().length >= 3 && this.loggedUser) {
+    if (this.channelForm.valid && this.loggedUser) {
       const newChannel: TChannel = {
-        name: this.value, // textfield value = channelname
+        name: this.channelForm.value.name,
         createdOn: this.loggedUser.id,
+        status: this.channelForm.value.status as 'public' | 'private',
       };
       this.channelService.createChannel(newChannel);
+      this.dialogRef.close();
     }
-    this.dialogRef.close();
   }
 
   onNoClick(): void {

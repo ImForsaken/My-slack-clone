@@ -32,6 +32,23 @@ export class ChannelsComponent implements OnInit, OnDestroy {
   }
 
   /**
+   * sorts the list of Channels alphabetically
+   * @param channelList
+   */
+  sortChannels(channels: TChannel[]): TChannel[] {
+    channels.sort((a, b) => {
+      if (a.name < b.name) {
+        return -1;
+      }
+      if (a.name > b.name) {
+        return 1;
+      }
+      return 0;
+    });
+    return channels;
+  }
+
+  /**
    * get the current logged user from Auth
    */
   getLoggedUser(): void {
@@ -40,6 +57,7 @@ export class ChannelsComponent implements OnInit, OnDestroy {
     this.subLoggedUser$ = this.userService
       .getUserById$(authUserID)
       .subscribe((user: TUser): void => {
+        user.channels = this.sortChannels(user.channels);
         this.loggedUser = user;
       });
   }
