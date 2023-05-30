@@ -69,22 +69,22 @@ export class RegisterFormComponent {
   async addUserToCollection(user: User) {
     await setDoc(
       doc(this.firestore, 'users', user.uid),
-      this.createUserInterface(user.uid)
+      this.createNewUser(user.uid)
     );
   }
 
-  createUserInterface(id: string) {
-    const userData: TUser = {
+  createNewUser(id: string): TUser {
+    const user: TUser = {
       username: this.registerForm.controls['userName'].value,
       email: this.registerForm.controls['userEmail'].value,
       firstname: this.registerForm.controls['firstName'].value,
       lastname: this.registerForm.controls['lastName'].value,
       id: id,
       isOnline: false,
-      profilePicture: 'imgUrl',
+      profilePicture: '../../../assets/images/user.png',
       channels: [],
       directMessages: [],
     };
-    return userData;
+    return user;
   }
 }
