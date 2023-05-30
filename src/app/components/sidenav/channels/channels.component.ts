@@ -42,7 +42,7 @@ export class ChannelsComponent implements OnInit {
   getLoggedUser(userID: string): void {
     this.userService.getUserById$(userID).subscribe((user) => {
       this.loggedUser = user;
-      console.log('this.loggedUser', this.loggedUser);
+      // console.log('this.loggedUser', this.loggedUser);
     });
   }
 

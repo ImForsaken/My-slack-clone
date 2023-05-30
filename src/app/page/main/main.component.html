@@ -24,15 +24,25 @@
 
         <!--rightSide main content -->
         <mat-sidenav-content>
-            <!-- header -->
-            <mat-toolbar>
-                <button class="toggle__btn" type="button" mat-button (click)="sidenav.toggle()" matTooltip="Toggle Menu">
-          <mat-icon>menu_open</mat-icon>
-        </button>
-                <div># {{ this.userServcie.activeChatName | titlecase }}</div>
-            </mat-toolbar>
-            <!-- chat display -->
-            <router-outlet></router-outlet>
+
+            <mat-drawer-container class="example-container" autosize>
+                <mat-drawer #threadDrawer mode="side" position="end">
+                    <!-- Thread -->
+                    <app-thread-content></app-thread-content>
+                </mat-drawer>
+
+                <!-- header -->
+                <mat-toolbar>
+                    <button class="toggle__btn" type="button" mat-button (click)="sidenav.toggle()"
+                        matTooltip="Toggle Menu">
+                        <mat-icon>menu_open</mat-icon>
+                    </button>
+                    <div># {{ this.userServcie.activeChatName | titlecase }}</div>
+                </mat-toolbar>
+                <!-- chat display -->
+                <router-outlet></router-outlet>
+
+            </mat-drawer-container>
         </mat-sidenav-content>
     </mat-sidenav-container>
 </section>

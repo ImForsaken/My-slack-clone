@@ -31,7 +31,7 @@ export class StoreService {
   constructor(public router: Router) {
     this.userAuth$.subscribe((aUser: User | null) => {
       //handle user state changes here. Note, that user will be null if there is no currently logged in user.
-      console.log('userSubscription', aUser);
+      // console.log('userSubscription', aUser);
     });
   }
 

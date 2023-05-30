@@ -9,7 +9,7 @@
             <quill-view-html [content]="message.text"></quill-view-html>
         </div>
         <div class="message-footer">
-            <a href="#"><strong>5 Antworten</strong></a>
+            <strong (click)="sidenavService.open(); loadThread(message.threadId)">5 Antworten</strong>
             <span>Letze Antwort heute um 15:34</span>
         </div>
     </div>
