@@ -1,10 +1,10 @@
 @import "../../../shared/style/variables";
-.channel__title {
+.dm__title {
   background-color: $purple;
   color: $white;
 }
 
-.channel__wrapper {
+.dm__wrapper {
   width: 20rem;
   display: flex;
   flex-direction: column;
@@ -12,7 +12,7 @@
   background-color: $purple;
 }
 
-.channel {
+.dm {
   color: $white;
   background-color: $purple;
   border-radius: 0.5rem;
@@ -21,14 +21,14 @@
   &:hover {
     background-color: $purple-hover;
   }
-  &.selected-channel,
-  .channel:not(.selected-channel):hover {
+  &.selected-dm,
+  .channel:not(.selected-dm):hover {
     color: $white;
     background-color: $blue-active;
   }
 }
 
-.channels__buttons {
+.dm__buttons {
   display: flex;
   flex-direction: row;
   justify-content: flex-end;

@@ -1,3 +1,32 @@
-<section>
-    <app-dm-label class="dm__list_item" *ngFor="let user of allUsers" [user]="user"></app-dm-label>
+<section class="dm__container">
+  <!-- DM Header -->
+  <div class="dm__header">
+    <!-- Arrow Drop Button -->
+    <button
+      mat-icon-button
+      (click)="isDirectMessageOpen = !isDirectMessageOpen"
+      matTooltip="{{ isDirectMessageOpen ? 'close' : 'open' }}"
+    >
+      <mat-icon>
+        {{ isDirectMessageOpen ? "arrow_drop_down" : "arrow_right" }}
+      </mat-icon>
+    </button>
+    <!-- Titel Dialog Button -->
+    <button mat-button [matMenuTriggerFor]="menu">Direct Messages</button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item (click)="openUsersDialog()">
+        <mat-icon>group</mat-icon>Users
+      </button>
+    </mat-menu>
+  </div>
+  <!-- List of DirectMessages -->
+  <div class="dm__list" *ngIf="isDirectMessageOpen">
+    <ng-container *ngIf="loggedUser">
+      <app-dm-label
+        class="dm__list_item"
+        *ngFor="let user of allUsers"
+        [user]="user"
+      ></app-dm-label>
+    </ng-container>
+  </div>
 </section>

@@ -9,11 +9,13 @@ import {
   signOut,
   user,
   User,
+  UserCredential,
 } from '@angular/fire/auth';
 import { Router } from '@angular/router';
-import { FormGroup } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 import { setPersistence } from '@firebase/auth';
 import { TUser } from '../types/user';
+import { AuthGuard } from './auth.guard';
 
 @Injectable({
   providedIn: 'root',
@@ -22,21 +24,23 @@ export class StoreService {
   userService: UserDbService = inject(UserDbService);
   public auth: Auth = inject(Auth);
   currentUser$!: Observable<TUser>;
-  loggedInUserID$ = new BehaviorSubject<string>('');
-
-  userAuth$ = user(this.auth);
-  loggedInUser$!: User;
   currentChat$!: Observable<string>;
+  loggedInUserID$ = new BehaviorSubject<string>('');
+  loggedInUser$!: User;
 
   constructor(public router: Router) {
-    this.userAuth$.subscribe((aUser: User | null) => {
+    // this.userAuth$.subscribe((aUser: User | null) => {
       //handle user state changes here. Note, that user will be null if there is no currently logged in user.
       // console.log('userSubscription', aUser);
-    });
+    // });
   }
+  guestLoginCredentials = new FormGroup({
+    userEmail: new FormControl('guestuser@guestuserslackclone.de'),
+    userPassword: new FormControl('123456'),
+  });
 
-  loginUser(loginForm: FormGroup) {
-    console.log(loginForm);
+
+  loginUser(loginForm: FormGroup): void {
     setPersistence(this.auth, browserSessionPersistence)
       .then(() => {
         this.signUpUser(loginForm);
@@ -47,19 +51,7 @@ export class StoreService {
   }
 
   guestLogin() {
-    return signInWithEmailAndPassword(
-      this.auth,
-      'guestuser@guestuserslackclone.de',
-      '123456'
-    )
-      .then((userCredential) => {
-        const user = userCredential.user;
-        console.log('Login successful', user);
-        this.router.navigate(['/main']);
-      })
-      .catch((error) => {
-        console.log('Error codes', error);
-      });
+    this.loginUser(this.guestLoginCredentials);
   }
 
   signUpUser(loginForm: FormGroup) {
@@ -69,11 +61,11 @@ export class StoreService {
       loginForm.controls['userEmail'].value,
       loginForm.controls['userPassword'].value
     )
-      .then((userCredential) => {
+      .then((userCredential: UserCredential) => {
         const user = userCredential.user;
         this.currentUser$ = this.userService.getUserById$(user.uid);
         this.loggedInUserID$.next(user.uid); // Wenn login erfolgreich, wird der neue wert weitergereicht.
-        console.log('Login successful', user);
+        console.log('Login successful for User:', user);
         this.router.navigate(['/main']);
       })
       .catch((error) => {
@@ -81,7 +73,7 @@ export class StoreService {
       });
   }
 
-  logout() {
+  logout(): void {
     signOut(this.auth)
       .then((result) => {
         // Sign-out successful.
@@ -93,8 +85,7 @@ export class StoreService {
       });
   }
 
-  forgetForm() {
-    const email = 'kevin-herbst1993@web.de';
+  forgotForm(email: string) {
     sendPasswordResetEmail(this.auth, email)
       .then((response) => {
         console.log('success', response);
@@ -103,10 +94,4 @@ export class StoreService {
         console.log('error', error);
       });
   }
-
-  // autoLogout(expirationDuration: number) {
-  //   setTimeout(() => {
-  //     this.logout();
-  //   }, expirationDuration);
-  // }
 }

@@ -28,8 +28,9 @@ export class ChannelDbService {
     this.firestore,
     'channels'
   );
+  allChannels: TChannel[] = [];
 
-  getAllChannels$() {
+  getAllChannels$(): Observable<TChannel[]> {
     return collectionData(this.channelsCollRef, {
       idField: 'id',
     }) as Observable<TChannel[]>;

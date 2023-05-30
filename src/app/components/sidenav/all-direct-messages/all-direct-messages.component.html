@@ -1,0 +1,24 @@
+<h1 class="dm__title" mat-dialog-title>Users</h1>
+<div mat-dialog-content class="dm__wrapper">
+  <div
+    *ngFor="let user of allUsers; let i = index"
+    (click)="selectUser(user)"
+    [ngClass]="{
+      'selected-dm': isSelected && selectedUser === user
+    }"
+    class="dm"
+  >
+    {{ user.username | titlecase }}
+  </div>
+</div>
+<div mat-dialog-actions class="dm__buttons">
+  <button mat-raised-button color="warn" (click)="onNoClick()">Chancel</button>
+  <button
+    mat-raised-button
+    color="accent"
+    [disabled]="!isSelected"
+    (click)="onAddUser()"
+  >
+    Add
+  </button>
+</div>

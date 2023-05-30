@@ -1,23 +1,41 @@
 @import "../../../shared/style/variables";
 :host {
-    display: flex;
-    padding: 0.5rem 1rem;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    border-radius: 0.25rem;
-    border: 1px solid pink;
-    &:hover {
-        opacity: 0.8;
+  display: flex;
+  padding: 0.5rem 1rem;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 0.25rem;
+  height: 2.5rem;
+  color: $white;
+  &:hover {
+    background-color: $purple-hover;
+    .channel__close-btn {
+      display: flex;
+      &:hover {
+        color: $grey;
+      }
     }
+  }
 }
 
 .channel__name {
-    display: flex;
-    gap: 0.5rem;
-    cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.channel__status-icon {
+  display: flex;
+}
+
+.channel__content {
+  display: flex;
+  gap: 0.5rem;
+  cursor: pointer;
+  flex-grow: 1;
 }
 
 .channel__close-btn {
-    cursor: pointer;
+  display: none;
+  cursor: pointer;
 }

@@ -2,14 +2,15 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from './shared/module/material.module';
 import { FirebaseModule } from './shared/module/firebase.module';
 import { QuillModule } from 'ngx-quill';
 import { QuillConfigModule } from 'ngx-quill/config';
 // Auth
-import { LoginComponent } from './auth/login/login/login.component';
-import { RegisterComponent } from './auth/register/register/register.component';
+import { ForgotPasswordDialogComponent } from './auth/forgot-password-dialog/forgot-password-dialog.component';
+import { LoginFormComponent } from './auth/login-form/login-form.component';
+import { RegisterFormComponent } from './auth/register-form/register-form.component';
 // Chat
 import { ChatAreaComponent } from './chat/chat-area/chat-area.component';
 import { ChatContentComponent } from './chat/chat-content/chat-content.component';
@@ -34,6 +35,7 @@ import { MainComponent } from './page/main/main.component';
 import { NewChannelComponent } from './components/sidenav/new-channel/new-channel.component';
 import { AllChannelsComponent } from './components/sidenav/all-channels/all-channels.component';
 import { ThreadContentComponent } from './chat/thread-content/thread-content.component';
+import { AllDirectMessagesComponent } from './components/sidenav/all-direct-messages/all-direct-messages.component';
 
 @NgModule({
   declarations: [
@@ -41,8 +43,9 @@ import { ThreadContentComponent } from './chat/thread-content/thread-content.com
     PageNotFoundComponent,
     WelcomeComponent,
     MainComponent,
-    LoginComponent,
-    RegisterComponent,
+    ForgotPasswordDialogComponent,
+    LoginFormComponent,
+    RegisterFormComponent,
     ChatAreaComponent,
     ChatContentComponent,
     MessageComponent,
@@ -57,11 +60,13 @@ import { ThreadContentComponent } from './chat/thread-content/thread-content.com
     NewChannelComponent,
     AllChannelsComponent,
     ThreadContentComponent,
+    AllDirectMessagesComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
+    ReactiveFormsModule,
     MaterialModule,
     FirebaseModule,
     QuillModule.forRoot(),

@@ -6,11 +6,11 @@ import { StoreService } from 'src/app/shared/service/store.service';
 import { TUser } from 'src/app/shared/types/user';
 
 @Component({
-  selector: 'app-register',
-  templateUrl: './register.component.html',
-  styleUrls: ['./register.component.scss'],
+  selector: 'app-register-form',
+  templateUrl: './register-form.component.html',
+  styleUrls: ['./register-form.component.scss'],
 })
-export class RegisterComponent implements OnInit {
+export class RegisterFormComponent {
   hide = true;
   registerForm!: FormGroup;
   errorMsg: string | null = null;
@@ -69,11 +69,11 @@ export class RegisterComponent implements OnInit {
   async addUserToCollection(user: User) {
     await setDoc(
       doc(this.firestore, 'users', user.uid),
-      this.createUserInterface(user.uid)
+      this.createNewUser(user.uid)
     );
   }
 
-  createUserInterface(id: string) {
+  createNewUser(id: string) {
     const userData: TUser = {
       username: this.registerForm.controls['userName'].value,
       email: this.registerForm.controls['userEmail'].value,
@@ -86,15 +86,5 @@ export class RegisterComponent implements OnInit {
       directMessages: [],
     };
     return userData;
-  }
-
-  getErrorMessage() {
-    if (this.registerForm.controls['userPassword'].hasError('required')) {
-      return 'Password needs min 6 character length';
-    }
-
-    return this.loginForm.controls['userPassword'].hasError('userPassword')
-      ? 'Not a valid Password'
-      : '';
   }
 }

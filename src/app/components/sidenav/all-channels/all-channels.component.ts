@@ -1,12 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
-import { AuthGuard } from 'src/app/shared/service/auth.guard';
 import { ChannelDbService } from 'src/app/shared/service/channels-db.service';
-import { StoreService } from 'src/app/shared/service/store.service';
 import { UserDbService } from 'src/app/shared/service/user-db.service';
 import { TChannel } from 'src/app/shared/types/chat';
-import { TUser } from 'src/app/shared/types/user';
 
 @Component({
   selector: 'app-all-channels',
@@ -14,10 +11,9 @@ import { TUser } from 'src/app/shared/types/user';
   styleUrls: ['./all-channels.component.scss'],
 })
 export class AllChannelsComponent implements OnInit, OnDestroy {
-  private subLoggedUser$!: Subscription;
   private subAllChannels$!: Subscription;
-  loggedUser!: TUser;
   allChannels: TChannel[] = [];
+  channels: TChannel[] = [];
   selectedChannel!: TChannel;
   isSelected: boolean = false;
 
@@ -25,38 +21,82 @@ export class AllChannelsComponent implements OnInit, OnDestroy {
     public dialogRef: MatDialogRef<AllChannelsComponent>,
     public dialog: MatDialog,
     private channelService: ChannelDbService,
-    private userService: UserDbService,
-    private storeService: StoreService,
-    private authGuard: AuthGuard
-  ) {
-    console.log('storeS', this.authGuard.loggedUser);
-  }
+    private userService: UserDbService
+  ) {}
 
   ngOnInit(): void {
-    this.getLoggedUserInfo();
     this.getAllChannelsFromDB();
+    this.sortAndFilterChannels();
   }
 
   /**
-   * get the current logged user from Auth
+   * get current Channels sorted and filterd to render list
+   * @returns
    */
-  getLoggedUserInfo() {
-    this.subLoggedUser$ = this.storeService.currentUser$.subscribe((user) => {
-      console.log('user:', user);
-      this.loggedUser = user;
-    });
+  sortAndFilterChannels(): TChannel[] {
+    const allChannels: TChannel[] = this.channelService.allChannels;
+    const userChannels: TChannel[] = this.userService.loggedUser.channels;
+    this.channels = this.sortChannelList(
+      this.filterChannelList(allChannels, userChannels)
+    );
+    return this.channels;
   }
 
   /**
    * get all existing channels, how are stored in Firebase
    */
-  getAllChannelsFromDB() {
+  getAllChannelsFromDB(): void {
     this.subAllChannels$ = this.channelService
       .getAllChannels$()
       .subscribe((channls: TChannel[]): void => {
-        console.log('channels: ', channls);
         this.allChannels = channls;
       });
+  }
+
+  /**
+   * all other existing channels
+   * @returns
+   */
+  filterChannelList(
+    allChannels: TChannel[],
+    userChannels: TChannel[]
+  ): TChannel[] {
+    const otherChannels: TChannel[] = allChannels.filter(
+      (channel: TChannel): boolean =>
+        !userChannels.some(
+          (existingChannel: TChannel): boolean =>
+            existingChannel.name.toLowerCase() === channel.name.toLowerCase()
+        )
+    );
+    return otherChannels;
+  }
+
+  /**
+   * sorts the list of Channels alphabetically
+   * @param channelList
+   */
+  sortChannelList(channelList: TChannel[]): TChannel[] {
+    channelList.sort((a, b) => {
+      if (a.name < b.name) {
+        return -1;
+      }
+      if (a.name > b.name) {
+        return 1;
+      }
+      return 0;
+    });
+    return channelList;
+  }
+
+  /**
+   * set selected Channel
+   * @param channel
+   */
+  selectChannel(channel: TChannel): void {
+    if (channel) {
+      this.selectedChannel = channel;
+      this.isSelected = true;
+    }
   }
 
   /**
@@ -64,9 +104,12 @@ export class AllChannelsComponent implements OnInit, OnDestroy {
    */
   onAddChannel(): void {
     if (this.selectedChannel) {
-      if (this.loggedUser.id) {
-        this.loggedUser.channels.push(this.selectedChannel);
-        this.userService.updateUser(this.loggedUser.id, this.loggedUser);
+      if (this.userService.loggedUser.id) {
+        this.userService.loggedUser.channels.push(this.selectedChannel);
+        this.userService.updateUser(
+          this.userService.loggedUser.id,
+          this.userService.loggedUser
+        );
       }
     } else {
       console.log('es wurde kein channel ausgewählt');
@@ -75,19 +118,14 @@ export class AllChannelsComponent implements OnInit, OnDestroy {
     this.isSelected = false;
   }
 
+  /**
+   * close Dialog
+   */
   onNoClick(): void {
     this.dialogRef.close();
   }
 
-  selectChannel(channel: TChannel): void {
-    if (channel) {
-      this.selectedChannel = channel;
-      this.isSelected = true;
-    }
-  }
-
   ngOnDestroy(): void {
-    this.subLoggedUser$.unsubscribe();
     this.subAllChannels$.unsubscribe();
   }
 }

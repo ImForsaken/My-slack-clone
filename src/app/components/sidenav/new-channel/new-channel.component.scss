@@ -1,9 +1,18 @@
+.content {
+  display: flex;
+  flex-direction: column;
+}
+
 mat-form-field {
-    padding-block: 1rem;
+  padding-block: 1rem;
 }
 
 .mdc-dialog__actions {
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-end;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+
+.invalid {
+  color: red;
 }
