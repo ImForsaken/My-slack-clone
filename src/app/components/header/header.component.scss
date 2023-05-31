@@ -1,36 +1,89 @@
 @import "../../shared/style/variables";
 .header {
-    .header__content {
-        height: $header-height;
-        padding-inline: 1rem;
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: space-between;
-        .header__logo {
-            cursor: pointer;
-            padding: 0.25rem;
-            height: 2.5rem;
-            width: 2.5rem;
-            border-radius: 100%;
-            &:hover {
-                background-color: $purple-hover;
-            }
-            .header__logo-image {
-                display: block;
-                height: 100%;
-                width: 100%;
-                border-radius: 100%;
-            }
-        }
-        .header__menu {
-            display: flex;
-            flex-direction: row;
-            gap: 1rem;
-            justify-content: flex-end;
-            button:hover {
-                background-color: $purple-hover;
-            }
-        }
+  .header__content {
+    height: $header-height;
+    padding-inline: 1rem;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    .header__logo {
+      cursor: pointer;
+      padding: 0.25rem;
+      height: 2.5rem;
+      width: 2.5rem;
+      border-radius: 100%;
+      &:hover {
+        background-color: $purple-hover;
+      }
+      .header__logo-image {
+        display: block;
+        height: 100%;
+        width: 100%;
+        border-radius: 100%;
+      }
     }
+    .header__menu {
+      display: flex;
+      flex-direction: row;
+      gap: 1rem;
+      align-items: center;
+      justify-content: flex-end;
+      button:hover {
+        background-color: $purple-hover;
+      }
+    }
+  }
+}
+
+// #############################################
+// ########  UserTag for testing  ##############
+// #############################################
+// height & width in size variable angeben
+.user__icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 48px;
+  width: 48px;
+}
+
+.user__image-container {
+  display: block;
+  position: relative;
+  background-color: transparent;
+  height: 1.5rem;
+  width: 1.5rem;
+}
+
+.user__image {
+  border-radius: 0.25rem;
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  object-position: center center;
+}
+
+.user__status {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  transform: translate(25%, 25%);
+  height: 10px;
+  width: 10px;
+  border-radius: 100%;
+}
+
+.user__status-online {
+  height: 100%;
+  width: 100%;
+  border-radius: 100%;
+  background-color: $green;
+}
+
+.user__status-offline {
+  height: 100%;
+  width: 100%;
+  border-radius: 100%;
+  background-color: $grey;
 }

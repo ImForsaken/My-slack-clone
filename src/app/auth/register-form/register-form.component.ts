@@ -73,18 +73,18 @@ export class RegisterFormComponent {
     );
   }
 
-  createNewUser(id: string) {
-    const userData: TUser = {
+  createNewUser(id: string): TUser {
+    const user: TUser = {
       username: this.registerForm.controls['userName'].value,
       email: this.registerForm.controls['userEmail'].value,
       firstname: this.registerForm.controls['firstName'].value,
       lastname: this.registerForm.controls['lastName'].value,
       id: id,
       isOnline: false,
-      profilePicture: 'imgUrl',
+      profilePicture: '../../../assets/images/user.png',
       channels: [],
       directMessages: [],
     };
-    return userData;
+    return user;
   }
 }
