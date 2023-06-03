@@ -4,7 +4,7 @@
         <mat-card-subtitle>Join the Community for free!</mat-card-subtitle>
     </mat-card-header>
     <mat-error *ngIf="errorMsg">{{errorMsg}}</mat-error>
-    <form [formGroup]="registerForm" (ngSubmit)="signUp()">
+    <form [formGroup]="registerForm" (ngSubmit)="this.store.signUp(this.registerForm, this)">
         <mat-card-content>
             <mat-form-field appearance="fill">
                 <mat-label>Enter your userName</mat-label>

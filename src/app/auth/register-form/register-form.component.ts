@@ -1,9 +1,6 @@
-import { Component, OnInit, inject } from '@angular/core';
-import { User, createUserWithEmailAndPassword } from '@angular/fire/auth';
-import { Firestore, doc, setDoc } from '@angular/fire/firestore';
+import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { StoreService } from 'src/app/shared/service/store.service';
-import { TUser } from 'src/app/shared/types/user';
 
 @Component({
   selector: 'app-register-form',
@@ -15,8 +12,6 @@ export class RegisterFormComponent {
   registerForm!: FormGroup;
   errorMsg: string | null = null;
   loginForm!: FormGroup;
-
-  private firestore: Firestore = inject(Firestore);
 
   constructor(public store: StoreService) {}
 
@@ -37,54 +32,7 @@ export class RegisterFormComponent {
     });
   }
 
-  getLoginData(): FormGroup {
-    const loginForm = new FormGroup({
-      userEmail: new FormControl(this.registerForm.controls['userEmail'].value),
-      userPassword: new FormControl(
-        this.registerForm.controls['userPassword'].value
-      ),
-    });
-
-    return loginForm;
-  }
-
-  signUp() {
-    createUserWithEmailAndPassword(
-      this.store.auth,
-      this.registerForm.controls['userEmail'].value,
-      this.registerForm.controls['userPassword'].value
-    )
-      .then(async (userCredential) => {
-        // Sign-Up
-        const user = userCredential.user;
-        console.log(user);
-        await this.addUserToCollection(user);
-        this.store.loginUser(this.getLoginData());
-      })
-      .catch((error) => {
-        this.errorMsg = 'Email already in use!';
-      });
-  }
-
-  async addUserToCollection(user: User) {
-    await setDoc(
-      doc(this.firestore, 'users', user.uid),
-      this.createNewUser(user.uid)
-    );
-  }
-
-  createNewUser(id: string) {
-    const userData: TUser = {
-      username: this.registerForm.controls['userName'].value,
-      email: this.registerForm.controls['userEmail'].value,
-      firstname: this.registerForm.controls['firstName'].value,
-      lastname: this.registerForm.controls['lastName'].value,
-      id: id,
-      isOnline: false,
-      profilePicture: 'imgUrl',
-      channels: [],
-      directMessages: [],
-    };
-    return userData;
+  setErrorMessage(message: string) {
+    this.errorMsg = message;
   }
 }

@@ -35,6 +35,7 @@ import { MainComponent } from './page/main/main.component';
 import { NewChannelComponent } from './components/sidenav/new-channel/new-channel.component';
 import { AllChannelsComponent } from './components/sidenav/all-channels/all-channels.component';
 import { AllDirectMessagesComponent } from './components/sidenav/all-direct-messages/all-direct-messages.component';
+import { ProfileSettingsDialogComponent } from './components/header/profile-settings-dialog/profile-settings-dialog.component';
 
 @NgModule({
   declarations: [
@@ -59,6 +60,7 @@ import { AllDirectMessagesComponent } from './components/sidenav/all-direct-mess
     NewChannelComponent,
     AllChannelsComponent,
     AllDirectMessagesComponent,
+    ProfileSettingsDialogComponent,
   ],
   imports: [
     BrowserModule,
