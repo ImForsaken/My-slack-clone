@@ -4,10 +4,11 @@
             <img class="header__logo-image" src="../assets/icons/s-c-logo.jpg" alt="Logo" />
         </div>
         <div class="header__menu">
-            <!-- Info Menu -->
+            <!-- Info Button -->
             <button mat-icon-button [matMenuTriggerFor]="infoMenu" matTooltip="Info">
                 <mat-icon>help</mat-icon>
             </button>
+            <!-- Info Menu -->
             <mat-menu #infoMenu="matMenu">
                 <button mat-menu-item routerLink="/legal-notice">
                     Legal Notice<mat-icon>copyright</mat-icon>
@@ -16,14 +17,29 @@
                     Data Protection<mat-icon>security</mat-icon>
                 </button>
             </mat-menu>
-            <!-- User Menu -->
-            <button mat-icon-button [matMenuTriggerFor]="userMenu" matTooltip="User Menu">
+
+            <!-- User Button -->
+            <button *ngIf="!userLoaded" mat-icon-button [matMenuTriggerFor]="userMenu" matTooltip="User Menu">
                 <mat-icon>manage_accounts</mat-icon>
             </button>
+            <!-- User Menu -->
             <mat-menu #userMenu="matMenu">
                 <button mat-menu-item (click)="openDialog()">Settings<mat-icon>settings</mat-icon></button>
-                <button mat-menu-item (click)="storeService.logout()">Logout<mat-icon>logout</mat-icon></button>
+                <button mat-menu-item (click)="logoutUser()">
+                    Logout<mat-icon>logout</mat-icon>
+                </button>
             </mat-menu>
+            <!-- LoginUser -->
+            <div class="user__icon" *ngIf="userLoaded">
+                <div class="user__image-container">
+                    <img class="user__image" [src]="user.profilePicture" alt="profile_picture"
+                        matTooltip="{{ user.username }}" [matMenuTriggerFor]="userMenu" />
+                    <div class="user__status">
+                        <div *ngIf="user.isOnline" class="user__status-online" matTooltip="online"></div>
+                        <div *ngIf="!user.isOnline" class="user__status-offline" matTooltip="offline"></div>
+                    </div>
+                </div>
+            </div>
         </div>
     </mat-toolbar>
 </header>
