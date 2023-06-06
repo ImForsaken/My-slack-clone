@@ -3,6 +3,8 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 import { StoreService } from 'src/app/shared/service/store.service';
 import { UserDbService } from 'src/app/shared/service/user-db.service';
+import { DirectMessageDbService } from 'src/app/shared/service/direct-messages-db.service';
+import { TDirectMessage } from 'src/app/shared/types/chat';
 import { TUser } from 'src/app/shared/types/user';
 
 @Component({
@@ -23,6 +25,7 @@ export class DirectMessagesDialogComponent implements OnInit, OnDestroy {
   constructor(
     private storeService: StoreService,
     private userService: UserDbService,
+    private dmServcie: DirectMessageDbService,
     public dialogRef: MatDialogRef<DirectMessagesDialogComponent>,
     public dialog: MatDialog
   ) {}
@@ -52,7 +55,14 @@ export class DirectMessagesDialogComponent implements OnInit, OnDestroy {
     this.subAllUsers$ = this.userService
       .getAllUsers$()
       .subscribe((users: TUser[]): void => {
-        this.allUsers = users;
+        this.allUsers = users.filter((user: TUser) => {
+          return (
+            user.id !== this.user.id && // Aktueller Benutzer ausschließen
+            !this.user.directMessages.some(
+              (dm: TDirectMessage) => dm.chatPartnerID === user.id
+            )
+          );
+        });
       });
   }
 
@@ -71,13 +81,10 @@ export class DirectMessagesDialogComponent implements OnInit, OnDestroy {
    * when a channel is selected it will be added to the user and updated Firebase
    */
   onAddUser(): void {
-    if (this.selectedUser) {
-      console.log('user ausgewählt', this.selectedUser);
-      // build new DirectMessageObject
-      // push it to user
-      // update database
+    if (this.selectedUser.id && this.user.id) {
+      this.dmServcie.createDirectMessage(this.user.id, this.selectedUser.id);
     } else {
-      console.log('es wurde kein channel ausgewählt');
+      console.warn('Es wurde kein Benutzer ausgewählt.');
     }
     this.dialogRef.close();
     this.isSelected = false;
