@@ -46,7 +46,7 @@ export class ChannelLabelComponent implements OnInit, OnDestroy {
    * @param channel
    */
   openChannel(channel: TChannel): void {
-    this.router.navigateByUrl(`main/${channel.id}`);
+    this.router.navigateByUrl(`main/channel_${channel.id}`);
     this.userService.activeChatName = channel.name;
   }
 

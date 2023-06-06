@@ -78,7 +78,7 @@ export class DirectMessagesComponent {
   }
 
   openDirectMessage(user: TUser) {
-    this.router.navigateByUrl(`main/${user.id}`);
+    this.router.navigateByUrl(`main/dmuser_${user.id}`);
   }
 
   /**
