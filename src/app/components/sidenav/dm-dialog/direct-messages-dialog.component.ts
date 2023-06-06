@@ -6,11 +6,11 @@ import { UserDbService } from 'src/app/shared/service/user-db.service';
 import { TUser } from 'src/app/shared/types/user';
 
 @Component({
-  selector: 'app-all-direct-messages',
-  templateUrl: './all-direct-messages.component.html',
-  styleUrls: ['./all-direct-messages.component.scss'],
+  selector: 'app-direct-messages-dialog',
+  templateUrl: './direct-messages-dialog.component.html',
+  styleUrls: ['./direct-messages-dialog.component.scss'],
 })
-export class AllDirectMessagesComponent implements OnInit, OnDestroy {
+export class DirectMessagesDialogComponent implements OnInit, OnDestroy {
   user!: TUser;
   subUser$!: Subscription;
   userLoaded: boolean = false;
@@ -23,7 +23,7 @@ export class AllDirectMessagesComponent implements OnInit, OnDestroy {
   constructor(
     private storeService: StoreService,
     private userService: UserDbService,
-    public dialogRef: MatDialogRef<AllDirectMessagesComponent>,
+    public dialogRef: MatDialogRef<DirectMessagesDialogComponent>,
     public dialog: MatDialog
   ) {}
 
@@ -57,11 +57,22 @@ export class AllDirectMessagesComponent implements OnInit, OnDestroy {
   }
 
   /**
+   * set selected User
+   * @param User
+   */
+  selectUser(user: TUser): void {
+    if (user) {
+      this.selectedUser = user;
+      this.isSelected = true;
+    }
+  }
+
+  /**
    * when a channel is selected it will be added to the user and updated Firebase
    */
   onAddUser(): void {
     if (this.selectedUser) {
-      console.log('user ausgewählt');
+      console.log('user ausgewählt', this.selectedUser);
       // build new DirectMessageObject
       // push it to user
       // update database
@@ -73,16 +84,8 @@ export class AllDirectMessagesComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * set selected User
-   * @param User
+   * close Dialog
    */
-  selectUser(user: TUser): void {
-    if (user) {
-      this.selectedUser = user;
-      this.isSelected = true;
-    }
-  }
-
   onNoClick(): void {
     this.dialogRef.close();
   }

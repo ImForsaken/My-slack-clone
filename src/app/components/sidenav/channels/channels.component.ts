@@ -3,7 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { StoreService } from 'src/app/shared/service/store.service';
 import { TUser } from 'src/app/shared/types/user';
 import { NewChannelComponent } from '../new-channel/new-channel.component';
-import { AllChannelsComponent } from '../all-channels/all-channels.component';
+import { AllChannelsComponent } from '../channels-dialog/all-channels.component';
 import { Subscription } from 'rxjs';
 import { TChannel } from 'src/app/shared/types/chat';
 

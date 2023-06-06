@@ -3,7 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 import { UserDbService } from 'src/app/shared/service/user-db.service';
 import { TUser } from 'src/app/shared/types/user';
-import { AllDirectMessagesComponent } from '../all-direct-messages/all-direct-messages.component';
+import { DirectMessagesDialogComponent } from '../dm-dialog/direct-messages-dialog.component';
 import { StoreService } from 'src/app/shared/service/store.service';
 import { TDirectMessage } from 'src/app/shared/types/chat';
 import { Router } from '@angular/router';
@@ -85,7 +85,7 @@ export class DirectMessagesComponent {
    * shows the dialog with all existing users
    */
   openUsersDialog(): void {
-    const dialogRef = this.dialog.open(AllDirectMessagesComponent);
+    const dialogRef = this.dialog.open(DirectMessagesDialogComponent);
     dialogRef.afterClosed().subscribe();
   }
 
