@@ -18,7 +18,7 @@ import { TUser } from '../types/user';
   providedIn: 'root',
 })
 export class StoreService {
-  userZZZ!: TUser;
+  user!: TUser;
   authLoggedUserUID!: string;
   currentUser$!: Observable<TUser | null>;
   currentChat$!: Observable<string>;
@@ -37,22 +37,18 @@ export class StoreService {
       if (user) {
         // user is logged in
         this.authLoggedUserUID = user.uid;
-        console.log('uid: ', user.uid);
+        console.log('user.uid: ', user.uid);
         this.currentUser$ = this.userDBService.getUserById$(user.uid);
         this.userDBService
           .getUserById$(user.uid)
-          .subscribe((user) => (this.userZZZ = user));
-        console.log('currentUser:', this.currentUser$);
+          .subscribe((user) => (this.user = user));
       } else {
-        // user is not logged in
-        console.log('elseBlock');
-        if (this.userZZZ) {
-          console.log('TEEEEESSSSSTT');
-          this.userZZZ.username = 'Ignatz';
-          this.userDBService.updateUser(this.authLoggedUserUID, this.userZZZ);
+        // user is NOT logged in
+        if (this.user) {
+          this.user.isOnline = false;
+          this.userDBService.updateUser(this.authLoggedUserUID, this.user);
         }
         this.currentUser$ = of(null);
-        //1. firestore der User mit Id this.userUID status update auf Offline nur wenn this.userUID ist definiert
       }
     });
   }

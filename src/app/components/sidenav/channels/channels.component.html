@@ -22,8 +22,8 @@
     </div>
     <!-- List of Channels -->
     <div class="channels__list" *ngIf="isChannelsOpen">
-        <ng-container *ngIf="loggedUser">
-            <app-channel-label *ngFor="let channel of loggedUser.channels; let i = index" class="channel" [index]="i" [channel]="channel" [class.selected]="channel === selectedChannel" (click)="selectChannel(channel)"></app-channel-label>
+        <ng-container *ngIf="userLoaded">
+            <app-channel-label *ngFor="let channel of user.channels; let i = index" class="channel" [index]="i" [channel]="channel" [class.selected]="channel === selectedChannel" (click)="selectChannel(channel)"></app-channel-label>
         </ng-container>
     </div>
 </section>

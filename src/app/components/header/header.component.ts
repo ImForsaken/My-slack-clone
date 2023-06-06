@@ -21,7 +21,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.getUser();
-    this.getUsers();
   }
 
   getUser(): void {
@@ -41,10 +40,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   onUpdateUser(userID: string, user: TUser): void {
     this.userService.updateUser(userID, user);
-  }
-
-  getUsers() {
-    this.userService.getAllUsers$().subscribe((users) => {});
   }
 
   logoutUser(): void {

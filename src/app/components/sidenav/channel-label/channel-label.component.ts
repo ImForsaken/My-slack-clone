@@ -1,8 +1,7 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { User } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { AuthGuard } from 'src/app/shared/service/auth.guard';
+import { StoreService } from 'src/app/shared/service/store.service';
 import { UserDbService } from 'src/app/shared/service/user-db.service';
 import { TChannel } from 'src/app/shared/types/chat';
 import { TUser } from 'src/app/shared/types/user';
@@ -13,32 +12,33 @@ import { TUser } from 'src/app/shared/types/user';
   styleUrls: ['./channel-label.component.scss'],
 })
 export class ChannelLabelComponent implements OnInit, OnDestroy {
-  private subLoggedUser$!: Subscription;
-  loggedUser!: TUser;
+  user!: TUser;
+  subUser$!: Subscription;
+  userLoaded: boolean = false;
   @Input() channel!: TChannel;
   @Input() index!: number;
 
   constructor(
     private router: Router,
-    private authGuard: AuthGuard,
-    private userService: UserDbService
+    private userService: UserDbService,
+    private storeService: StoreService
   ) {}
 
   ngOnInit(): void {
-    this.getLoggedUser();
+    this.getUser();
   }
 
   /**
-   * get the current logged user from Auth
+   * fetch current logged User
    */
-  getLoggedUser(): void {
-    const authUser: User = this.authGuard.getAuthUser();
-    const authUserID: string = authUser.uid;
-    this.subLoggedUser$ = this.userService
-      .getUserById$(authUserID)
-      .subscribe((user: TUser): void => {
-        this.loggedUser = user;
-      });
+  getUser(): void {
+    this.subUser$ = this.storeService.currentUser$.subscribe((user) => {
+      if (user) {
+        this.user = user;
+        this.user.isOnline = true;
+        this.userLoaded = true;
+      }
+    });
   }
 
   /**
@@ -55,13 +55,18 @@ export class ChannelLabelComponent implements OnInit, OnDestroy {
    * @param channelID
    */
   leaveChannel(): void {
-    if (this.loggedUser && this.loggedUser.id) {
-      this.loggedUser.channels.splice(this.index, 1);
-      this.userService.updateUser(this.loggedUser.id, this.loggedUser);
+    if (this.user && this.user.id) {
+      const channelIndex = this.user.channels.findIndex(
+        (channel: TChannel) => channel.name === this.channel.name
+      );
+      if (channelIndex !== -1) {
+        this.user.channels.splice(channelIndex, 1);
+        this.userService.updateUser(this.user.id, this.user);
+      }
     }
   }
 
   ngOnDestroy(): void {
-    this.subLoggedUser$.unsubscribe();
+    this.subUser$.unsubscribe();
   }
 }

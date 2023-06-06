@@ -1,8 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { User } from '@angular/fire/auth';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
-import { AuthGuard } from 'src/app/shared/service/auth.guard';
 import { StoreService } from 'src/app/shared/service/store.service';
 import { UserDbService } from 'src/app/shared/service/user-db.service';
 import { TUser } from 'src/app/shared/types/user';
@@ -13,16 +11,16 @@ import { TUser } from 'src/app/shared/types/user';
   styleUrls: ['./all-direct-messages.component.scss'],
 })
 export class AllDirectMessagesComponent implements OnInit, OnDestroy {
-  private subLoggedUser$!: Subscription;
-  private subAllUsers$!: Subscription;
-  loggedUser!: TUser;
+  user!: TUser;
+  subUser$!: Subscription;
+  userLoaded: boolean = false;
   selectedUser!: TUser;
   isSelected: boolean = false;
   directMessages: TUser[] = [];
   allUsers: TUser[] = [];
+  subAllUsers$!: Subscription;
 
   constructor(
-    private authGuard: AuthGuard,
     private storeService: StoreService,
     private userService: UserDbService,
     public dialogRef: MatDialogRef<AllDirectMessagesComponent>,
@@ -30,21 +28,21 @@ export class AllDirectMessagesComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
+    this.getUser();
     this.getAllUsers();
-    this.getLoggedUser();
   }
 
   /**
-   * get the current logged user from Auth
+   * fetch current logged User
    */
-  getLoggedUser(): void {
-    const authUser: User = this.authGuard.getAuthUser();
-    const authUserID: string = authUser.uid;
-    this.subLoggedUser$ = this.userService
-      .getUserById$(authUserID)
-      .subscribe((user: TUser): void => {
-        this.loggedUser = user;
-      });
+  getUser(): void {
+    this.subUser$ = this.storeService.currentUser$.subscribe((user) => {
+      if (user) {
+        this.user = user;
+        this.user.isOnline = true;
+        this.userLoaded = true;
+      }
+    });
   }
 
   /**
@@ -90,7 +88,7 @@ export class AllDirectMessagesComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.subLoggedUser$.unsubscribe();
+    this.subUser$.unsubscribe();
     this.subAllUsers$.unsubscribe();
   }
 }

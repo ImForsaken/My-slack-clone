@@ -1,16 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { User } from '@angular/fire/auth';
-import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
-import { AuthGuard } from 'src/app/shared/service/auth.guard';
 import { ChannelDbService } from 'src/app/shared/service/channels-db.service';
-import { UserDbService } from 'src/app/shared/service/user-db.service';
+import { StoreService } from 'src/app/shared/service/store.service';
 import { TChannel } from 'src/app/shared/types/chat';
 import { TUser } from 'src/app/shared/types/user';
 
@@ -19,16 +12,16 @@ import { TUser } from 'src/app/shared/types/user';
   templateUrl: './new-channel.component.html',
   styleUrls: ['./new-channel.component.scss'],
 })
-export class NewChannelComponent implements OnInit {
+export class NewChannelComponent implements OnInit, OnDestroy {
   channelForm!: FormGroup;
-  loggedUser$!: Subscription;
-  loggedUser!: TUser;
+  user!: TUser;
+  subUser$!: Subscription;
+  userLoaded: boolean = false;
 
   constructor(
     public dialogRef: MatDialogRef<NewChannelComponent>,
     private channelService: ChannelDbService,
-    private authGuard: AuthGuard,
-    private userService: UserDbService,
+    private storeService: StoreService,
     private formBuilder: FormBuilder
   ) {
     this.channelForm = this.formBuilder.group({
@@ -38,27 +31,37 @@ export class NewChannelComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getLoggedUser();
+    this.getUser();
   }
 
   /**
-   * observe with user are logged in
+   * fetch current logged User
    */
-  getLoggedUser(): void {
-    const authUser: User = this.authGuard.getAuthUser();
-    const authUserID: string = authUser.uid;
-    this.loggedUser$ = this.userService
-      .getUserById$(authUserID)
-      .subscribe((user: TUser): void => {
-        this.loggedUser = user;
-      });
+  getUser(): void {
+    this.subUser$ = this.storeService.currentUser$.subscribe((user) => {
+      if (user) {
+        this.user = user;
+        this.user.isOnline = true;
+        this.userLoaded = true;
+      }
+    });
   }
 
+  /**
+   * Inputfield Validation
+   * @param controlName
+   * @returns
+   */
   isInvalid(controlName: string): boolean {
     const control = this.channelForm.get(controlName);
     return control ? control.invalid && control.touched : false;
   }
 
+  /**
+   * display ErrorMessages
+   * @param controlName
+   * @returns
+   */
   getErrorMessage(controlName: string): string {
     const control = this.channelForm.get(controlName);
     if (control && control.errors) {
@@ -75,10 +78,10 @@ export class NewChannelComponent implements OnInit {
    * Create a new channel and push it to Firestore
    */
   onNewChannel(): void {
-    if (this.channelForm.valid && this.loggedUser) {
+    if (this.channelForm.valid && this.user) {
       const newChannel: TChannel = {
         name: this.channelForm.value.name,
-        createdOn: this.loggedUser.id,
+        createdOn: this.user.id,
         status: this.channelForm.value.status as 'public' | 'private',
       };
       this.channelService.createChannel(newChannel);
@@ -86,7 +89,14 @@ export class NewChannelComponent implements OnInit {
     }
   }
 
+  /**
+   * close Dialog
+   */
   onNoClick(): void {
     this.dialogRef.close();
+  }
+
+  ngOnDestroy() {
+    this.subUser$.unsubscribe();
   }
 }
