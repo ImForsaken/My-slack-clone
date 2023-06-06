@@ -12,7 +12,7 @@ export type TChannel = {
  * Direct messages type used in the user type.
  */
 export type TDirectMessage = {
-  chatPartnerId: string;
+  chatPartnerID: string;
   chatPartnerName: string;
-  dmDocId: string;
+  dmDocID: string;
 };

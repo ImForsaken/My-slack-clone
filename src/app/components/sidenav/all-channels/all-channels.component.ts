@@ -70,6 +70,7 @@ export class AllChannelsComponent implements OnInit, OnDestroy {
     );
     return otherChannels;
   }
+  arr = [32, 2, 3, 4, 56, 879, 6456, 31, 631];
 
   /**
    * sorts the list of Channels alphabetically

@@ -13,35 +13,43 @@ export class HeaderComponent implements OnInit, OnDestroy {
   user!: TUser;
   subUser$!: Subscription;
   userLoaded: boolean = false;
+
   constructor(
     private storeService: StoreService,
     private userService: UserDbService
   ) {}
 
   ngOnInit(): void {
-    this.getAuthState();
+    this.getUser();
+    this.getUsers();
   }
 
-  getAuthState(): void {
-    setTimeout(() => {
-      const user = this.storeService.auth.currentUser;
+  getUser(): void {
+    this.subUser$ = this.storeService.currentUser$.subscribe((user) => {
       if (user) {
-        console.log('signIn', user);
-        this.getUser(user.uid);
-      } else {
-        console.log('no nix');
+        this.user = user;
+        this.user.isOnline = true;
+        this.userLoaded = true;
       }
-    }, 1000);
+    });
+    setTimeout(() => {
+      if (this.user) {
+        this.onUpdateUser(this.storeService.authLoggedUserUID, this.user);
+      }
+    }, 500);
   }
 
-  getUser(userID: string): void {
-    this.subUser$ = this.userService.getUserById$(userID).subscribe((user) => {
-      this.user = user;
-      this.userLoaded = true;
-    });
+  onUpdateUser(userID: string, user: TUser): void {
+    this.userService.updateUser(userID, user);
+  }
+
+  getUsers() {
+    this.userService.getAllUsers$().subscribe((users) => {});
   }
 
   logoutUser(): void {
+    this.user.isOnline = false;
+    this.onUpdateUser(this.storeService.authLoggedUserUID, this.user);
     this.storeService.logout();
   }
 

@@ -1,5 +1,5 @@
 import { Injectable, inject } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, of } from 'rxjs';
 import { UserDbService } from './user-db.service';
 import {
   Auth,
@@ -7,33 +7,55 @@ import {
   sendPasswordResetEmail,
   signInWithEmailAndPassword,
   signOut,
-  user,
-  User,
   UserCredential,
 } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import { FormControl, FormGroup } from '@angular/forms';
 import { setPersistence } from '@firebase/auth';
 import { TUser } from '../types/user';
-import { AuthGuard } from './auth.guard';
 
 @Injectable({
   providedIn: 'root',
 })
 export class StoreService {
-  userService: UserDbService = inject(UserDbService);
-  public auth: Auth = inject(Auth);
-  currentUser$!: Observable<TUser>;
+  userZZZ!: TUser;
+  authLoggedUserUID!: string;
+  currentUser$!: Observable<TUser | null>;
   currentChat$!: Observable<string>;
-  loggedInUserID$ = new BehaviorSubject<string>('');
-  loggedInUser$!: User;
 
   guestLoginCredentials = new FormGroup({
     userEmail: new FormControl('guestuser@guestuserslackclone.de'),
     userPassword: new FormControl('123456'),
   });
 
-  constructor(public router: Router) {}
+  constructor(
+    public router: Router,
+    public userDBService: UserDbService,
+    public auth: Auth
+  ) {
+    this.auth.onAuthStateChanged((user) => {
+      if (user) {
+        // user is logged in
+        this.authLoggedUserUID = user.uid;
+        console.log('uid: ', user.uid);
+        this.currentUser$ = this.userDBService.getUserById$(user.uid);
+        this.userDBService
+          .getUserById$(user.uid)
+          .subscribe((user) => (this.userZZZ = user));
+        console.log('currentUser:', this.currentUser$);
+      } else {
+        // user is not logged in
+        console.log('elseBlock');
+        if (this.userZZZ) {
+          console.log('TEEEEESSSSSTT');
+          this.userZZZ.username = 'Ignatz';
+          this.userDBService.updateUser(this.authLoggedUserUID, this.userZZZ);
+        }
+        this.currentUser$ = of(null);
+        //1. firestore der User mit Id this.userUID status update auf Offline nur wenn this.userUID ist definiert
+      }
+    });
+  }
 
   loginUser(loginForm: FormGroup): void {
     setPersistence(this.auth, browserSessionPersistence)
@@ -58,8 +80,7 @@ export class StoreService {
     )
       .then((userCredential: UserCredential) => {
         const user = userCredential.user;
-        this.currentUser$ = this.userService.getUserById$(user.uid);
-        this.loggedInUserID$.next(user.uid); // Wenn login erfolgreich, wird der neue wert weitergereicht.
+        this.currentUser$ = this.userDBService.getUserById$(user.uid);
         console.log('Login successful for User:', user);
         this.router.navigate(['/main']);
       })
