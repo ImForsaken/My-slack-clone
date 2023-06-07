@@ -30,6 +30,7 @@ export class StoreService {
   currentUser$!: Observable<TUser>;
   currentChat$!: Observable<string>;
   loggedInUserID$ = new BehaviorSubject<string>('');
+  userId!: string;
 
   guestLoginCredentials = new FormGroup({
     userEmail: new FormControl('guestuser@guestuserslackclone.de'),

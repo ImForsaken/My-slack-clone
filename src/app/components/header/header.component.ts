@@ -15,6 +15,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
   user!: TUser;
   subUser$!: Subscription;
   userLoaded: boolean = false;
+  userId!: string;
+
   constructor(
     private storeService: StoreService,
     private userService: UserDbService,
@@ -41,6 +43,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.subUser$ = this.userService.getUserById$(userID).subscribe((user) => {
       this.user = user;
       this.userLoaded = true;
+      this.userId = userID;
     });
   }
 
@@ -52,7 +55,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.subUser$.unsubscribe();
   }
 
-  openDialog() {
-    this.dialog.open(ProfileSettingsDialogComponent);
+  openSettingsDialog() {
+    const dialogRef = this.dialog.open(ProfileSettingsDialogComponent, {
+      data: { userId: this.userId },
+    });
   }
 }

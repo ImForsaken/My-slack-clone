@@ -1,5 +1,21 @@
-<h1 mat-dialog-title>Dialog with elements</h1>
-<div mat-dialog-content>This dialog showcases the title, close, content and actions elements.</div>
+<h1 mat-dialog-title>Edit your Profile</h1>
+<div mat-dialog-content>
+    {{ userInformation?.username }}
+
+
+    <form [formGroup]="editProfileForm" class="editProfileForm">
+        <mat-form-field class="example-full-width">
+            <mat-label>Email</mat-label>
+            <input type="email" matInput formControlName="username">
+            <mat-error *ngIf="editProfileForm.controls['username'].hasError('required')">
+                Please enter a valid email address
+            </mat-error>
+            <mat-error *ngIf="emailFormControl.hasError('required')">
+                Email is <strong>required</strong>
+            </mat-error>
+        </mat-form-field>
+    </form>
+</div>
 <div mat-dialog-actions>
     <button mat-button mat-dialog-close>Close</button>
 </div>
