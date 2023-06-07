@@ -78,16 +78,16 @@ export class UserDbService {
     ).then((user) => user.data())) as TUser;
 
     user?.['directMessages'].push({
-      chatPartnerId: partnerId,
+      chatPartnerID: partnerId,
       chatPartnerName: partner.username,
-      dmDocId: docId,
+      dmDocID: docId,
     });
     this.updateUser(user?.['id']!, user);
 
     partner?.['directMessages'].push({
-      chatPartnerId: userId,
+      chatPartnerID: userId,
       chatPartnerName: user.username,
-      dmDocId: docId,
+      dmDocID: docId,
     });
     this.updateUser(partner?.['id']!, partner);
   }
@@ -107,10 +107,10 @@ export class UserDbService {
       doc(this.usersCollRef, directMessageChat.userIDs[1])
     ).then((user) => user.data())) as TUser;
     const userDmIndex = user?.['directMessages'].findIndex(
-      (dm) => dm.dmDocId === dmId
+      (dm) => dm.dmDocID === dmId
     );
     const partnerDmIndex = partner?.['directMessages'].findIndex(
-      (dm) => dm.dmDocId === dmId
+      (dm) => dm.dmDocID === dmId
     );
     user?.['directMessages'].splice(userDmIndex, 1);
     partner?.['directMessages'].splice(partnerDmIndex, 1);

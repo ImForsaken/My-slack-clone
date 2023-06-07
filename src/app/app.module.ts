@@ -33,9 +33,9 @@ import { PageNotFoundComponent } from './page/page-not-found/page-not-found.comp
 import { WelcomeComponent } from './page/welcome/welcome.component';
 import { MainComponent } from './page/main/main.component';
 import { NewChannelComponent } from './components/sidenav/new-channel/new-channel.component';
-import { AllChannelsComponent } from './components/sidenav/all-channels/all-channels.component';
+import { AllChannelsComponent } from './components/sidenav/channels-dialog/all-channels.component';
+import { DirectMessagesDialogComponent } from './components/sidenav/dm-dialog/direct-messages-dialog.component';
 import { ThreadContentComponent } from './chat/thread-content/thread-content.component';
-import { AllDirectMessagesComponent } from './components/sidenav/all-direct-messages/all-direct-messages.component';
 
 @NgModule({
   declarations: [
@@ -59,8 +59,8 @@ import { AllDirectMessagesComponent } from './components/sidenav/all-direct-mess
     DmLabelComponent,
     NewChannelComponent,
     AllChannelsComponent,
-    ThreadContentComponent,
-    AllDirectMessagesComponent,
+    DirectMessagesDialogComponent,
+    ThreadContentComponent
   ],
   imports: [
     BrowserModule,

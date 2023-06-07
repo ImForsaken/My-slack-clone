@@ -18,7 +18,7 @@ export class TextEditorComponent {
   threadService: ThreadService = inject(ThreadService);
   storeService: StoreService = inject(StoreService);
   location: Location = inject(Location);
-  currentUser!: TUser;
+  currentUser!: TUser | null;
   text: string = '';
   chatId!: string;
   
@@ -51,6 +51,7 @@ export class TextEditorComponent {
   }
 
   sendNewMessage() {
+    if (!this.currentUser) return;
     const chatId = this.location.path().split('/').at(-1);
     const date = new Date();
     const message: TMessage = {
@@ -69,7 +70,6 @@ export class TextEditorComponent {
         threadId = this.threadService.createThread({messageId: this.threadService.messageId});
         this.channelService.addThreadToMessage(chatId!, this.threadService.messageId, threadId);
         this.threadService.loadedThread$.next(threadId);
-        console.log('New Thread', chatId, this.threadService.messageId, threadId);
       }
       this.threadService.addMessage(this.threadService.loadedThread$.getValue(), message);
     }

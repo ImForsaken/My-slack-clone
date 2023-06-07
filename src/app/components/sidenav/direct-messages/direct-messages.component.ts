@@ -3,9 +3,10 @@ import { MatDialog } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 import { UserDbService } from 'src/app/shared/service/user-db.service';
 import { TUser } from 'src/app/shared/types/user';
-import { AllDirectMessagesComponent } from '../all-direct-messages/all-direct-messages.component';
-import { AuthGuard } from 'src/app/shared/service/auth.guard';
-import { User } from '@angular/fire/auth';
+import { DirectMessagesDialogComponent } from '../dm-dialog/direct-messages-dialog.component';
+import { StoreService } from 'src/app/shared/service/store.service';
+import { TDirectMessage } from 'src/app/shared/types/chat';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-direct-messages',
@@ -14,59 +15,82 @@ import { User } from '@angular/fire/auth';
 })
 export class DirectMessagesComponent {
   subAllUsers$!: Subscription;
+  subUser$!: Subscription;
   allUsers: TUser[] = [];
-  loggedUser$!: Subscription;
-  loggedUser!: TUser;
+  myStoredUsers: TUser[] = [];
+  user!: TUser;
+  isUserLoaded: boolean = false;
+  isAllUsersLoaded: boolean = false;
   isDirectMessageOpen: boolean = true;
 
   constructor(
-    private authGuard: AuthGuard,
     public dialog: MatDialog,
-    private userService: UserDbService
+    private userDBService: UserDbService,
+    private storeService: StoreService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
-    this.getLoggedUser();
+    this.getUser();
     this.getAllUsers();
+    this.loadMyStoredUsers();
   }
 
   /**
-   * observe with user are logged in
+   * observe the current logged in user
    */
-  getLoggedUser(): void {
-    const authUser: User = this.authGuard.getAuthUser();
-    const authUserID: string = authUser.uid;
-    this.loggedUser$ = this.userService
-      .getUserById$(authUserID)
-      .subscribe((user: TUser): void => {
-        this.loggedUser = user;
-      });
+  getUser(): void {
+    this.subUser$ = this.storeService.currentUser$.subscribe((user) => {
+      if (user) {
+        this.user = user;
+        this.isUserLoaded = true;
+        this.loadMyStoredUsers();
+      }
+    });
   }
 
   /**
    * observe all users from Firestore
    */
   getAllUsers(): void {
-    this.subAllUsers$ = this.userService
+    this.subAllUsers$ = this.userDBService
       .getAllUsers$()
-      .subscribe((users: TUser[]): void => {
+      .subscribe((users: TUser[]) => {
         this.allUsers = users;
-        // console.log('allUsers: ', users);
+        this.isAllUsersLoaded = true;
+        this.loadMyStoredUsers();
       });
   }
-  //alle User aus der DB laden
 
-  // meine dmUser abgleichen
+  /**
+   * load all users to view the direct messages label
+   */
+  loadMyStoredUsers(): void {
+    if (this.isUserLoaded && this.isAllUsersLoaded) {
+      const storedUserIDs: string[] = this.user.directMessages.map(
+        (dm: TDirectMessage) => dm.chatPartnerID
+      );
+      this.myStoredUsers = this.allUsers.filter((user) =>
+        storedUserIDs.includes(user.id!)
+      );
+      console.log('myStoredUsers:', this.myStoredUsers);
+    }
+  }
 
-  // und diese rendern
+  openDirectMessage(user: TUser) {
+    this.router.navigateByUrl(`main/dmuser_${user.id}`);
+  }
 
-  openUsersDialog() {
-    const dialogRef = this.dialog.open(AllDirectMessagesComponent);
+  /**
+   * shows the dialog with all existing users
+   */
+  openUsersDialog(): void {
+    const dialogRef = this.dialog.open(DirectMessagesDialogComponent);
     dialogRef.afterClosed().subscribe();
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.subAllUsers$.unsubscribe();
-    this.loggedUser$.unsubscribe();
+    this.subUser$.unsubscribe();
   }
 }

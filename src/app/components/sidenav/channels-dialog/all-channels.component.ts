@@ -2,8 +2,10 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 import { ChannelDbService } from 'src/app/shared/service/channels-db.service';
+import { StoreService } from 'src/app/shared/service/store.service';
 import { UserDbService } from 'src/app/shared/service/user-db.service';
 import { TChannel } from 'src/app/shared/types/chat';
+import { TUser } from 'src/app/shared/types/user';
 
 @Component({
   selector: 'app-all-channels',
@@ -11,9 +13,16 @@ import { TChannel } from 'src/app/shared/types/chat';
   styleUrls: ['./all-channels.component.scss'],
 })
 export class AllChannelsComponent implements OnInit, OnDestroy {
-  private subAllChannels$!: Subscription;
-  allChannels: TChannel[] = [];
+  // User
+  user!: TUser;
+  subUser$!: Subscription;
+  isUserLoaded: boolean = false;
   channels: TChannel[] = [];
+  // Channels
+  subAllChannels$!: Subscription;
+  allChannels: TChannel[] = [];
+  isAllChannelsLoaded: boolean = false;
+
   selectedChannel!: TChannel;
   isSelected: boolean = false;
 
@@ -21,62 +30,62 @@ export class AllChannelsComponent implements OnInit, OnDestroy {
     public dialogRef: MatDialogRef<AllChannelsComponent>,
     public dialog: MatDialog,
     private channelService: ChannelDbService,
-    private userService: UserDbService
+    private userService: UserDbService,
+    private storeService: StoreService
   ) {}
 
   ngOnInit(): void {
-    this.getAllChannelsFromDB();
-    this.sortAndFilterChannels();
+    this.getUser();
+    this.getAllChannels();
+  }
+
+  /**
+   * fetch current logged User
+   */
+  getUser(): void {
+    this.subUser$ = this.storeService.currentUser$.subscribe((user) => {
+      if (user) {
+        this.user = user;
+        this.user.isOnline = true;
+        this.isUserLoaded = true;
+      }
+    });
+  }
+
+  /**
+   * fetch all Channels form Database
+   */
+  getAllChannels(): void {
+    this.subAllChannels$ = this.channelService
+      .getAllChannels$()
+      .subscribe((channels: TChannel[]): void => {
+        this.allChannels = channels;
+        this.isAllChannelsLoaded = true;
+        this.sortAndFilterChannels();
+      });
   }
 
   /**
    * get current Channels sorted and filterd to render list
    * @returns
    */
-  sortAndFilterChannels(): TChannel[] {
-    const allChannels: TChannel[] = this.channelService.allChannels;
-    const userChannels: TChannel[] = this.userService.loggedUser.channels;
-    this.channels = this.sortChannelList(
-      this.filterChannelList(allChannels, userChannels)
+  sortAndFilterChannels(): void {
+    const userChannelNames: string[] = this.user.channels.map(
+      (channel: TChannel) => channel.name.toLowerCase()
     );
-    return this.channels;
-  }
-
-  /**
-   * get all existing channels, how are stored in Firebase
-   */
-  getAllChannelsFromDB(): void {
-    this.subAllChannels$ = this.channelService
-      .getAllChannels$()
-      .subscribe((channls: TChannel[]): void => {
-        this.allChannels = channls;
-      });
-  }
-
-  /**
-   * all other existing channels
-   * @returns
-   */
-  filterChannelList(
-    allChannels: TChannel[],
-    userChannels: TChannel[]
-  ): TChannel[] {
-    const otherChannels: TChannel[] = allChannels.filter(
-      (channel: TChannel): boolean =>
-        !userChannels.some(
-          (existingChannel: TChannel): boolean =>
-            existingChannel.name.toLowerCase() === channel.name.toLowerCase()
-        )
+    this.channels = this.allChannels.filter(
+      (channel: TChannel) =>
+        !userChannelNames.includes(channel.name.toLowerCase())
     );
-    return otherChannels;
+    this.sortChannelList();
   }
 
   /**
    * sorts the list of Channels alphabetically
    * @param channelList
    */
-  sortChannelList(channelList: TChannel[]): TChannel[] {
-    channelList.sort((a, b) => {
+  sortChannelList(): void {
+    this.channels.sort((a, b) => {
       if (a.name < b.name) {
         return -1;
       }
@@ -85,7 +94,6 @@ export class AllChannelsComponent implements OnInit, OnDestroy {
       }
       return 0;
     });
-    return channelList;
   }
 
   /**
@@ -104,12 +112,9 @@ export class AllChannelsComponent implements OnInit, OnDestroy {
    */
   onAddChannel(): void {
     if (this.selectedChannel) {
-      if (this.userService.loggedUser.id) {
-        this.userService.loggedUser.channels.push(this.selectedChannel);
-        this.userService.updateUser(
-          this.userService.loggedUser.id,
-          this.userService.loggedUser
-        );
+      if (this.user.id) {
+        this.user.channels.push(this.selectedChannel);
+        this.userService.updateUser(this.user.id, this.user);
       }
     } else {
       console.log('es wurde kein channel ausgewählt');
@@ -127,5 +132,6 @@ export class AllChannelsComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.subAllChannels$.unsubscribe();
+    this.subUser$.unsubscribe();
   }
 }
