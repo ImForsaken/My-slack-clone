@@ -7,7 +7,7 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./chat-content.component.scss'],
 })
 export class ChatContentComponent implements OnInit {
-  currentRoute: string = '';
+  private currentRoute: string = '';
 
   constructor(private route: ActivatedRoute) {}
 

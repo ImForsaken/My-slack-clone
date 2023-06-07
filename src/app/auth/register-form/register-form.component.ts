@@ -57,7 +57,7 @@ export class RegisterFormComponent {
       .then(async (userCredential) => {
         // Sign-Up
         const user = userCredential.user;
-        console.log(user);
+        // console.log(user);
         await this.addUserToCollection(user);
         this.store.loginUser(this.getLoginData());
       })

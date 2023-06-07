@@ -1,5 +1,9 @@
-<button mat-menu-item (click)="sidenavService.close()">
+<button mat-menu-item (click)="sidenavService.close(); resetMessages()">
     <mat-icon>close</mat-icon>
 </button>
 
-<app-text-editor></app-text-editor>
+<div class="thread-message-container">
+    <app-message *ngFor="let message of messages | async" [message]="message" messageType="thread"></app-message>
+</div>
+
+<app-text-editor inputType="thread"></app-text-editor>

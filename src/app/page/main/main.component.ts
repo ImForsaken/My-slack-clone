@@ -45,7 +45,6 @@ export class MainComponent implements OnInit, OnDestroy {
   }
 
   ngAfterViewInit() {
-    console.log('Main Sidenav', this.sidenav)
     this.sidenavService.setSidenav(this.sidenav);
   }
 

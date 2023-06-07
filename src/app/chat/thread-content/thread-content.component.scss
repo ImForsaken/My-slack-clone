@@ -1,0 +1,9 @@
+:host {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.thread-message-container {
+    flex-grow: 1;
+}

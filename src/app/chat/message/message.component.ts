@@ -11,11 +11,14 @@ import { TMessage } from 'src/app/shared/types/message';
   styleUrls: ['./message.component.scss']
 })
 export class MessageComponent {
-  channelService: ChannelDbService = inject(ChannelDbService);
-  route: ActivatedRoute = inject(ActivatedRoute);
-  sidenavService: SidenavService = inject(SidenavService);
-  threadService: ThreadService = inject(ThreadService);
-  channelId!: string;
+  private channelService: ChannelDbService = inject(ChannelDbService);
+  public threadService: ThreadService = inject(ThreadService);
+  public sidenavService: SidenavService = inject(SidenavService);
+  private route: ActivatedRoute = inject(ActivatedRoute);
+
+  private channelId!: string;
+  
+  @Input() messageType!: 'chat' | 'thread';
   @Input() message!: TMessage;
 
   constructor() {
@@ -25,13 +28,16 @@ export class MessageComponent {
   }
 
   deleteMessage(messageId: string) {
-    
-    this.channelService.deleteMessage(this.channelId, messageId);
+    if (this.messageType === 'chat') {
+      this.channelService.deleteMessage(this.channelId, messageId, this.message.threadId);
+    }
+    if (this.messageType === 'thread') {
+      console.log('Delete Thread Message', this.threadService.loadedThread$.getValue(), messageId)
+      this.threadService.deleteMessage(this.threadService.loadedThread$.getValue(), messageId);
+    }
   }
 
-  loadThread(threadId: string | undefined) {
-    if (threadId) {
-      this.threadService.getThreadMessages$(threadId).subscribe(data => console.log(data));
-    }
+  showThread(messageId: string, threadId: string | undefined) {
+    this.threadService.openThread(threadId, messageId);
   }
 }

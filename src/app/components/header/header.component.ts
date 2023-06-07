@@ -26,7 +26,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     setTimeout(() => {
       const user = this.storeService.auth.currentUser;
       if (user) {
-        console.log('signIn', user);
+        // console.log('signIn', user);
         this.getUser(user.uid);
       } else {
         console.log('no nix');
