@@ -18,8 +18,6 @@ import { collection, CollectionReference } from '@firebase/firestore';
 import { Observable } from 'rxjs';
 import { TUser } from '../types/user';
 import { TDirectMessages } from '../types/dm';
-import { AuthGuard } from './auth.guard';
-import { User } from '@angular/fire/auth';
 
 @Injectable({
   providedIn: 'root',

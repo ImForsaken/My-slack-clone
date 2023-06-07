@@ -7,15 +7,12 @@ import {
   sendPasswordResetEmail,
   signInWithEmailAndPassword,
   signOut,
-  user,
-  User,
   UserCredential,
 } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import { FormControl, FormGroup } from '@angular/forms';
 import { setPersistence } from '@firebase/auth';
 import { TUser } from '../types/user';
-import { AuthGuard } from './auth.guard';
 
 @Injectable({
   providedIn: 'root',
@@ -26,7 +23,6 @@ export class StoreService {
   currentUser$!: Observable<TUser>;
   currentChat$!: Observable<string>;
   loggedInUserID$ = new BehaviorSubject<string>('');
-  loggedInUser$!: User;
 
   constructor(public router: Router) {
     // this.userAuth$.subscribe((aUser: User | null) => {
@@ -65,7 +61,7 @@ export class StoreService {
         const user = userCredential.user;
         this.currentUser$ = this.userService.getUserById$(user.uid);
         this.loggedInUserID$.next(user.uid); // Wenn login erfolgreich, wird der neue wert weitergereicht.
-        console.log('Login successful for User:', user);
+        // console.log('Login successful for User:', user);
         this.router.navigate(['/main']);
       })
       .catch((error) => {
