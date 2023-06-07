@@ -7,6 +7,6 @@ export type TMessage = {
   userName: string;
   profilePicture: string;
   text: string;
-  timestamp: string;
+  timestamp: number;
   threadId?: string;
 };

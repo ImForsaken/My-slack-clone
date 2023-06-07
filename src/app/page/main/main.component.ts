@@ -1,8 +1,10 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild, inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { MatSidenav } from '@angular/material/sidenav';
 import { Subscription } from 'rxjs';
 import { ChannelDbService } from 'src/app/shared/service/channels-db.service';
 import { DirectMessageDbService } from 'src/app/shared/service/direct-messages-db.service';
+import { SidenavService } from 'src/app/shared/service/sidenav.service';
 import { StoreService } from 'src/app/shared/service/store.service';
 import { UserDbService } from 'src/app/shared/service/user-db.service';
 import { TChannel } from 'src/app/shared/types/chat';
@@ -15,12 +17,17 @@ import { TUser } from 'src/app/shared/types/user';
   styleUrls: ['./main.component.scss'],
 })
 export class MainComponent implements OnInit, OnDestroy {
+  sidenavService: SidenavService = inject(SidenavService);
+
+  @ViewChild('threadDrawer') sidenav!: MatSidenav;
+
+  private subLoggedUser$!: Subscription;
+  private subAllUsers$!: Subscription;
+  private subChannels$!: Subscription;
+  private subDirectMessages$!: Subscription;
   user!: TUser;
   subUser$!: Subscription;
   userLoaded: boolean = false;
-  subAllUsers$!: Subscription;
-  subChannels$!: Subscription;
-  subDirectMessages$!: Subscription;
   isSidenavOpened: boolean = true;
 
   constructor(
@@ -39,6 +46,10 @@ export class MainComponent implements OnInit, OnDestroy {
     this.getAllUsers();
     this.getAllChannels();
     this.getAllDircetMessages();
+  }
+
+  ngAfterViewInit() {
+    this.sidenavService.setSidenav(this.sidenav);
   }
 
   /**

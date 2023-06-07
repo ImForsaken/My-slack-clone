@@ -35,6 +35,7 @@ import { MainComponent } from './page/main/main.component';
 import { NewChannelComponent } from './components/sidenav/new-channel/new-channel.component';
 import { AllChannelsComponent } from './components/sidenav/channels-dialog/all-channels.component';
 import { DirectMessagesDialogComponent } from './components/sidenav/dm-dialog/direct-messages-dialog.component';
+import { ThreadContentComponent } from './chat/thread-content/thread-content.component';
 
 @NgModule({
   declarations: [
@@ -59,6 +60,7 @@ import { DirectMessagesDialogComponent } from './components/sidenav/dm-dialog/di
     NewChannelComponent,
     AllChannelsComponent,
     DirectMessagesDialogComponent,
+    ThreadContentComponent
   ],
   imports: [
     BrowserModule,

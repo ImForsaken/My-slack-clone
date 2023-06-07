@@ -1,7 +1,10 @@
-import { Component, inject } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Location } from '@angular/common';
+import { Component, Input, inject } from '@angular/core';
 import { ChannelDbService } from 'src/app/shared/service/channels-db.service';
+import { StoreService } from 'src/app/shared/service/store.service';
+import { ThreadService } from 'src/app/shared/service/thread.service';
 import { TMessage } from 'src/app/shared/types/message';
+import { TUser } from 'src/app/shared/types/user';
 
 @Component({
   selector: 'app-text-editor',
@@ -12,7 +15,10 @@ import { TMessage } from 'src/app/shared/types/message';
 })
 export class TextEditorComponent {
   channelService: ChannelDbService = inject(ChannelDbService);
-  route: ActivatedRoute = inject(ActivatedRoute);
+  threadService: ThreadService = inject(ThreadService);
+  storeService: StoreService = inject(StoreService);
+  location: Location = inject(Location);
+  currentUser!: TUser | null;
   text: string = '';
   chatId!: string;
   
@@ -22,10 +28,10 @@ export class TextEditorComponent {
     borderRadius: '0 0 10px 10px'
   }
 
-  constructor() {
-    this.route.url.subscribe(route => {
-      this.chatId = route[0].path;
-    });
+  @Input() inputType!: 'chat' | 'thread';
+  
+  ngAfterViewInit() {
+    this.storeService.currentUser$.subscribe(user =>  this.currentUser = user);
   }
 
   onKeyDown(event: KeyboardEvent) {
@@ -45,16 +51,28 @@ export class TextEditorComponent {
   }
 
   sendNewMessage() {
+    if (!this.currentUser) return;
+    const chatId = this.location.path().split('/').at(-1);
     const date = new Date();
     const message: TMessage = {
-      userId: 'xyz',
-      userName: 'Dennis Ammen',
-      profilePicture: 'url',
+      userId: this.currentUser.id!,
+      userName: this.currentUser.username,
+      profilePicture: this.currentUser.profilePicture,
       text: this.text,
-      timestamp: date.toUTCString()
+      timestamp: Date.now()
     }
 
-    this.channelService.addMessage(this.chatId, message);
+    if (this.inputType === 'chat') this.channelService.addMessage(chatId!, message);
+    if (this.inputType === 'thread') {
+      let threadId = this.threadService.loadedThread$.getValue();
+
+      if (!threadId) {
+        threadId = this.threadService.createThread({messageId: this.threadService.messageId});
+        this.channelService.addThreadToMessage(chatId!, this.threadService.messageId, threadId);
+        this.threadService.loadedThread$.next(threadId);
+      }
+      this.threadService.addMessage(this.threadService.loadedThread$.getValue(), message);
+    }
     this.text = '';
   }
 }

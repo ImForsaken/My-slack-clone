@@ -1,5 +1,5 @@
 <div class="message">
-    <img src="https://source.unsplash.com/random" width="30" height="30" draggable="false">
+    <img [src]="message.profilePicture" width="30" height="30" draggable="false">
     <div>
         <div class="message-header">
             <span><strong>{{ message.userName }}</strong></span>
@@ -8,9 +8,9 @@
         <div class="message-body">
             <quill-view-html [content]="message.text"></quill-view-html>
         </div>
-        <div class="message-footer">
-            <a href="#"><strong>5 Antworten</strong></a>
-            <span>Letze Antwort heute um 15:34</span>
+        <div class="message-footer" *ngIf="messageType === 'chat'">
+            <strong (click)="showThread(message.id!, message.threadId)">Open Thread</strong>
+            <!-- <span>Letze Antwort heute um 15:34</span> -->
         </div>
     </div>
     <button mat-icon-button [matMenuTriggerFor]="menu" class="btn">

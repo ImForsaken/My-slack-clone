@@ -53,6 +53,11 @@ mat-toolbar {
     flex-shrink: 0;
 }
 
+.mat-drawer-content {
+    display: flex;
+    flex-direction: column;
+}
+
 .chat-content {
     display: flex;
     flex-direction: column;
@@ -62,4 +67,8 @@ mat-toolbar {
     color: $white;
     text-align: center;
     padding: 1rem;
+}
+
+.message-container {
+    height: 100%;
 }

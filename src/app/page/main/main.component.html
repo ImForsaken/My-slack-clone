@@ -1,27 +1,39 @@
 <section>
-    <mat-sidenav-container>
-        <!-- leftSide menu content -->
-        <mat-sidenav #sidenav mode="side" [(opened)]="isSidenavOpened">
-            <mat-toolbar class="sidenav__header" color="primary">
-                <div>Slack-Clone</div>
-            </mat-toolbar>
-            <!-- Channels -->
-            <app-channels></app-channels>
-            <hr />
-            <!-- DirectMessages -->
-            <app-direct-messages></app-direct-messages>
-        </mat-sidenav>
-        <!--rightSide main content -->
-        <mat-sidenav-content>
-            <!-- header -->
-            <mat-toolbar>
-                <button class="toggle__btn" type="button" mat-button (click)="sidenav.toggle()" matTooltip="Toggle Menu">
-          <mat-icon>menu_open</mat-icon>
-        </button>
-                <div># {{ this.userService.activeChatName | uppercase }}</div>
-            </mat-toolbar>
-            <!-- chat display -->
-            <router-outlet></router-outlet>
-        </mat-sidenav-content>
-    </mat-sidenav-container>
+  <mat-sidenav-container>
+    <!-- leftSide menu content -->
+    <mat-sidenav #sidenav mode="side" [(opened)]="isSidenavOpened">
+      <mat-toolbar class="sidenav__header" color="primary">
+        <div>Slack-Clone</div>
+      </mat-toolbar>
+      <!-- Channels -->
+      <app-channels></app-channels>
+      <hr />
+      <!-- DirectMessages -->
+      <app-direct-messages></app-direct-messages>
+    </mat-sidenav>
+    <!--rightSide main content -->
+    <mat-sidenav-content>
+
+      <mat-drawer-container class="message-container" autosize>
+        <mat-drawer #threadDrawer mode="over" position="end">
+          <!-- Thread -->
+          <app-thread-content></app-thread-content>
+        </mat-drawer>
+
+        <mat-drawer-content>
+          <!-- header -->
+          <mat-toolbar>
+            <button class="toggle__btn" type="button" mat-button (click)="sidenav.toggle()" matTooltip="Toggle Menu">
+              <mat-icon>menu_open</mat-icon>
+            </button>
+            <div># {{ this.userService.activeChatName | uppercase }}</div>
+          </mat-toolbar>
+          <!-- chat display -->
+          <router-outlet></router-outlet>
+        </mat-drawer-content>
+      </mat-drawer-container>
+
+
+    </mat-sidenav-content>
+  </mat-sidenav-container>
 </section>
