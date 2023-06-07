@@ -18,6 +18,7 @@
 
     img {
         flex-shrink: 0;
+        object-fit: cover;
     }
 }
 
@@ -53,6 +54,10 @@
 
   span {
     cursor: default;
+  }
+
+  strong {
+    cursor: pointer;
   }
 }
 

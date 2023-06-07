@@ -8,9 +8,6 @@ import { TUser } from 'src/app/shared/types/user';
   styleUrls: ['./dm-label.component.scss'],
 })
 export class DmLabelComponent {
-  isOnline: boolean = true;
-
-  username: string = 'Georg Strassberger';
   @Input() user!: TUser;
 
   constructor(private userService: UserDbService) {}

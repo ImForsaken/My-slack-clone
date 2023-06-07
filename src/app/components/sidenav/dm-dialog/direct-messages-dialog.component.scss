@@ -1,0 +1,38 @@
+@import "../../../shared/style/variables";
+.dm__title {
+    background-color: $purple;
+    color: $white;
+}
+
+.dm__wrapper {
+    padding-top: 1rem;
+    width: 20rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    background-color: $purple;
+}
+
+.dm {
+    color: $white;
+    background-color: $purple;
+    border-radius: 0.5rem;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    &:hover {
+        background-color: $purple-hover;
+    }
+    &.selected-dm,
+    .channel:not(.selected-dm):hover {
+        color: $white;
+        background-color: $blue-active;
+    }
+}
+
+.dm__buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    background-color: $purple;
+    flex-wrap: nowrap;
+}

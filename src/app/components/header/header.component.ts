@@ -15,7 +15,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   user!: TUser;
   subUser$!: Subscription;
   userLoaded: boolean = false;
-  userId!: string;
+  userId?: string;
 
   constructor(
     private storeService: StoreService,
@@ -24,30 +24,33 @@ export class HeaderComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.getAuthState();
+    this.getUser();
   }
 
-  getAuthState(): void {
-    setTimeout(() => {
-      const user = this.storeService.auth.currentUser;
+  getUser(): void {
+    this.subUser$ = this.storeService.currentUser$.subscribe((user) => {
       if (user) {
-        console.log('signIn', user);
-        this.getUser(user.uid);
-      } else {
-        console.log('no nix');
+        console.log(user);
+        this.user = user;
+        this.user.isOnline = true;
+        this.userLoaded = true;
+        this.userId = user.id;
       }
-    }, 1000);
+    });
+    setTimeout(() => {
+      if (this.user) {
+        this.onUpdateUser(this.storeService.authLoggedUserUID, this.user);
+      }
+    }, 500);
   }
 
-  getUser(userID: string): void {
-    this.subUser$ = this.userService.getUserById$(userID).subscribe((user) => {
-      this.user = user;
-      this.userLoaded = true;
-      this.userId = userID;
-    });
+  onUpdateUser(userID: string, user: TUser): void {
+    this.userService.updateUser(userID, user);
   }
 
   logoutUser(): void {
+    this.user.isOnline = false;
+    this.onUpdateUser(this.storeService.authLoggedUserUID, this.user);
     this.storeService.logout();
   }
 

@@ -19,6 +19,7 @@ import { TextEditorComponent } from './chat/text-editor/text-editor.component';
 // Components
 // Header
 import { HeaderComponent } from './components/header/header.component';
+import { ProfileSettingsDialogComponent } from './components/header/profile-settings-dialog/profile-settings-dialog.component';
 // Info
 import { DataProtectionComponent } from './components/info/data-protection/data-protection.component';
 import { LegalNoticeComponent } from './components/info/legal-notice/legal-notice.component';
@@ -33,9 +34,9 @@ import { PageNotFoundComponent } from './page/page-not-found/page-not-found.comp
 import { WelcomeComponent } from './page/welcome/welcome.component';
 import { MainComponent } from './page/main/main.component';
 import { NewChannelComponent } from './components/sidenav/new-channel/new-channel.component';
-import { AllChannelsComponent } from './components/sidenav/all-channels/all-channels.component';
-import { AllDirectMessagesComponent } from './components/sidenav/all-direct-messages/all-direct-messages.component';
-import { ProfileSettingsDialogComponent } from './components/header/profile-settings-dialog/profile-settings-dialog.component';
+import { AllChannelsComponent } from './components/sidenav/channels-dialog/all-channels.component';
+import { DirectMessagesDialogComponent } from './components/sidenav/dm-dialog/direct-messages-dialog.component';
+import { ThreadContentComponent } from './chat/thread-content/thread-content.component';
 
 @NgModule({
   declarations: [
@@ -59,7 +60,8 @@ import { ProfileSettingsDialogComponent } from './components/header/profile-sett
     DmLabelComponent,
     NewChannelComponent,
     AllChannelsComponent,
-    AllDirectMessagesComponent,
+    DirectMessagesDialogComponent,
+    ThreadContentComponent,
     ProfileSettingsDialogComponent,
   ],
   imports: [

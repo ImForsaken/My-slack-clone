@@ -1,5 +1,5 @@
 import { Injectable, inject } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, of } from 'rxjs';
 import { UserDbService } from './user-db.service';
 import {
   Auth,
@@ -8,7 +8,6 @@ import {
   sendPasswordResetEmail,
   signInWithEmailAndPassword,
   signOut,
-  user,
   User,
   UserCredential,
 } from '@angular/fire/auth';
@@ -26,18 +25,42 @@ import { RegisterFormComponent } from 'src/app/auth/register-form/register-form.
 export class StoreService {
   private firestore: Firestore = inject(Firestore);
   userService: UserDbService = inject(UserDbService);
-  public auth: Auth = inject(Auth);
-  currentUser$!: Observable<TUser>;
+  currentUser$!: Observable<TUser | null>;
   currentChat$!: Observable<string>;
   loggedInUserID$ = new BehaviorSubject<string>('');
   userId!: string;
+  user!: TUser;
+  authLoggedUserUID!: string;
 
   guestLoginCredentials = new FormGroup({
     userEmail: new FormControl('guestuser@guestuserslackclone.de'),
     userPassword: new FormControl('123456'),
   });
 
-  constructor(public router: Router) {}
+  constructor(
+    public router: Router,
+    public userDBService: UserDbService,
+    public auth: Auth
+  ) {
+    this.auth.onAuthStateChanged((user) => {
+      if (user) {
+        // user is logged in
+        this.authLoggedUserUID = user.uid;
+        console.log('user.uid: ', user.uid);
+        this.currentUser$ = this.userDBService.getUserById$(user.uid);
+        this.userDBService
+          .getUserById$(user.uid)
+          .subscribe((user) => (this.user = user));
+      } else {
+        // user is NOT logged in
+        if (this.user) {
+          this.user.isOnline = false;
+          this.userDBService.updateUser(this.authLoggedUserUID, this.user);
+        }
+        this.currentUser$ = of(null);
+      }
+    });
+  }
 
   loginUser(loginForm: FormGroup): void {
     setPersistence(this.auth, browserSessionPersistence)
@@ -62,8 +85,7 @@ export class StoreService {
     )
       .then((userCredential: UserCredential) => {
         const user = userCredential.user;
-        this.currentUser$ = this.userService.getUserById$(user.uid);
-        this.loggedInUserID$.next(user.uid); // Wenn login erfolgreich, wird der neue wert weitergereicht.
+        this.currentUser$ = this.userDBService.getUserById$(user.uid);
         console.log('Login successful for User:', user);
         setTimeout(() => {
           this.router.navigate(['/main']);

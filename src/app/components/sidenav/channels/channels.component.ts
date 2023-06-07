@@ -1,12 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { StoreService } from 'src/app/shared/service/store.service';
-import { UserDbService } from 'src/app/shared/service/user-db.service';
 import { TUser } from 'src/app/shared/types/user';
 import { NewChannelComponent } from '../new-channel/new-channel.component';
-import { AllChannelsComponent } from '../all-channels/all-channels.component';
-import { User } from '@angular/fire/auth';
-import { AuthGuard } from 'src/app/shared/service/auth.guard';
+import { AllChannelsComponent } from '../channels-dialog/all-channels.component';
 import { Subscription } from 'rxjs';
 import { TChannel } from 'src/app/shared/types/chat';
 
@@ -16,19 +13,40 @@ import { TChannel } from 'src/app/shared/types/chat';
   styleUrls: ['./channels.component.scss'],
 })
 export class ChannelsComponent implements OnInit, OnDestroy {
-  private subLoggedUser$!: Subscription;
-  loggedUser!: TUser;
+  user!: TUser;
+  subUser$!: Subscription;
+  userLoaded: boolean = false;
   isChannelsOpen: boolean = true;
   selectedChannel!: TChannel;
 
-  constructor(
-    public dialog: MatDialog,
-    private userService: UserDbService,
-    private authGuard: AuthGuard
-  ) {}
+  constructor(public dialog: MatDialog, private storeService: StoreService) {}
 
   ngOnInit(): void {
-    this.getLoggedUser();
+    this.getUser();
+  }
+
+  /**
+   * fetch current logged User
+   */
+  getUser(): void {
+    this.subUser$ = this.storeService.currentUser$.subscribe((user) => {
+      if (user) {
+        this.user = user;
+        this.user.isOnline = true;
+        this.userLoaded = true;
+      }
+    });
+  }
+
+  /**
+   * set Channel,
+   * to hightlight the selected channel
+   * @param channel
+   */
+  selectChannel(channel: TChannel): void {
+    if (channel) {
+      this.selectedChannel = channel;
+    }
   }
 
   /**
@@ -49,31 +67,6 @@ export class ChannelsComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * get the current logged user from Auth
-   */
-  getLoggedUser(): void {
-    const authUser: User = this.authGuard.getAuthUser();
-    const authUserID: string = authUser.uid;
-    this.subLoggedUser$ = this.userService
-      .getUserById$(authUserID)
-      .subscribe((user: TUser): void => {
-        user.channels = this.sortChannels(user.channels);
-        this.loggedUser = user;
-      });
-  }
-
-  /**
-   * set Channel,
-   * to hightlight the selected channel
-   * @param channel
-   */
-  selectChannel(channel: TChannel): void {
-    if (channel) {
-      this.selectedChannel = channel;
-    }
-  }
-
-  /**
    * Open a Dialog to create a new Channel
    */
   openNewDialog(): void {
@@ -90,6 +83,6 @@ export class ChannelsComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.subLoggedUser$.unsubscribe();
+    this.subUser$.unsubscribe();
   }
 }

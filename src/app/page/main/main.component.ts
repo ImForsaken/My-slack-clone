@@ -1,10 +1,11 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { User } from '@angular/fire/auth';
+import { Component, OnDestroy, OnInit, ViewChild, inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { MatSidenav } from '@angular/material/sidenav';
 import { Subscription } from 'rxjs';
-import { AuthGuard } from 'src/app/shared/service/auth.guard';
 import { ChannelDbService } from 'src/app/shared/service/channels-db.service';
 import { DirectMessageDbService } from 'src/app/shared/service/direct-messages-db.service';
+import { SidenavService } from 'src/app/shared/service/sidenav.service';
+import { StoreService } from 'src/app/shared/service/store.service';
 import { UserDbService } from 'src/app/shared/service/user-db.service';
 import { TChannel } from 'src/app/shared/types/chat';
 import { TDirectMessages } from 'src/app/shared/types/dm';
@@ -16,48 +17,57 @@ import { TUser } from 'src/app/shared/types/user';
   styleUrls: ['./main.component.scss'],
 })
 export class MainComponent implements OnInit, OnDestroy {
+  sidenavService: SidenavService = inject(SidenavService);
+
+  @ViewChild('threadDrawer') sidenav!: MatSidenav;
+
   private subLoggedUser$!: Subscription;
   private subAllUsers$!: Subscription;
   private subChannels$!: Subscription;
   private subDirectMessages$!: Subscription;
+  user!: TUser;
+  subUser$!: Subscription;
+  userLoaded: boolean = false;
   isSidenavOpened: boolean = true;
 
   constructor(
     public dialog: MatDialog,
     public userService: UserDbService,
-    private authGuard: AuthGuard,
     private channelService: ChannelDbService,
-    private dmService: DirectMessageDbService
+    private dmService: DirectMessageDbService,
+    private storeService: StoreService
   ) {}
 
-  // Start Subscribe DB with Service and Store the data on it.
+  /**
+   * Start all Subscriptions from Database
+   */
   ngOnInit(): void {
-    this.getLoggedUser();
+    this.getUser();
     this.getAllUsers();
     this.getAllChannels();
     this.getAllDircetMessages();
   }
 
-  /**
-   * get User ID from AuthGuard;
-   * @returns
-   */
-  getAuthUserID(): string {
-    const authUser: User = this.authGuard.getAuthUser();
-    return authUser.uid;
+  ngAfterViewInit() {
+    this.sidenavService.setSidenav(this.sidenav);
   }
 
   /**
-   * save current signIn User in userService
+   * fetch current logged User
    */
-  getLoggedUser(): void {
-    this.subLoggedUser$ = this.userService
-      .getUserById$(this.getAuthUserID())
-      .subscribe((user: TUser): void => {
-        this.userService.loggedUser = user;
-      });
+  getUser(): void {
+    this.subUser$ = this.storeService.currentUser$.subscribe((user) => {
+      if (user) {
+        this.user = user;
+        this.user.isOnline = true;
+        this.userLoaded = true;
+      }
+    });
   }
 
+  /**
+   * fetch all Users form Database
+   */
   getAllUsers(): void {
     this.subAllUsers$ = this.userService
       .getAllUsers$()
@@ -67,7 +77,7 @@ export class MainComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * save all existing channels in channelService
+   * fetch all Channels form Database
    */
   getAllChannels(): void {
     this.subChannels$ = this.channelService
@@ -77,6 +87,9 @@ export class MainComponent implements OnInit, OnDestroy {
       });
   }
 
+  /**
+   * fetch all DirectMessages form Database
+   */
   getAllDircetMessages(): void {
     this.subDirectMessages$ = this.dmService
       .getAllDirectMessages$()
@@ -85,8 +98,11 @@ export class MainComponent implements OnInit, OnDestroy {
       });
   }
 
+  /**
+   * close all Subscriptions from Database
+   */
   ngOnDestroy(): void {
-    this.subLoggedUser$.unsubscribe();
+    this.subUser$.unsubscribe();
     this.subAllUsers$.unsubscribe();
     this.subChannels$.unsubscribe();
     this.subDirectMessages$.unsubscribe();
