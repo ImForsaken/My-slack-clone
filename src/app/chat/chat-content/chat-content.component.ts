@@ -1,19 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component} from '@angular/core';
 
 @Component({
   selector: 'app-chat-content',
   templateUrl: './chat-content.component.html',
   styleUrls: ['./chat-content.component.scss'],
 })
-export class ChatContentComponent implements OnInit {
-  private currentRoute: string = '';
+export class ChatContentComponent {
 
-  constructor(private route: ActivatedRoute) {}
-
-  ngOnInit() {
-    this.route.params.subscribe((params): void => {
-      this.currentRoute = params['name'];
-    });
-  }
 }

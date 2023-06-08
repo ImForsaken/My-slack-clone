@@ -19,44 +19,63 @@ import { Observable } from 'rxjs';
 import { TUser } from '../types/user';
 import { TDirectMessages } from '../types/dm';
 
+/**
+ * Service for managing users in the firebase firestore.
+ */
 @Injectable({
   providedIn: 'root',
 })
 export class UserDbService {
   private firestore: Firestore = inject(Firestore);
-  private usersCollRef: CollectionReference = collection(
-    this.firestore,
-    'users'
-  );
-  allUsers: TUser[] = [];
-  loggedUser!: TUser;
-  activeChatName: string = '';
+  private usersCollRef: CollectionReference = collection(this.firestore, 'users');
+  public allUsers: TUser[] = [];
+  // loggedUser!: TUser;
+  public activeChatName: string = '';
 
+  /**
+   * Gets the firebase collection for all users.
+   * @returns Obserable for all users.
+   */
   getAllUsers$(): Observable<TUser[]> {
-    return collectionData(this.usersCollRef, { idField: 'id' }) as Observable<
-      TUser[]
-    >;
+    return collectionData(this.usersCollRef, { idField: 'id' }) as Observable<TUser[]>;
   }
 
+  /**
+   * Gets the firebase user document with the given id from the users collection.
+   * @param chatId Id of the channel/chat.
+   * @returns Observable of the channel/chat document.
+   */
   getUserById$(userId: string): Observable<TUser> {
     const usersDocRef: DocumentReference = doc(this.usersCollRef, userId);
     return docData(usersDocRef, { idField: 'id' }) as Observable<TUser>;
   }
 
+  /**
+   * Gets the firebase user document with the given email from the users collection.
+   * @param chatId Id of the channel/chat.
+   * @returns Observable of the channel/chat document.
+   */
   getUserByEmail$(email: string): Observable<TUser[]> {
-    const userQueryRef: Query<DocumentData> = query(
-      this.usersCollRef,
-      where('email', '==', email)
-    );
-    return collectionData(userQueryRef, { idField: 'id' }) as Observable<
-      TUser[]
-    >;
+    const userQueryRef: Query<DocumentData> = query(this.usersCollRef, where('email', '==', email));
+    return collectionData(userQueryRef, { idField: 'id' }) as Observable<TUser[]>;
   }
 
+  /**
+   * Creates a new user in firebase with the provided id as document id.
+   * @param userId Document user id.
+   * @param userObj Object of type TUser.
+   * @returns setDoc promise.
+   */
   createUser(userId: string, userObj: TUser): Promise<void> {
     return setDoc(doc(this.usersCollRef, userId), userObj);
   }
 
+  /**
+   * Updates the user with the given id in firebase with the new user object.
+   * @param userId Document user id.
+   * @param userObj Object of type TUser.
+   * @returns updateDoc promise.
+   */
   updateUser(userId: string, userObj: TUser): Promise<void> {
     return updateDoc(doc(this.usersCollRef, userId), userObj);
   }

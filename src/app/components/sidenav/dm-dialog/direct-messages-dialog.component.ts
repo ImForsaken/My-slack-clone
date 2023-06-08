@@ -40,6 +40,7 @@ export class DirectMessagesDialogComponent implements OnInit, OnDestroy {
    */
   getUser(): void {
     this.subUser$ = this.storeService.currentUser$.subscribe((user) => {
+      console.log('dm dialog comp')
       if (user) {
         this.user = user;
         this.user.isOnline = true;
@@ -55,6 +56,7 @@ export class DirectMessagesDialogComponent implements OnInit, OnDestroy {
     this.subAllUsers$ = this.userService
       .getAllUsers$()
       .subscribe((users: TUser[]): void => {
+        console.log('dm dialog comp')
         this.allUsers = users.filter((user: TUser) => {
           return (
             user.id !== this.user.id && // Aktueller Benutzer ausschließen

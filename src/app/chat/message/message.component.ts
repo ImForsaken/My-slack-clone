@@ -1,9 +1,10 @@
 import { Component, Input, inject } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { ChannelDbService } from 'src/app/shared/service/channels-db.service';
 import { SidenavService } from 'src/app/shared/service/sidenav.service';
 import { ThreadService } from 'src/app/shared/service/thread.service';
 import { TMessage } from 'src/app/shared/types/message';
+import { Location } from '@angular/common';
+import { DirectMessageDbService } from 'src/app/shared/service/direct-messages-db.service';
 
 @Component({
   selector: 'app-message',
@@ -12,32 +13,32 @@ import { TMessage } from 'src/app/shared/types/message';
 })
 export class MessageComponent {
   private channelService: ChannelDbService = inject(ChannelDbService);
+  private directMessageService: DirectMessageDbService = inject(DirectMessageDbService);
+  private location: Location = inject(Location);
   public threadService: ThreadService = inject(ThreadService);
   public sidenavService: SidenavService = inject(SidenavService);
-  private route: ActivatedRoute = inject(ActivatedRoute);
-
-  private channelId!: string;
   
   @Input() messageType!: 'chat' | 'thread';
   @Input() message!: TMessage;
 
-  constructor() {
-    this.route.url.subscribe(route => {
-      this.channelId = route[0].path;
-    });
-  }
+  deleteMessage(messageId: string): void {
+    const urlPath: string |undefined = this.location.path().split('/').at(-1);
+    const chatType: string |undefined = urlPath?.split('_')[0];
+    const chatId: string |undefined = urlPath?.split('_')[1];
 
-  deleteMessage(messageId: string) {
     if (this.messageType === 'chat') {
-      this.channelService.deleteMessage(this.channelId, messageId, this.message.threadId);
+      if (chatType === 'channel') {
+        this.channelService.deleteMessage(chatId!, messageId, this.message.threadId);
+      } else if (chatType === 'dmuser') {
+        this.directMessageService.deleteMessage(chatId!, messageId);
+      }
     }
     if (this.messageType === 'thread') {
-      console.log('Delete Thread Message', this.threadService.loadedThread$.getValue(), messageId)
       this.threadService.deleteMessage(this.threadService.loadedThread$.getValue(), messageId);
     }
   }
 
-  showThread(messageId: string, threadId: string | undefined) {
+  showThread(messageId: string, threadId: string | undefined): void {
     this.threadService.openThread(threadId, messageId);
   }
 }
