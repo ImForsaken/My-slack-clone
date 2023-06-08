@@ -40,7 +40,7 @@ export class ChannelDbService {
   }
 
   /**
-   * Gets the firebase message collection from the direct message document with the given id.
+   * Gets the firebase channel/chat document with the given id from the channels collection.
    * @param chatId Id of the channel/chat.
    * @returns Observable of the channel/chat document.
    */
@@ -102,7 +102,7 @@ export class ChannelDbService {
     if (threadId) {
       this.threadService.deleteThread(threadId);
     }
-
+    
     return deleteDoc(doc(messageCollRef, messageId));
   }
 
