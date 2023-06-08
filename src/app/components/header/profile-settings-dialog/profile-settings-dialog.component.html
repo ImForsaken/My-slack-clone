@@ -2,16 +2,12 @@
 <div mat-dialog-content>
     {{ userInformation?.username }}
 
-
     <form [formGroup]="editProfileForm" class="editProfileForm">
         <mat-form-field class="example-full-width">
-            <mat-label>Email</mat-label>
-            <input type="email" matInput formControlName="username">
-            <mat-error *ngIf="editProfileForm.controls['username'].hasError('required')">
-                Please enter a valid email address
-            </mat-error>
-            <mat-error *ngIf="emailFormControl.hasError('required')">
-                Email is <strong>required</strong>
+            <mat-label>Name</mat-label>
+            <input type="text" matInput formControlName="firstname" [placeholder]="userInformation?.firstname || ''">
+            <mat-error *ngIf="editProfileForm.controls['firstname'].hasError('required')">
+                Please enter a valid Name
             </mat-error>
         </mat-form-field>
     </form>
