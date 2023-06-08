@@ -46,17 +46,13 @@ export class StoreService {
       if (user) {
         // user is logged in
         this.authLoggedUserUID = user.uid;
-        console.log('user.uid: ', user.uid);
+
         this.currentUser$ = this.userDBService.getUserById$(user.uid);
         this.userDBService
           .getUserById$(user.uid)
           .subscribe((user) => (this.user = user));
       } else {
         // user is NOT logged in
-        if (this.user) {
-          this.user.isOnline = false;
-          this.userDBService.updateUser(this.authLoggedUserUID, this.user);
-        }
         this.currentUser$ = of(null);
       }
     });
@@ -85,8 +81,16 @@ export class StoreService {
     )
       .then((userCredential: UserCredential) => {
         const user = userCredential.user;
-        this.currentUser$ = this.userDBService.getUserById$(user.uid);
         console.log('Login successful for User:', user);
+        // this.currentUser$ = this.userDBService.getUserById$(user.uid); // ist auch in onAuthStateChanged ????
+        // ############################
+        // ######### Login ############
+        // ############################
+        console.log('this.user', this.user);
+        this.user.isOnline = true;
+        console.log('this.user.isOnline', this.user.isOnline);
+        // this.userDBService.updateUser(this.user.id!, this.user);
+
         setTimeout(() => {
           this.router.navigate(['/main']);
         }, 500);
@@ -152,17 +156,19 @@ export class StoreService {
         name: 'Allgemein',
         id: '6DiSW40zY13TUg9RGBwL',
         status: 'public',
+        createdOn: 'admin',
       },
       {
         name: 'Community',
         id: '3NvnI5JguDd2UizBqnkP',
         status: 'public',
+        createdOn: 'admin',
       },
       {
         status: 'public',
         name: 'JavaScript',
         id: 'Y0nlU5MQOOdUbwElvEwQ',
-        createdOn: 'activeUser',
+        createdOn: 'admin',
       },
     ];
     return channels;
@@ -173,6 +179,16 @@ export class StoreService {
       .then((result) => {
         // Sign-out successful.
         console.log('logged Out', result);
+
+        // ############################
+        // ######### LogOUT ############
+        // ############################
+        this.currentUser$ = this.userDBService.getUserById$(this.user.id!); // ist auch in onAuthStateChanged ????
+        console.log('this.user', this.user);
+        this.user.isOnline = false;
+        console.log('this.user.isOnline', this.user.isOnline);
+        // this.userDBService.updateUser(this.user.id!, this.user);
+
         this.router.navigate(['']);
       })
       .catch((error) => {
