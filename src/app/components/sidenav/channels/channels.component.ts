@@ -33,6 +33,7 @@ export class ChannelsComponent implements OnInit, OnDestroy {
       if (user) {
         this.user = user;
         this.user.isOnline = true;
+        this.user.channels = this.sortChannels(this.user.channels);
         this.userLoaded = true;
       }
     });
