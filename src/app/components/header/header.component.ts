@@ -1,8 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 import { StoreService } from 'src/app/shared/service/store.service';
-import { UserDbService } from 'src/app/shared/service/user-db.service';
 import { TUser } from 'src/app/shared/types/user';
+import { ProfileSettingsDialogComponent } from './profile-settings-dialog/profile-settings-dialog.component';
 
 @Component({
   selector: 'app-header',
@@ -12,12 +13,8 @@ import { TUser } from 'src/app/shared/types/user';
 export class HeaderComponent implements OnInit, OnDestroy {
   user!: TUser;
   subUser$!: Subscription;
-  userLoaded: boolean = false;
 
-  constructor(
-    private storeService: StoreService,
-    private userService: UserDbService
-  ) {}
+  constructor(private storeService: StoreService, public dialog: MatDialog) {}
 
   ngOnInit(): void {
     this.getUser();
@@ -28,28 +25,18 @@ export class HeaderComponent implements OnInit, OnDestroy {
       console.log('header comp')
       if (user) {
         this.user = user;
-        this.user.isOnline = true;
-        this.userLoaded = true;
       }
     });
-    setTimeout(() => {
-      if (this.user) {
-        console.log('möchte user updaten')
-        this.onUpdateUser(this.storeService.authLoggedUserUID, this.user);
-      }
-    }, 500);
   }
 
-  onUpdateUser(userID: string, user: TUser): void {
-    this.userService.updateUser(userID, user);
-  }
-
-  logoutUser(): void {
-    this.user.isOnline = false;
-    console.log('möchte user ausloggen');
-    
-    // this.onUpdateUser(this.storeService.authLoggedUserUID, this.user);
+  logout(): void {
     this.storeService.logout();
+  }
+
+  openSettingsDialog() {
+    const dialogRef = this.dialog.open(ProfileSettingsDialogComponent, {
+      data: { userId: this.user.id },
+    });
   }
 
   ngOnDestroy(): void {

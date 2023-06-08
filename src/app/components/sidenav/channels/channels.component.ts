@@ -15,7 +15,6 @@ import { TChannel } from 'src/app/shared/types/chat';
 export class ChannelsComponent implements OnInit, OnDestroy {
   user!: TUser;
   subUser$!: Subscription;
-  userLoaded: boolean = false;
   isChannelsOpen: boolean = true;
   selectedChannel!: TChannel;
 
@@ -33,8 +32,7 @@ export class ChannelsComponent implements OnInit, OnDestroy {
       console.log('channel comp')
       if (user) {
         this.user = user;
-        this.user.isOnline = true;
-        this.userLoaded = true;
+        this.user.channels = this.sortChannels(this.user.channels);
       }
     });
   }
@@ -44,7 +42,7 @@ export class ChannelsComponent implements OnInit, OnDestroy {
    * to hightlight the selected channel
    * @param channel
    */
-  selectChannel(channel: TChannel): void {
+  setSelectedChannel(channel: TChannel): void {
     if (channel) {
       this.selectedChannel = channel;
     }

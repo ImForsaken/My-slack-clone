@@ -6,7 +6,6 @@ import { TUser } from 'src/app/shared/types/user';
 import { DirectMessagesDialogComponent } from '../dm-dialog/direct-messages-dialog.component';
 import { StoreService } from 'src/app/shared/service/store.service';
 import { TDirectMessage } from 'src/app/shared/types/chat';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-direct-messages',
@@ -17,7 +16,7 @@ export class DirectMessagesComponent {
   subAllUsers$!: Subscription;
   subUser$!: Subscription;
   allUsers: TUser[] = [];
-  myStoredUsers: TUser[] = [];
+  dmUsers: TUser[] = [];
   user!: TUser;
   isUserLoaded: boolean = false;
   isAllUsersLoaded: boolean = false;
@@ -26,18 +25,16 @@ export class DirectMessagesComponent {
   constructor(
     public dialog: MatDialog,
     private userDBService: UserDbService,
-    private storeService: StoreService,
-    private router: Router
+    private storeService: StoreService
   ) {}
 
   ngOnInit(): void {
     this.getUser();
     this.getAllUsers();
-    this.loadMyStoredUsers();
   }
 
   /**
-   * observe the current logged in user
+   * fetch the current logged in user
    */
   getUser(): void {
     this.subUser$ = this.storeService.currentUser$.subscribe((user) => {
@@ -45,13 +42,13 @@ export class DirectMessagesComponent {
       if (user) {
         this.user = user;
         this.isUserLoaded = true;
-        this.loadMyStoredUsers();
+        this.getDMUsers();
       }
     });
   }
 
   /**
-   * observe all users from Firestore
+   * fetch all users from Firestore
    */
   getAllUsers(): void {
     this.subAllUsers$ = this.userDBService
@@ -60,27 +57,22 @@ export class DirectMessagesComponent {
         console.log('dm comp')
         this.allUsers = users;
         this.isAllUsersLoaded = true;
-        this.loadMyStoredUsers();
+        this.getDMUsers();
       });
   }
 
   /**
    * load all users to view the direct messages label
    */
-  loadMyStoredUsers(): void {
+  getDMUsers(): void {
     if (this.isUserLoaded && this.isAllUsersLoaded) {
       const storedUserIDs: string[] = this.user.directMessages.map(
         (dm: TDirectMessage) => dm.chatPartnerID
       );
-      this.myStoredUsers = this.allUsers.filter((user) =>
+      this.dmUsers = this.allUsers.filter((user) =>
         storedUserIDs.includes(user.id!)
       );
-      console.log('myStoredUsers:', this.myStoredUsers);
     }
-  }
-
-  openDirectMessage(user: TUser) {
-    this.router.navigateByUrl(`main/dmuser_${user.id}`);
   }
 
   /**
@@ -91,6 +83,24 @@ export class DirectMessagesComponent {
     dialogRef.afterClosed().subscribe();
   }
 
+  /**
+   * leave DirectMessage Chat by clicked user.
+   * @param chatUserID
+   */
+  leaveDMChat(chatUserID: string): void {
+    const directMessage = this.user.directMessages.find(
+      (dm) => dm.chatPartnerID === chatUserID
+    );
+    if (directMessage) {
+      const index: number = this.user.directMessages.indexOf(directMessage);
+      this.user.directMessages.splice(index, 1);
+      this.userDBService.updateUser(this.user.id!, this.user);
+    }
+  }
+
+  /**
+   * stop all subscriptions
+   */
   ngOnDestroy(): void {
     this.subAllUsers$.unsubscribe();
     this.subUser$.unsubscribe();

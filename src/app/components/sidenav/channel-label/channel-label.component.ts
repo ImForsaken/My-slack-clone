@@ -14,7 +14,6 @@ import { TUser } from 'src/app/shared/types/user';
 export class ChannelLabelComponent implements OnInit, OnDestroy {
   user!: TUser;
   subUser$!: Subscription;
-  userLoaded: boolean = false;
   @Input() channel!: TChannel;
   @Input() index!: number;
 
@@ -36,8 +35,6 @@ export class ChannelLabelComponent implements OnInit, OnDestroy {
       console.log('channel label comp')
       if (user) {
         this.user = user;
-        this.user.isOnline = true;
-        this.userLoaded = true;
       }
     });
   }

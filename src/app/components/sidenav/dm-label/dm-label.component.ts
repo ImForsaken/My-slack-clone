@@ -1,4 +1,5 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Router } from '@angular/router';
 import { UserDbService } from 'src/app/shared/service/user-db.service';
 import { TUser } from 'src/app/shared/types/user';
 
@@ -8,17 +9,33 @@ import { TUser } from 'src/app/shared/types/user';
   styleUrls: ['./dm-label.component.scss'],
 })
 export class DmLabelComponent {
-  @Input() user!: TUser;
+  @Input() dmUser!: TUser;
+  @Output() leaveChat: EventEmitter<string> = new EventEmitter<string>();
 
-  constructor(private userService: UserDbService) {}
+  constructor(private userService: UserDbService, private router: Router) {}
 
-  onDeleteUser(userID: string | undefined): void {
+  /**
+   * set dmUser.id to url
+   * @param dmUser
+   */
+  openDirectMessage(dmUser: TUser): void {
+    this.router.navigateByUrl(`main/dmuser_${dmUser.id}`);
+  }
+
+  /**
+   * remove DM-label from list
+   */
+  leaveDMChat(dmUser: TUser): void {
+    this.leaveChat.emit(dmUser.id);
+  }
+
+  /**
+   * delete User from Database
+   * @param userID
+   */
+  onDeleteUser(userID: string): void {
     if (userID) {
       this.userService.deleteUser(userID);
     }
-  }
-
-  leaveDMChat(): void {
-    console.log('dm Chat verlassen');
   }
 }

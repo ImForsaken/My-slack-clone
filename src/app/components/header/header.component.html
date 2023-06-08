@@ -24,7 +24,7 @@
 
       <!-- User Button -->
       <button
-        *ngIf="!userLoaded"
+        *ngIf="!user"
         mat-icon-button
         [matMenuTriggerFor]="userMenu"
         matTooltip="User Menu"
@@ -33,13 +33,15 @@
       </button>
       <!-- User Menu -->
       <mat-menu #userMenu="matMenu">
-        <button mat-menu-item>Settings<mat-icon>settings</mat-icon></button>
-        <button mat-menu-item (click)="logoutUser()">
+        <button mat-menu-item (click)="openSettingsDialog()">
+          Settings<mat-icon>settings</mat-icon>
+        </button>
+        <button mat-menu-item (click)="logout()">
           Logout<mat-icon>logout</mat-icon>
         </button>
       </mat-menu>
       <!-- LoginUser -->
-      <div class="user__icon" *ngIf="userLoaded">
+      <div class="user__icon" *ngIf="user">
         <div class="user__image-container">
           <img
             class="user__image"

@@ -1,16 +1,33 @@
-<div class="user__container">
-    <!-- ProfilePicture -->
-    <div class="user__image-container">
-        <img class="user__image" [src]="user.profilePicture" alt="profile_picture" />
-        <div class="user__status">
-            <div *ngIf="user.isOnline" class="user__status-online" matTooltip="online"></div>
-            <div *ngIf="!user.isOnline" class="user__status-offline" matTooltip="offline"></div>
-        </div>
+<div class="user__container" (click)="openDirectMessage(dmUser)">
+  <!-- ProfilePicture -->
+  <div class="user__image-container">
+    <img
+      class="user__image"
+      [src]="dmUser.profilePicture"
+      alt="profile_picture"
+    />
+    <div class="user__status">
+      <div
+        *ngIf="dmUser.isOnline"
+        class="user__status-online"
+        matTooltip="online"
+      ></div>
+      <div
+        *ngIf="!dmUser.isOnline"
+        class="user__status-offline"
+        matTooltip="offline"
+      ></div>
     </div>
-    <!-- UserName -->
-    <div class="user__name">
-        {{ user.firstname | titlecase }} {{ user.lastname | titlecase }}
-    </div>
+  </div>
+  <!-- UserName -->
+  <div class="user__name">
+    {{ dmUser.firstname | titlecase }} {{ dmUser.lastname | titlecase }}
+  </div>
 </div>
 <!-- Close DM Button -->
-<mat-icon class="user__btn-close" (click)="leaveDMChat()" matTooltip="leave chat">close</mat-icon>
+<mat-icon
+  class="user__btn-close"
+  (click)="leaveDMChat(dmUser)"
+  matTooltip="leave chat"
+  >close</mat-icon
+>

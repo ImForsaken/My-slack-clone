@@ -1,0 +1,17 @@
+<h1 mat-dialog-title>Edit your Profile</h1>
+<div mat-dialog-content>
+    {{ userInformation?.username }}
+
+    <form [formGroup]="editProfileForm" class="editProfileForm">
+        <mat-form-field class="example-full-width">
+            <mat-label>Name</mat-label>
+            <input type="text" matInput formControlName="firstname" [placeholder]="userInformation?.firstname || ''">
+            <mat-error *ngIf="editProfileForm.controls['firstname'].hasError('required')">
+                Please enter a valid Name
+            </mat-error>
+        </mat-form-field>
+    </form>
+</div>
+<div mat-dialog-actions>
+    <button mat-button mat-dialog-close>Close</button>
+</div>

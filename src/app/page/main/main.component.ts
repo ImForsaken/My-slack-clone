@@ -21,13 +21,11 @@ export class MainComponent implements OnInit, OnDestroy {
 
   @ViewChild('threadDrawer') sidenav!: MatSidenav;
 
-  private subLoggedUser$!: Subscription;
   private subAllUsers$!: Subscription;
   private subChannels$!: Subscription;
   private subDirectMessages$!: Subscription;
+  private subUser$!: Subscription;
   user!: TUser;
-  subUser$!: Subscription;
-  userLoaded: boolean = false;
   isSidenavOpened: boolean = true;
 
   constructor(
@@ -42,10 +40,10 @@ export class MainComponent implements OnInit, OnDestroy {
    * Start all Subscriptions from Database
    */
   ngOnInit(): void {
-    this.getUser();
-    this.getAllUsers();
-    this.getAllChannels();
-    this.getAllDircetMessages();
+    // this.getUser();
+    // this.getAllUsers();
+    // this.getAllChannels();
+    // this.getAllDircetMessages();
   }
 
   ngAfterViewInit() {
@@ -60,8 +58,6 @@ export class MainComponent implements OnInit, OnDestroy {
       console.log('main comp')
       if (user) {
         this.user = user;
-        this.user.isOnline = true;
-        this.userLoaded = true;
       }
     });
   }

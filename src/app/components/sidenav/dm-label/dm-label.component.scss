@@ -26,6 +26,7 @@
   flex-direction: row;
   align-items: center;
   gap: 0.5rem;
+  cursor: pointer;
 }
 
 // height & width in size variable angeben
@@ -67,10 +68,6 @@
   width: 100%;
   border-radius: 100%;
   background-color: $grey;
-}
-
-.user__name {
-  cursor: pointer;
 }
 
 .user__btn-close {
