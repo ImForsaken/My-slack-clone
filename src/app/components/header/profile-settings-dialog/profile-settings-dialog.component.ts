@@ -19,10 +19,16 @@ export class ProfileSettingsDialogComponent {
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: { userId: string }) {
     this.userId = data.userId;
+    this.editProfileForm = new FormGroup({
+      firstname: new FormControl('', Validators.required),
+      lastname: new FormControl('', Validators.required),
+      profilePicture: new FormControl('', Validators.required),
+    });
     console.log(this.userId);
     this.userService.getUserById$(this.userId).subscribe((user: TUser) => {
       this.userInformation = user;
       console.log(this.userInformation);
+      this.createEditProfileForm();
     });
   }
 
@@ -31,10 +37,16 @@ export class ProfileSettingsDialogComponent {
     Validators.email,
   ]);
 
-  editUserProfile() {
+  createEditProfileForm() {
     this.editProfileForm = new FormGroup({
-      username: new FormControl('', Validators.required),
-      firstname: new FormControl('', Validators.required),
+      firstname: new FormControl(
+        this.userInformation!.firstname,
+        Validators.required
+      ),
+      lastname: new FormControl(
+        this.userInformation!.lastname,
+        Validators.required
+      ),
       profilePicture: new FormControl('', Validators.required),
     });
   }
