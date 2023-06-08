@@ -68,7 +68,7 @@ export class StoreService {
       });
   }
 
-  guestLogin() {
+  guestLogin(): void {
     this.loginUser(this.guestLoginCredentials);
   }
 
@@ -97,6 +97,28 @@ export class StoreService {
       })
       .catch((error) => {
         console.log('Error codes', error);
+      });
+  }
+
+  logout(): void {
+    signOut(this.auth)
+      .then((result) => {
+        // Sign-out successful.
+        console.log('logged Out', result);
+
+        // ############################
+        // ######### LogOUT ############
+        // ############################
+        this.currentUser$ = this.userDBService.getUserById$(this.user.id!); // ist auch in onAuthStateChanged ????
+        console.log('this.user', this.user);
+        this.user.isOnline = false;
+        console.log('this.user.isOnline', this.user.isOnline);
+        // this.userDBService.updateUser(this.user.id!, this.user);
+
+        this.router.navigate(['']);
+      })
+      .catch((error) => {
+        console.log('cant log out', error);
       });
   }
 
@@ -172,28 +194,6 @@ export class StoreService {
       },
     ];
     return channels;
-  }
-
-  logout(): void {
-    signOut(this.auth)
-      .then((result) => {
-        // Sign-out successful.
-        console.log('logged Out', result);
-
-        // ############################
-        // ######### LogOUT ############
-        // ############################
-        this.currentUser$ = this.userDBService.getUserById$(this.user.id!); // ist auch in onAuthStateChanged ????
-        console.log('this.user', this.user);
-        this.user.isOnline = false;
-        console.log('this.user.isOnline', this.user.isOnline);
-        // this.userDBService.updateUser(this.user.id!, this.user);
-
-        this.router.navigate(['']);
-      })
-      .catch((error) => {
-        console.log('cant log out', error);
-      });
   }
 
   forgotForm(email: string) {
