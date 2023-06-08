@@ -25,6 +25,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   getUser(): void {
     this.subUser$ = this.storeService.currentUser$.subscribe((user) => {
+      console.log('header comp')
       if (user) {
         this.user = user;
         this.user.isOnline = true;
@@ -33,6 +34,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     });
     setTimeout(() => {
       if (this.user) {
+        console.log('möchte user updaten')
         this.onUpdateUser(this.storeService.authLoggedUserUID, this.user);
       }
     }, 500);
@@ -44,7 +46,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   logoutUser(): void {
     this.user.isOnline = false;
-    this.onUpdateUser(this.storeService.authLoggedUserUID, this.user);
+    console.log('möchte user ausloggen');
+    
+    // this.onUpdateUser(this.storeService.authLoggedUserUID, this.user);
     this.storeService.logout();
   }
 

@@ -36,7 +36,7 @@ export class MainComponent implements OnInit, OnDestroy {
     private channelService: ChannelDbService,
     private dmService: DirectMessageDbService,
     private storeService: StoreService
-  ) {}
+  ) { }
 
   /**
    * Start all Subscriptions from Database
@@ -57,6 +57,7 @@ export class MainComponent implements OnInit, OnDestroy {
    */
   getUser(): void {
     this.subUser$ = this.storeService.currentUser$.subscribe((user) => {
+      console.log('main comp')
       if (user) {
         this.user = user;
         this.user.isOnline = true;
@@ -72,6 +73,7 @@ export class MainComponent implements OnInit, OnDestroy {
     this.subAllUsers$ = this.userService
       .getAllUsers$()
       .subscribe((users: TUser[]): void => {
+        console.log('main comp')
         this.userService.allUsers = users;
       });
   }
@@ -83,6 +85,7 @@ export class MainComponent implements OnInit, OnDestroy {
     this.subChannels$ = this.channelService
       .getAllChannels$()
       .subscribe((channels: TChannel[]): void => {
+        console.log('main comp')
         this.channelService.allChannels = channels;
       });
   }
@@ -94,6 +97,7 @@ export class MainComponent implements OnInit, OnDestroy {
     this.subDirectMessages$ = this.dmService
       .getAllDirectMessages$()
       .subscribe((dms: TDirectMessages[]): void => {
+        console.log('main comp')
         this.dmService.addDirectMessages = dms;
       });
   }

@@ -44,6 +44,7 @@ export class AllChannelsComponent implements OnInit, OnDestroy {
    */
   getUser(): void {
     this.subUser$ = this.storeService.currentUser$.subscribe((user) => {
+      console.log('all channel comp')
       if (user) {
         this.user = user;
         this.user.isOnline = true;
@@ -59,6 +60,7 @@ export class AllChannelsComponent implements OnInit, OnDestroy {
     this.subAllChannels$ = this.channelService
       .getAllChannels$()
       .subscribe((channels: TChannel[]): void => {
+        console.log('all channels comp')
         this.allChannels = channels;
         this.isAllChannelsLoaded = true;
         this.sortAndFilterChannels();
