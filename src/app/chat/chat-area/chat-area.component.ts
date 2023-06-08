@@ -2,7 +2,7 @@ import { Component, Input, OnInit, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Observable, tap } from 'rxjs';
 import { ChannelDbService } from 'src/app/shared/service/channels-db.service';
-import { ThreadService } from 'src/app/shared/service/thread.service';
+import { DirectMessageDbService } from 'src/app/shared/service/direct-messages-db.service';
 import { TMessage } from 'src/app/shared/types/message';
 
 @Component({
@@ -12,6 +12,7 @@ import { TMessage } from 'src/app/shared/types/message';
 })
 export class ChatAreaComponent implements OnInit {
   private chatService: ChannelDbService = inject(ChannelDbService);
+  private directMessageService: DirectMessageDbService = inject(DirectMessageDbService);
   private route: ActivatedRoute = inject(ActivatedRoute);
 
   public messages!: Observable<TMessage[]>;
@@ -21,9 +22,17 @@ export class ChatAreaComponent implements OnInit {
   ngOnInit() {
     if (this.chatType === 'chat') {
       this.route.url.subscribe((route) => {
-        this.messages = this.chatService
-          .getMessages$(route[0].path)
-          .pipe(tap(this.scrollToLastMessage));
+        console.log('Router subscription');
+        const currentRoute = route[0].path.split('_');
+        if (currentRoute[0] === 'channel') {
+          this.messages = this.chatService
+            .getMessages$(currentRoute[1])
+            .pipe(tap(this.scrollToLastMessage));
+        } else if (currentRoute[0] === 'dmuser') {
+          this.messages = this.directMessageService
+            .getMessages$(currentRoute[1])
+            .pipe(tap(this.scrollToLastMessage));
+        }
       });
     }
   }
