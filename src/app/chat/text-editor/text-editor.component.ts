@@ -1,6 +1,7 @@
 import { Location } from '@angular/common';
 import { Component, Input, inject } from '@angular/core';
 import { ChannelDbService } from 'src/app/shared/service/channels-db.service';
+import { DirectMessageDbService } from 'src/app/shared/service/direct-messages-db.service';
 import { StoreService } from 'src/app/shared/service/store.service';
 import { ThreadService } from 'src/app/shared/service/thread.service';
 import { TMessage } from 'src/app/shared/types/message';
@@ -15,6 +16,7 @@ import { TUser } from 'src/app/shared/types/user';
 })
 export class TextEditorComponent {
   channelService: ChannelDbService = inject(ChannelDbService);
+  directMessageService: DirectMessageDbService = inject(DirectMessageDbService);
   threadService: ThreadService = inject(ThreadService);
   storeService: StoreService = inject(StoreService);
   location: Location = inject(Location);
@@ -31,7 +33,7 @@ export class TextEditorComponent {
   @Input() inputType!: 'chat' | 'thread';
   
   ngAfterViewInit() {
-    this.storeService.currentUser$.subscribe(user =>  this.currentUser = user);
+    this.storeService.currentUser$.subscribe(user =>  {this.currentUser = user; console.log('text editor')});
   }
 
   onKeyDown(event: KeyboardEvent) {
@@ -52,7 +54,9 @@ export class TextEditorComponent {
 
   sendNewMessage() {
     if (!this.currentUser) return;
-    const chatId = this.location.path().split('/').at(-1);
+    const urlId = this.location.path().split('/').at(-1);
+    const chatType = urlId?.split('_')[0];
+    const chatId = urlId?.split('_')[1];
     const date = new Date();
     const message: TMessage = {
       userId: this.currentUser.id!,
@@ -62,7 +66,13 @@ export class TextEditorComponent {
       timestamp: Date.now()
     }
 
-    if (this.inputType === 'chat') this.channelService.addMessage(chatId!, message);
+    if (this.inputType === 'chat') {
+      if (chatType === 'channel') {
+        this.channelService.addMessage(chatId!, message);
+      } else if (chatType === 'dmuser') {
+        this.directMessageService.addMessage(chatId!, message);
+      }
+    }
     if (this.inputType === 'thread') {
       let threadId = this.threadService.loadedThread$.getValue();
 
