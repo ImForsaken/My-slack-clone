@@ -12,10 +12,8 @@ import { ProfileSettingsDialogComponent } from './profile-settings-dialog/profil
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit, OnDestroy {
-  user!: TUser;
+  user: TUser | null = null;
   subUser$!: Subscription;
-  userLoaded: boolean = false;
-  userId?: string;
 
   constructor(
     private storeService: StoreService,
@@ -30,37 +28,57 @@ export class HeaderComponent implements OnInit, OnDestroy {
   getUser(): void {
     this.subUser$ = this.storeService.currentUser$.subscribe((user) => {
       if (user) {
-        console.log(user);
         this.user = user;
-        this.user.isOnline = true;
-        this.userLoaded = true;
-        this.userId = user.id;
+        this.setUserOnline(this.user);
       }
     });
-    setTimeout(() => {
-      if (this.user) {
-        this.onUpdateUser(this.storeService.authLoggedUserUID, this.user);
-      }
-    }, 500);
   }
 
-  onUpdateUser(userID: string, user: TUser): void {
-    this.userService.updateUser(userID, user);
+  /**
+   * update User in Database
+   * @param user
+   */
+  updateUserDB(user: TUser): void {
+    this.userService.updateUser(user.id!, user);
   }
 
+  /**
+   * logout current user & set Offline
+   */
   logoutUser(): void {
-    this.user.isOnline = false;
-    this.onUpdateUser(this.storeService.authLoggedUserUID, this.user);
-    this.storeService.logout();
+    if (this.user) {
+      this.setUserOffline(this.user);
+      this.storeService.logout();
+    }
+  }
+
+  /**
+   * change userstat to offline
+   * @param user
+   */
+  setUserOffline(user: TUser): void {
+    user.isOnline = false;
+    this.updateUserDB(user);
+  }
+
+  /**
+   * change userstat to onine
+   * @param user
+   */
+  setUserOnline(user: TUser): void {
+    user.isOnline = false;
+    this.updateUserDB(user);
+  }
+
+  openSettingsDialog(): void {
+    if (this.user) {
+      const dialogRef = this.dialog.open(ProfileSettingsDialogComponent, {
+        data: { userId: this.user.id },
+      });
+    }
   }
 
   ngOnDestroy(): void {
     this.subUser$.unsubscribe();
-  }
-
-  openSettingsDialog() {
-    const dialogRef = this.dialog.open(ProfileSettingsDialogComponent, {
-      data: { userId: this.userId },
-    });
   }
 }
