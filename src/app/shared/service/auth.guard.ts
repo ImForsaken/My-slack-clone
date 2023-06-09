@@ -1,6 +1,5 @@
 import { Injectable, inject } from '@angular/core';
-import { Router, RouterStateSnapshot, UrlTree } from '@angular/router';
-import { ActivatedRouteSnapshot } from '@angular/router';
+import { Router, UrlTree } from '@angular/router';
 import { CanActivate } from '@angular/router';
 import { Observable, map, take } from 'rxjs';
 import { StoreService } from './store.service';

@@ -43,15 +43,16 @@ export class StoreService {
     public auth: Auth
   ) {
     this.auth.onAuthStateChanged((user) => {
-      console.log('Auth State Change getriggert')
+      console.log('Auth State Change getriggert');
       if (user) {
         // user is logged in
         this.authLoggedUserUID = user.uid;
 
         this.currentUser$ = this.userDBService.getUserById$(user.uid);
-        this.userDBService
-          .getUserById$(user.uid)
-          .subscribe((user) => {console.log('inside onAuthStateChange');(this.user = user)});
+        this.userDBService.getUserById$(user.uid).subscribe((user) => {
+          console.log('inside onAuthStateChange');
+          this.user = user;
+        });
       } else {
         // user is NOT logged in
         this.currentUser$ = of(null);
@@ -82,22 +83,23 @@ export class StoreService {
     )
       .then((userCredential: UserCredential) => {
         const user = userCredential.user;
-        console.log('Login successful for User:', user);
-        // this.currentUser$ = this.userDBService.getUserById$(user.uid); // ist auch in onAuthStateChanged ????
+        console.log('user', user);
+        console.log('LOGIN this.user', this.user);
         // ############################
         // ######### Login ############
         // ############################
-        console.log('this.user', this.user);
-        this.user.isOnline = true;
-        console.log('this.user.isOnline', this.user.isOnline);
-        // this.userDBService.updateUser(this.user.id!, this.user);
+        if (this.user && !this.user.isOnline) {
+          this.user.isOnline = true;
+          this.userDBService.updateUser(this.user.id!, this.user);
+          console.log('this.user.isOnline', this.user.isOnline);
+        }
 
         setTimeout(() => {
           this.router.navigate(['/main']);
         }, 500);
       })
       .catch((error) => {
-        console.log('Error codes', error);
+        console.warn('Error codes', error);
       });
   }
 
@@ -105,21 +107,20 @@ export class StoreService {
     signOut(this.auth)
       .then((result) => {
         // Sign-out successful.
-        console.log('logged Out', result);
-
+        console.log('LOGOUT this.user', this.user);
         // ############################
-        // ######### LogOUT ############
+        // ######### LogOUT ###########
         // ############################
-        this.currentUser$ = this.userDBService.getUserById$(this.user.id!); // ist auch in onAuthStateChanged ????
-        console.log('this.user', this.user);
-        this.user.isOnline = false;
-        console.log('this.user.isOnline', this.user.isOnline);
-        // this.userDBService.updateUser(this.user.id!, this.user);
+        if (this.user.isOnline) {
+          this.user.isOnline = false;
+          console.log('LOGOUT this.user.isOnline', this.user.isOnline);
+          this.userDBService.updateUser(this.user.id!, this.user);
+        }
 
         this.router.navigate(['']);
       })
       .catch((error) => {
-        console.log('cant log out', error);
+        console.warn('cant log out', error);
       });
   }
 
@@ -129,7 +130,7 @@ export class StoreService {
       registerForm.controls['userEmail'].value,
       registerForm.controls['userPassword'].value
     )
-      .then(async (userCredential) => {
+      .then(async (userCredential: UserCredential) => {
         // Sign-Up
         const user = userCredential.user;
         console.log(user);
@@ -158,7 +159,7 @@ export class StoreService {
     );
   }
 
-  createNewUser(id: string, registerForm: FormGroup) {
+  createNewUser(id: string, registerForm: FormGroup): TUser {
     const userData: TUser = {
       username: registerForm.controls['userName'].value,
       email: registerForm.controls['userEmail'].value,
@@ -173,7 +174,7 @@ export class StoreService {
     return userData;
   }
 
-  setStandardChannels() {
+  setStandardChannels(): TChannel[] {
     const channels: TChannel[] = [
       {
         name: 'Allgemein',
@@ -197,7 +198,7 @@ export class StoreService {
     return channels;
   }
 
-  forgotForm(email: string) {
+  forgotForm(email: string): void {
     sendPasswordResetEmail(this.auth, email)
       .then((response) => {
         console.log('success', response);
