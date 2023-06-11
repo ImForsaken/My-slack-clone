@@ -32,6 +32,8 @@ body {
 }
 
 .ql-editor {
+  padding-right: 40px;
+  
   img {
     max-width: 150px;
     max-height: 150px;
@@ -54,4 +56,9 @@ body {
 .ql-snow .ql-picker.ql-expanded .ql-picker-options {
   top: auto;
   bottom: 25px;
+}
+
+// Material sidenav
+.mat-drawer-backdrop.mat-drawer-shown {
+  background: rgba($color: #000000, $alpha: 0.1);
 }

@@ -18,6 +18,7 @@ import { Observable } from 'rxjs';
 import { TMessage } from '../types/message';
 import { TDirectMessages } from '../types/dm';
 import { UserDbService } from './user-db.service';
+import { ThreadService } from './thread.service';
 
 /**
  * Service for managing direct message chats in the firebase firestore.
@@ -28,6 +29,7 @@ import { UserDbService } from './user-db.service';
 export class DirectMessageDbService {
   private firestore: Firestore = inject(Firestore);
   private userDbService: UserDbService = inject(UserDbService);
+  private threadService: ThreadService = inject(ThreadService);
   private directMessagesCollRef: CollectionReference = collection(this.firestore, 'directMessages');
   public addDirectMessages: TDirectMessages[] = [];
 
@@ -90,12 +92,19 @@ export class DirectMessageDbService {
 
   /**
    * Deletes the message with the given id from the direct message chat in firebase.
+   * If a thread exists for the message, it will be deleted as well.
    * @param dmId Direct message document id.
    * @param messageId Direct message message id.
+   * @param threadId thread document id.
    * @returns deleteDoc promise.
    */
-  deleteMessage(dmId: string, messageId: string): Promise<void> {
+  deleteMessage(dmId: string, messageId: string, threadId?: string): Promise<void> {
     const messageCollRef: CollectionReference = collection(this.firestore, `directMessages/${dmId}/messages`);
+
+    if (threadId) {
+      this.threadService.deleteThread(threadId);
+    }
+
     return deleteDoc(doc(messageCollRef, messageId));
   }
 

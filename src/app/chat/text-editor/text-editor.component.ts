@@ -25,7 +25,7 @@ export class TextEditorComponent implements AfterViewInit, OnDestroy {
   private storeSub!: Subscription;
   private currentUser!: TUser | null;
   
-  public text: string = '';
+  public editorText: string = '';
   public quillStyle = {
     border: '2px solid #3f3b3f',
     borderTop: 'none',
@@ -34,26 +34,53 @@ export class TextEditorComponent implements AfterViewInit, OnDestroy {
 
   @Input() inputType!: 'chat' | 'thread';
   
+  /**
+   * Executes on component initialisation.
+   * Subscibe the currentUser and stores the value in the local currentUser.
+   */
   ngAfterViewInit(): void {
     this.storeSub = this.storeService.currentUser$.subscribe(user => this.currentUser = user);
   }
 
-  onKeyDown(event: KeyboardEvent): void {
-    if (
-      event.key === 'Enter' &&
-      event.shiftKey == false &&
-      this.text.length > 0
-    ) {
-      const inputSize = new Blob([this.text]).size;
-
-      if (inputSize < 1000000) {
-        this.prepareNewMessage();
-      } else {
-        console.log('File is to big');
+  /**
+   * If the enter key is pressed and the editor text is not empty, it is checked whether the content is too large.
+   * If everything fits, a new message is prepared.
+   * @param event Keyboard Event
+   */
+  onKeyDown(event: KeyboardEvent | MouseEvent): void {
+    if (event instanceof KeyboardEvent) {
+      if (
+        event.key === 'Enter' &&
+        event.shiftKey == false &&
+        this.editorText.length > 0
+      ) {
+        const inputSize = new Blob([this.editorText]).size;
+  
+        if (inputSize < 1000000) {
+          this.prepareNewMessage();
+        } else {
+          console.log('File is to big');
+        }
+      }
+    } else if (event instanceof MouseEvent) {
+      if (
+        this.editorText.length > 0
+      ) {
+        const inputSize = new Blob([this.editorText]).size;
+  
+        if (inputSize < 1000000) {
+          this.prepareNewMessage();
+        } else {
+          console.log('File is to big');
+        }
       }
     }
   }
 
+  /**
+   * Prepares a new TMessage object.
+   * @returns /
+   */
   prepareNewMessage(): void {
     if (!this.currentUser) return;
 
@@ -65,14 +92,21 @@ export class TextEditorComponent implements AfterViewInit, OnDestroy {
       userId: this.currentUser.id!,
       userName: this.currentUser.username,
       profilePicture: this.currentUser.profilePicture,
-      text: this.text,
-      timestamp: Date.now()
+      text: this.editorText,
+      timestamp: Date.now(),
+      type: chatType!
     }
 
     if (!chatType || !chatId) return;
     this.sendMessage(chatType, chatId, message);
   }
 
+  /**
+   * Distinguishes between thread and channel to execute the corresponding sendMessage function.
+   * @param chatType String with channel or dmuser.
+   * @param chatId Document id of the channel/chat.
+   * @param message Obect of type TMessage.
+   */
   sendMessage(chatType: string, chatId: string, message: TMessage): void {
     if (this.inputType === 'chat') {
       this.sendChatMessage(chatType, chatId, message);
@@ -82,9 +116,17 @@ export class TextEditorComponent implements AfterViewInit, OnDestroy {
       this.sendThreadMessage(chatId, message);
     }
 
-    this.text = '';
+    this.editorText = '';
   }
 
+  /**
+   * Sends a chat message via the channel/dm service.
+   * Based on the type, either a channel message or a direct message
+   * will be sent to firebase with the appropriate service.
+   * @param chatType String with channel or dmuser.
+   * @param chatId Document id of the channel/chat.
+   * @param message Obect of type TMessage.
+   */
   sendChatMessage(chatType: string, chatId: string, message: TMessage): void {
     if (chatType === 'channel') {
       this.channelService.addMessage(chatId!, message);
@@ -93,6 +135,12 @@ export class TextEditorComponent implements AfterViewInit, OnDestroy {
     }
   }
 
+  /**
+   * Sends a thread message via the thread service.
+   * If no thread exists, a new one will be created.
+   * @param chatId Document id of the channel/chat.
+   * @param message Obect of type TMessage.
+   */
   sendThreadMessage(chatId: string, message: TMessage): void {
     let threadId: string = this.threadService.loadedThread$.getValue();
 
@@ -104,6 +152,10 @@ export class TextEditorComponent implements AfterViewInit, OnDestroy {
     this.threadService.addMessage(this.threadService.loadedThread$.getValue(), message);
   }
 
+  /**
+   * Executes when a component is destroyed.
+   * Unsubsibe all subs when component gets destroyed.
+   */
   ngOnDestroy(): void {
     this.storeSub.unsubscribe();
   }

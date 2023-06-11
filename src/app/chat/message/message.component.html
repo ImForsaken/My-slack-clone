@@ -1,4 +1,4 @@
-<div class="message">
+<div class="message" [class.thread-padding] = "messageType === 'thread'">
     <img [src]="message.profilePicture" width="30" height="30" draggable="false">
     <div>
         <div class="message-header">
@@ -9,11 +9,16 @@
             <quill-view-html [content]="message.text"></quill-view-html>
         </div>
         <div class="message-footer" *ngIf="messageType === 'chat'">
-            <strong (click)="showThread(message.id!, message.threadId)">Open Thread</strong>
-            <!-- <span>Letze Antwort heute um 15:34</span> -->
+          <ng-container *ngIf="message.type === 'channel'">
+            <strong (click)="showThread(message.id!, message.threadId)">
+              {{ threadText }}
+            </strong>
+          </ng-container>
         </div>
     </div>
-    <button mat-icon-button [matMenuTriggerFor]="menu" class="btn">
+    <button mat-icon-button [matMenuTriggerFor]="menu" class="btn"
+      [class.btn-thread] = "messageType === 'thread'"
+      *ngIf="message.userId === storeService.user.id">
         <mat-icon>more_vert</mat-icon>
       </button>
       <mat-menu #menu="matMenu">

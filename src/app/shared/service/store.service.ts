@@ -27,8 +27,8 @@ export class StoreService {
   userService: UserDbService = inject(UserDbService);
   currentUser$!: Observable<TUser | null>;
   currentChat$!: Observable<string>;
-  loggedInUserID$ = new BehaviorSubject<string>('');
-  userId!: string;
+  // loggedInUserID$ = new BehaviorSubject<string>(''); -> wird nicht mehr gebraucht?
+  // userId!: string; -> wird nicht mehr gebraucht?
   user!: TUser;
   authLoggedUserUID!: string;
 
