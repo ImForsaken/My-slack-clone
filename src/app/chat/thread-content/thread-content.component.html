@@ -1,9 +1,6 @@
-<button mat-menu-item (click)="resetMessages(); sidenavService.close()">
+<button mat-menu-item (click)="chatArea.resetMessages(); sidenavService.close()">
     <mat-icon>close</mat-icon>
 </button>
 
-<div class="thread-message-container">
-    <app-message *ngFor="let message of messages | async" [message]="message" messageType="thread"></app-message>
-</div>
-
+<app-chat-area chatType="thread" #chatArea></app-chat-area>
 <app-text-editor inputType="thread"></app-text-editor>

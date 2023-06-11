@@ -1,5 +1,5 @@
 /**
- * Allgemein der Text der gepostet wird, aus der Textbox (QIll)
+ * Message type for the messages from the quill editor.
  */
 export type TMessage = {
   id?: string;
@@ -8,5 +8,6 @@ export type TMessage = {
   profilePicture: string;
   text: string;
   timestamp: number;
+  type: string;
   threadId?: string;
 };

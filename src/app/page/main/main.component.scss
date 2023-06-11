@@ -53,6 +53,10 @@ mat-toolbar {
     flex-shrink: 0;
 }
 
+mat-drawer {
+    max-width: 350px;
+}
+
 .mat-drawer-content {
     display: flex;
     flex-direction: column;

@@ -1,6 +1,7 @@
 @import '../../shared/style/variables';
 
 :host {
+    position: relative;
     display: block;
     padding-bottom: 16px;
 }
@@ -9,4 +10,13 @@ quill-editor {
     padding: 0 21px;
     width: 100%;
     color: $dark-grey;
+}
+
+img {
+    position: absolute;
+    right: 28px;
+    bottom: 24px;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
 }

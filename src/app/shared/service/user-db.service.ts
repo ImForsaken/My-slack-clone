@@ -18,6 +18,7 @@ import { collection, CollectionReference } from '@firebase/firestore';
 import { Observable } from 'rxjs';
 import { TUser } from '../types/user';
 import { TDirectMessages } from '../types/dm';
+import { StringMap } from 'quill';
 
 /**
  * Service for managing users in the firebase firestore.
@@ -80,57 +81,63 @@ export class UserDbService {
     return updateDoc(doc(this.usersCollRef, userId), userObj);
   }
 
+  /**
+   * Deletes the user with the given id in firebase.
+   * @param userId Document user id.
+   * @param userObj Object of type TUser.
+   * @returns setDoc promise.
+   */
   deleteUser(userId: string): Promise<void> {
     return deleteDoc(doc(this.usersCollRef, userId));
   }
 
-  async addDirectMessageChat(
-    userId: string,
-    partnerId: string,
-    docId: string
-  ): Promise<void> {
-    const user: TUser = (await getDoc(doc(this.usersCollRef, userId)).then(
-      (user) => user.data()
-    )) as TUser;
-    const partner: TUser = (await getDoc(
-      doc(this.usersCollRef, partnerId)
-    ).then((user) => user.data())) as TUser;
+  /**
+   * Adds the direct message chat to the current users and chat partner users direct messages array.
+   * @param userId Document id of the user.
+   * @param partnerId Document id of the chat parnter user.
+   * @param docId Document id of the direct message chat.
+   */
+  async addDirectMessageChat(userId: string, partnerId: string, docId: string): Promise<void> {
+    const user: TUser = await getDoc(doc(this.usersCollRef, userId))
+      .then((user) => user.data()) as TUser;
+    const partner: TUser = await getDoc(doc(this.usersCollRef, partnerId))
+      .then((user) => user.data()) as TUser;
 
+    this.addDirectMessageChatToUser(user, partner, partnerId, docId);
+    this.addDirectMessageChatToUser(partner, user, userId, docId);
+  }
+
+  /**
+   * Adds the direct message chat to the users direct messages array and updates the firebase db.
+   * @param user Document of the user.
+   * @param partner Document of the parnter.
+   * @param partnerId Document id of the partner.
+   * @param docId Document id of the direct message chat.
+   */
+  private addDirectMessageChatToUser(user: TUser, partner: TUser, partnerId: string, docId: string) {
     user?.['directMessages'].push({
       chatPartnerID: partnerId,
       chatPartnerName: partner.username,
       dmDocID: docId,
     });
     this.updateUser(user?.['id']!, user);
-
-    partner?.['directMessages'].push({
-      chatPartnerID: userId,
-      chatPartnerName: user.username,
-      dmDocID: docId,
-    });
-    this.updateUser(partner?.['id']!, partner);
   }
 
+  /**
+   * Deletes the direct message chat from both users (current user and chat partner).
+   * @param dmId Document id of the direct message chat.
+   */
   async deleteDirectMessagesChat(dmId: string) {
-    const directMessagesCollRef: CollectionReference = collection(
-      this.firestore,
-      'directMessages'
-    );
-    const directMessageChat: TDirectMessages = (await getDoc(
-      doc(directMessagesCollRef, dmId)
-    ).then((dmChat) => dmChat.data())) as TDirectMessages;
-    const user: TUser = (await getDoc(
-      doc(this.usersCollRef, directMessageChat.userIDs[0])
-    ).then((user) => user.data())) as TUser;
-    const partner: TUser = (await getDoc(
-      doc(this.usersCollRef, directMessageChat.userIDs[1])
-    ).then((user) => user.data())) as TUser;
-    const userDmIndex = user?.['directMessages'].findIndex(
-      (dm) => dm.dmDocID === dmId
-    );
-    const partnerDmIndex = partner?.['directMessages'].findIndex(
-      (dm) => dm.dmDocID === dmId
-    );
+    const directMessagesCollRef: CollectionReference = collection(this.firestore, 'directMessages');
+    const directMessageChat: TDirectMessages = await getDoc(doc(directMessagesCollRef, dmId))
+      .then(dmChat => dmChat.data()) as TDirectMessages;
+    const user: TUser = await getDoc(doc(this.usersCollRef, directMessageChat.userIDs[0]))
+      .then(user => user.data()) as TUser;
+    const partner: TUser = await getDoc(doc(this.usersCollRef, directMessageChat.userIDs[1]))
+      .then(user => user.data()) as TUser;
+    const userDmIndex = user?.['directMessages'].findIndex((dm) => dm.dmDocID === dmId);
+    const partnerDmIndex = partner?.['directMessages'].findIndex((dm) => dm.dmDocID === dmId);
+
     user?.['directMessages'].splice(userDmIndex, 1);
     partner?.['directMessages'].splice(partnerDmIndex, 1);
 
@@ -138,21 +145,27 @@ export class UserDbService {
     this.updateUser(partner?.['id']!, partner);
   }
 
-  addContact(userId: string, contactId: string): Promise<void> {
-    const contactsDbRef: CollectionReference = collection(
-      this.firestore,
-      `users/${userId}/contacts`
-    );
-    return setDoc(doc(contactsDbRef), { contactId });
-  }
+  // Werden aktuell nicht verwendet. ggf. löschen: 
 
-  deleteContact(userId: string, contactId: string): Promise<void> {
-    const contactsDbRef: CollectionReference = collection(
-      this.firestore,
-      `users/${userId}/contacts`
-    );
-    return deleteDoc(doc(contactsDbRef, contactId));
-  }
+  // /**
+  //  * Adds a new contact.
+  //  * @param userId Document id of the user.
+  //  * @param contactId Document id of the dm contact.
+  //  * @returns setDoc promise.
+  //  */
+  // addContact(userId: string, contactId: string): Promise<void> {
+  //   const contactsDbRef: CollectionReference = collection(this.firestore, `users/${userId}/contacts`);
+  //   return setDoc(doc(contactsDbRef), { contactId });
+  // }
 
-  // Get User Funktion ergänzen -> ähnlich wie getUserData.
+  // /**
+  //  * Deletes the contact.
+  //  * @param userId Document id of the user.
+  //  * @param contactId Document id of the dm contact.
+  //  * @returns deleteDoc promise.
+  //  */
+  // deleteContact(userId: string, contactId: string): Promise<void> {
+  //   const contactsDbRef: CollectionReference = collection(this.firestore, `users/${userId}/contacts`);
+  //   return deleteDoc(doc(contactsDbRef, contactId));
+  // }
 }

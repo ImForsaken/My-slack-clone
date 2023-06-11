@@ -1,6 +1,7 @@
 <quill-editor
-    [(ngModel)]="text"
+    [(ngModel)]="editorText"
     (keydown)="onKeyDown($event)"
     [format]="'html'"
     [styles]="quillStyle">
 </quill-editor>
+<img src="/assets/icons/send_black.svg" (click)="onKeyDown($event)">
