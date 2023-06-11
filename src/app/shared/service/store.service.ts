@@ -81,20 +81,9 @@ export class StoreService {
       loginForm.controls['userEmail'].value,
       loginForm.controls['userPassword'].value
     )
-      .then((userCredential: UserCredential) => {
-        const user = userCredential.user;
-        console.log('user', user);
-        console.log('LOGIN this.user', this.user);
-        // ############################
-        // ######### Login ############
-        // ############################
-        if (this.user && !this.user.isOnline) {
-          this.user.isOnline = true;
-          this.userDBService.updateUser(this.user.id!, this.user);
-          console.log('this.user.isOnline', this.user.isOnline);
-        }
-
+      .then((userCredential: UserCredential): void => {
         setTimeout(() => {
+          this.setUserOnline(this.user);
           this.router.navigate(['/main']);
         }, 500);
       })
@@ -103,20 +92,32 @@ export class StoreService {
       });
   }
 
+  /**
+   * set Userstate to online and store it in Firebase
+   * @param user
+   */
+  setUserOnline(user: TUser): void {
+    if (!user.isOnline) {
+      user.isOnline = true;
+      this.userDBService.updateUser(user.id!, user);
+    }
+  }
+
+  /**
+   * set Userstate to offline and store it in Firebase
+   * @param user
+   */
+  setUserOffline(user: TUser): void {
+    if (user.isOnline) {
+      user.isOnline = false;
+      this.userDBService.updateUser(user.id!, user);
+    }
+  }
+
   logout(): void {
     signOut(this.auth)
       .then((result) => {
-        // Sign-out successful.
-        console.log('LOGOUT this.user', this.user);
-        // ############################
-        // ######### LogOUT ###########
-        // ############################
-        if (this.user.isOnline) {
-          this.user.isOnline = false;
-          console.log('LOGOUT this.user.isOnline', this.user.isOnline);
-          this.userDBService.updateUser(this.user.id!, this.user);
-        }
-
+        this.setUserOffline(this.user);
         this.router.navigate(['']);
       })
       .catch((error) => {
