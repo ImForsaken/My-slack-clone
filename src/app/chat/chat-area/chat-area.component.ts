@@ -51,7 +51,7 @@ export class ChatAreaComponent implements OnDestroy {
    */
   loadMessages(route: UrlSegment[]): void {
     const currentRoute: string[] = route[0].path.split('_');
-        
+    
     if (currentRoute[0] === 'channel') {
       this.messages = this.chatService
         .getMessages$(currentRoute[1])
