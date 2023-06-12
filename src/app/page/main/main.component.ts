@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit, ViewChild, inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { MatSidenav } from '@angular/material/sidenav';
+import { MatDrawerMode, MatSidenav } from '@angular/material/sidenav';
 import { Subscription } from 'rxjs';
 import { LabelService } from 'src/app/components/sidenav/label.service';
 import { ChannelDbService } from 'src/app/shared/service/channels-db.service';
@@ -27,6 +27,7 @@ export class MainComponent implements OnInit, OnDestroy {
   private subDirectMessages$!: Subscription;
   private subUser$!: Subscription;
   user!: TUser;
+  modeValue: MatDrawerMode = 'side';
   isSidenavOpened: boolean = true;
 
   constructor(
@@ -50,6 +51,18 @@ export class MainComponent implements OnInit, OnDestroy {
 
   ngAfterViewInit() {
     this.sidenavService.setSidenav(this.sidenav);
+  }
+
+  toggleSideNav() {
+    console.log('window.innerWidth', window.innerWidth);
+    if (window.innerWidth <= 600) {
+      // #sidenav mode = side oder over
+      console.log('trigger sidenav true');
+      this.modeValue = 'over';
+    } else {
+      console.log('trigger sidenav false');
+      this.modeValue = 'side';
+    }
   }
 
   /**

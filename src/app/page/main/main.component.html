@@ -1,7 +1,7 @@
-<section>
+<section (window:resize)="toggleSideNav()">
   <mat-sidenav-container>
     <!-- leftSide menu content -->
-    <mat-sidenav #sidenav mode="side" [(opened)]="isSidenavOpened">
+    <mat-sidenav #sidenav [mode]="modeValue" [(opened)]="isSidenavOpened">
       <mat-toolbar class="sidenav__header" color="primary">
         <div>Slack-Clone</div>
       </mat-toolbar>
