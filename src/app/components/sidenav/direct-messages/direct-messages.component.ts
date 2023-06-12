@@ -6,6 +6,7 @@ import { TUser } from 'src/app/shared/types/user';
 import { DirectMessagesDialogComponent } from '../dm-dialog/direct-messages-dialog.component';
 import { StoreService } from 'src/app/shared/service/store.service';
 import { TDirectMessage } from 'src/app/shared/types/chat';
+import { LabelService } from '../label.service';
 
 @Component({
   selector: 'app-direct-messages',
@@ -21,11 +22,13 @@ export class DirectMessagesComponent {
   isUserLoaded: boolean = false;
   isAllUsersLoaded: boolean = false;
   isDirectMessageOpen: boolean = true;
+  selectedDmUsers: TUser | null = null;
 
   constructor(
     public dialog: MatDialog,
     private userDBService: UserDbService,
-    private storeService: StoreService
+    private storeService: StoreService,
+    public labelService: LabelService
   ) {}
 
   ngOnInit(): void {
@@ -33,12 +36,16 @@ export class DirectMessagesComponent {
     this.getAllUsers();
   }
 
+  selectDMUser(dmUser: TUser): void {
+    this.labelService.activeLabel = dmUser;
+  }
+
   /**
    * fetch the current logged in user
    */
   getUser(): void {
     this.subUser$ = this.storeService.currentUser$.subscribe((user) => {
-      console.log('dm comp')
+      console.log('dm comp');
       if (user) {
         this.user = user;
         this.isUserLoaded = true;
@@ -54,7 +61,7 @@ export class DirectMessagesComponent {
     this.subAllUsers$ = this.userDBService
       .getAllUsers$()
       .subscribe((users: TUser[]) => {
-        console.log('dm comp')
+        console.log('dm comp');
         this.allUsers = users;
         this.isAllUsersLoaded = true;
         this.getDMUsers();

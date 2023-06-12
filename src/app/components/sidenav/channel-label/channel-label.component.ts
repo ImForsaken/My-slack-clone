@@ -15,7 +15,6 @@ export class ChannelLabelComponent implements OnInit, OnDestroy {
   user!: TUser;
   subUser$!: Subscription;
   @Input() channel!: TChannel;
-  @Input() index!: number;
 
   constructor(
     private router: Router,
@@ -32,7 +31,7 @@ export class ChannelLabelComponent implements OnInit, OnDestroy {
    */
   getUser(): void {
     this.subUser$ = this.storeService.currentUser$.subscribe((user) => {
-      console.log('channel label comp')
+      console.log('channel label comp');
       if (user) {
         this.user = user;
       }

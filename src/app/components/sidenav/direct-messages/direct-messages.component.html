@@ -23,10 +23,12 @@
   <div class="dm__list" *ngIf="isDirectMessageOpen">
     <ng-container *ngIf="user">
       <app-dm-label
-        class="dm__list_item"
         *ngFor="let dmUser of dmUsers"
         [dmUser]="dmUser"
         (leaveChat)="leaveDMChat($event)"
+        (click)="selectDMUser(dmUser)"
+        class="direct-message"
+        [class.selected]="dmUser === labelService.activeLabel"
       ></app-dm-label>
     </ng-container>
   </div>
