@@ -1,0 +1,24 @@
+<ng-container *ngIf="user">
+  <div class="user__icon">
+    <div class="user__image-container">
+      <img
+        class="user__image"
+        [src]="user.profilePicture"
+        alt="profile_picture"
+        matTooltip="{{ user.username }}"
+      />
+      <div class="user__status">
+        <div
+          *ngIf="user.isOnline"
+          class="user__status-online"
+          matTooltip="online"
+        ></div>
+        <div
+          *ngIf="!user.isOnline"
+          class="user__status-offline"
+          matTooltip="offline"
+        ></div>
+      </div>
+    </div>
+  </div>
+</ng-container>

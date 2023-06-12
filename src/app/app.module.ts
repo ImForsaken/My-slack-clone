@@ -37,6 +37,7 @@ import { AllChannelsComponent } from './components/sidenav/channels-dialog/all-c
 import { DirectMessagesDialogComponent } from './components/sidenav/dm-dialog/direct-messages-dialog.component';
 import { ThreadContentComponent } from './chat/thread-content/thread-content.component';
 import { PageNotFoundComponent } from './page/page-not-found/page-not-found.component';
+import { UserIconComponent } from './components/user-icon/user-icon.component';
 
 @NgModule({
   declarations: [
@@ -63,6 +64,7 @@ import { PageNotFoundComponent } from './page/page-not-found/page-not-found.comp
     DirectMessagesDialogComponent,
     ThreadContentComponent,
     ProfileSettingsDialogComponent,
+    UserIconComponent,
   ],
   imports: [
     BrowserModule,

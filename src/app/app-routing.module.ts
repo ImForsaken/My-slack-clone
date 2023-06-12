@@ -14,7 +14,10 @@ const routes: Routes = [
     path: 'main',
     component: MainComponent,
     canActivate: [AuthGuard],
-    children: [{ path: ':name', component: ChatContentComponent }],
+    children: [
+      // { path: '', component: PageNotFoundComponent }, Hier eine Info Componente erstellen / einstzen
+      { path: ':name', component: ChatContentComponent },
+    ],
   },
   { path: 'legal-notice', component: LegalNoticeComponent },
   { path: 'data-protection', component: DataProtectionComponent },

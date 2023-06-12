@@ -38,6 +38,7 @@ export class DirectMessagesComponent {
 
   selectDMUser(dmUser: TUser): void {
     this.labelService.activeLabel = dmUser;
+    this.labelService.mySubject.next(dmUser);
   }
 
   /**

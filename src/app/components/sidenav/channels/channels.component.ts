@@ -50,6 +50,7 @@ export class ChannelsComponent implements OnInit, OnDestroy {
   selectChannel(channel: TChannel): void {
     if (channel) {
       this.labelService.activeLabel = channel;
+      this.labelService.mySubject.next(channel);
     }
   }
 

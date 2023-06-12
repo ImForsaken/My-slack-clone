@@ -31,32 +31,18 @@
             >
               <mat-icon>menu_open</mat-icon>
             </button>
-            <ng-container *ngIf="labelService.activeLabel">
-              <div>{{ labelService.getActiveName() }}</div>
-            </ng-container>
-            <ng-container *ngIf="labelService.getActiveObject()">
-              <div class="user__icon">
-                <div class="user__image-container">
-                  <img
-                    class="user__image"
-                    [src]="labelService.getActiveObject()!.profilePicture"
-                    alt="profile_picture"
-                    matTooltip="{{ labelService.getActiveObject()!.username }}"
-                  />
-                  <div class="user__status">
-                    <div
-                      *ngIf="labelService.getActiveObject()!.isOnline"
-                      class="user__status-online"
-                      matTooltip="online"
-                    ></div>
-                    <div
-                      *ngIf="!labelService.getActiveObject()!.isOnline"
-                      class="user__status-offline"
-                      matTooltip="offline"
-                    ></div>
-                  </div>
-                </div>
+            <!-- Headline for Chats -->
+            <ng-container *ngIf="labelService.activeLabel; else elseBlock">
+              <div>
+                {{ labelService.getActiveName() }}
               </div>
+            </ng-container>
+            <ng-template #elseBlock>
+              <div>Open Chat</div>
+            </ng-template>
+            <!-- Show UserImg & Status -->
+            <ng-container *ngIf="labelService.getActiveObject()">
+              <app-user-icon></app-user-icon>
             </ng-container>
           </mat-toolbar>
           <!-- chat display -->
