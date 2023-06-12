@@ -22,9 +22,9 @@ export class DmLabelComponent {
    * @param dmUser
    */
   openDirectMessage(dmUser: TUser): void {
-    const dmId = dmUser.directMessages.find(dm => {
+    const dmId = dmUser.directMessages.find((dm) => {
       return dm.chatPartnerID === this.storeService.user.id;
-    })
+    });
 
     this.router.navigateByUrl(`main/dmuser_${dmId?.dmDocID}`);
   }

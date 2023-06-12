@@ -30,13 +30,13 @@ import { DirectMessagesComponent } from './components/sidenav/direct-messages/di
 import { DmLabelComponent } from './components/sidenav/dm-label/dm-label.component';
 // Page
 import { AppComponent } from './app.component';
-import { PageNotFoundComponent } from './page/page-not-found/page-not-found.component';
 import { WelcomeComponent } from './page/welcome/welcome.component';
 import { MainComponent } from './page/main/main.component';
 import { NewChannelComponent } from './components/sidenav/new-channel/new-channel.component';
 import { AllChannelsComponent } from './components/sidenav/channels-dialog/all-channels.component';
 import { DirectMessagesDialogComponent } from './components/sidenav/dm-dialog/direct-messages-dialog.component';
 import { ThreadContentComponent } from './chat/thread-content/thread-content.component';
+import { PageNotFoundComponent } from './page/page-not-found/page-not-found.component';
 
 @NgModule({
   declarations: [
