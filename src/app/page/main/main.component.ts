@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit, ViewChild, inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSidenav } from '@angular/material/sidenav';
 import { Subscription } from 'rxjs';
+import { LabelService } from 'src/app/components/sidenav/label.service';
 import { ChannelDbService } from 'src/app/shared/service/channels-db.service';
 import { DirectMessageDbService } from 'src/app/shared/service/direct-messages-db.service';
 import { SidenavService } from 'src/app/shared/service/sidenav.service';
@@ -33,7 +34,8 @@ export class MainComponent implements OnInit, OnDestroy {
     public userService: UserDbService,
     private channelService: ChannelDbService,
     private dmService: DirectMessageDbService,
-    private storeService: StoreService
+    private storeService: StoreService,
+    public labelService: LabelService
   ) {}
 
   /**

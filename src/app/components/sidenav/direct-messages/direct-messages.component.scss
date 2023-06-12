@@ -12,6 +12,12 @@
   .dm__list {
     display: flex;
     flex-direction: column;
+    .direct-message {
+      transition: background-color 0.2s ease;
+      &.selected {
+        background-color: $blue-active;
+      }
+    }
   }
 }
 

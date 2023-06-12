@@ -28,12 +28,11 @@
   <div class="channels__list" *ngIf="isChannelsOpen">
     <ng-container *ngIf="user">
       <app-channel-label
-        *ngFor="let channel of user.channels; let i = index"
+        *ngFor="let channel of user.channels"
         class="channel"
-        [index]="i"
         [channel]="channel"
-        [class.selected]="channel === selectedChannel"
-        (click)="setSelectedChannel(channel)"
+        [class.selected]="channel === labelService.activeLabel"
+        (click)="selectChannel(channel)"
       ></app-channel-label>
     </ng-container>
   </div>

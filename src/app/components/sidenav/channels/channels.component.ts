@@ -6,6 +6,7 @@ import { NewChannelComponent } from '../new-channel/new-channel.component';
 import { AllChannelsComponent } from '../channels-dialog/all-channels.component';
 import { Subscription } from 'rxjs';
 import { TChannel } from 'src/app/shared/types/chat';
+import { LabelService } from '../label.service';
 
 @Component({
   selector: 'app-channels',
@@ -16,9 +17,13 @@ export class ChannelsComponent implements OnInit, OnDestroy {
   user!: TUser;
   subUser$!: Subscription;
   isChannelsOpen: boolean = true;
-  selectedChannel!: TChannel;
+  selectedChannel: TChannel | null = null;
 
-  constructor(public dialog: MatDialog, private storeService: StoreService) {}
+  constructor(
+    public dialog: MatDialog,
+    private storeService: StoreService,
+    public labelService: LabelService
+  ) {}
 
   ngOnInit(): void {
     this.getUser();
@@ -29,7 +34,7 @@ export class ChannelsComponent implements OnInit, OnDestroy {
    */
   getUser(): void {
     this.subUser$ = this.storeService.currentUser$.subscribe((user) => {
-      console.log('channel comp')
+      console.log('channel comp');
       if (user) {
         this.user = user;
         this.user.channels = this.sortChannels(this.user.channels);
@@ -42,9 +47,9 @@ export class ChannelsComponent implements OnInit, OnDestroy {
    * to hightlight the selected channel
    * @param channel
    */
-  setSelectedChannel(channel: TChannel): void {
+  selectChannel(channel: TChannel): void {
     if (channel) {
-      this.selectedChannel = channel;
+      this.labelService.activeLabel = channel;
     }
   }
 
