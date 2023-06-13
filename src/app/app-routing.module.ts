@@ -7,6 +7,7 @@ import { LegalNoticeComponent } from './components/info/legal-notice/legal-notic
 import { DataProtectionComponent } from './components/info/data-protection/data-protection.component';
 import { AuthGuard } from './shared/service/auth.guard';
 import { ChatContentComponent } from './chat/chat-content/chat-content.component';
+import { ChatHintComponent } from './components/info/chat-hint/chat-hint.component';
 
 const routes: Routes = [
   { path: '', component: WelcomeComponent },
@@ -15,7 +16,7 @@ const routes: Routes = [
     component: MainComponent,
     canActivate: [AuthGuard],
     children: [
-      // { path: '', component: PageNotFoundComponent }, Hier eine Info Componente erstellen / einstzen
+      { path: '', component: ChatHintComponent }, //Hier eine Info Componente erstellen / einstzen
       { path: ':name', component: ChatContentComponent },
     ],
   },

@@ -38,6 +38,7 @@ import { DirectMessagesDialogComponent } from './components/sidenav/dm-dialog/di
 import { ThreadContentComponent } from './chat/thread-content/thread-content.component';
 import { PageNotFoundComponent } from './page/page-not-found/page-not-found.component';
 import { UserIconComponent } from './components/user-icon/user-icon.component';
+import { ChatHintComponent } from './components/info/chat-hint/chat-hint.component';
 
 @NgModule({
   declarations: [
@@ -65,6 +66,7 @@ import { UserIconComponent } from './components/user-icon/user-icon.component';
     ThreadContentComponent,
     ProfileSettingsDialogComponent,
     UserIconComponent,
+    ChatHintComponent,
   ],
   imports: [
     BrowserModule,
