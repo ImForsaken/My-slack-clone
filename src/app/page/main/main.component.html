@@ -52,6 +52,7 @@
               <app-user-icon></app-user-icon>
             </ng-container>
 
+            <!-- =================== -->
             <!-- Show Open Chat name -->
             <ng-container *ngIf="labelService.activeLabel; else elseBlock">
               <div>
@@ -61,6 +62,7 @@
             <ng-template #elseBlock>
               <div>Open Chat</div>
             </ng-template>
+            <!-- =================== -->
           </mat-toolbar>
           <!-- chat display -->
           <router-outlet></router-outlet>

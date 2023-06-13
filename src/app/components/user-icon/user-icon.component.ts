@@ -31,7 +31,7 @@ export class UserIconComponent implements OnInit, OnDestroy {
   }
 
   getLabel() {
-    this.labelSub$ = this.labelServcie.mySubject.subscribe((data) => {
+    this.labelSub$ = this.labelServcie.labelSubject$.subscribe((data) => {
       if (data) {
         // TUser property
         if ('username' in data) {

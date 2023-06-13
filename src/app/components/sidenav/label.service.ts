@@ -8,7 +8,7 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class LabelService {
   activeLabel: TUser | TChannel | null = null;
-  mySubject = new BehaviorSubject<TUser | TChannel | null>(null);
+  labelSubject$ = new BehaviorSubject<TUser | TChannel | null>(null);
 
   /**
    * returns stored Channel-, Username as string or null
@@ -17,8 +17,10 @@ export class LabelService {
   getActiveNameOfChannelOfUser(): string | null {
     if (this.activeLabel) {
       if ('username' in this.activeLabel) {
+        console.log('if username: ', this.activeLabel);
         return this.activeLabel.username;
       } else if ('name' in this.activeLabel) {
+        console.log('if name: ', this.activeLabel);
         return this.activeLabel.name;
       }
     }

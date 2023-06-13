@@ -36,9 +36,13 @@ export class DirectMessagesComponent {
     this.getAllUsers();
   }
 
+  /**
+   * store selected Direct Message User
+   * @param dmUser
+   */
   selectDMUser(dmUser: TUser): void {
     this.labelService.activeLabel = dmUser;
-    this.labelService.mySubject.next(dmUser);
+    this.labelService.labelSubject$.next(dmUser);
   }
 
   /**
