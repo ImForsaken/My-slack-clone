@@ -43,14 +43,12 @@ export class StoreService {
     public auth: Auth
   ) {
     this.auth.onAuthStateChanged((user) => {
-      console.log('Auth State Change getriggert');
       if (user) {
         // user is logged in
         this.authLoggedUserUID = user.uid;
 
         this.currentUser$ = this.userDBService.getUserById$(user.uid);
         this.userDBService.getUserById$(user.uid).subscribe((user) => {
-          console.log('inside onAuthStateChange');
           this.user = user;
         });
       } else {

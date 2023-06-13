@@ -39,7 +39,6 @@ export class NewChannelComponent implements OnInit, OnDestroy {
    */
   getUser(): void {
     this.subUser$ = this.storeService.currentUser$.subscribe((user) => {
-      console.log('new channel comp')
       if (user) {
         this.user = user;
         this.user.isOnline = true;

@@ -23,27 +23,44 @@
           <!-- header -->
           <mat-toolbar>
             <button
-              class="toggle__btn"
               type="button"
               mat-button
               (click)="sidenav.toggle()"
-              matTooltip="Toggle Menu"
+              matTooltip="Sidemenu"
             >
               <mat-icon>menu_open</mat-icon>
             </button>
             <!-- Headline for Chats -->
+
+            <!-- Show ChannelStatus -->
+            <ng-container *ngIf="labelService.getActiveChannel()">
+              <mat-icon
+                *ngIf="
+                  labelService.getActiveChannel()?.status === 'public';
+                  else privateBlock
+                "
+                matTooltip="public"
+                >tag</mat-icon
+              >
+              <ng-template #privateBlock>
+                <mat-icon matTooltip="private">locked</mat-icon>
+              </ng-template>
+            </ng-container>
+
+            <!-- Show UserImg & Status -->
+            <ng-container *ngIf="labelService.getActiveUser()">
+              <app-user-icon></app-user-icon>
+            </ng-container>
+
+            <!-- Show Open Chat name -->
             <ng-container *ngIf="labelService.activeLabel; else elseBlock">
               <div>
-                {{ labelService.getActiveName() }}
+                {{ labelService.getActiveNameOfChannelOfUser() }}
               </div>
             </ng-container>
             <ng-template #elseBlock>
               <div>Open Chat</div>
             </ng-template>
-            <!-- Show UserImg & Status -->
-            <ng-container *ngIf="labelService.getActiveObject()">
-              <app-user-icon></app-user-icon>
-            </ng-container>
           </mat-toolbar>
           <!-- chat display -->
           <router-outlet></router-outlet>

@@ -23,7 +23,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   getUser(): void {
     this.subUser$ = this.storeService.currentUser$.subscribe((user) => {
-      console.log('header comp');
       if (user) {
         this.user = user;
       }

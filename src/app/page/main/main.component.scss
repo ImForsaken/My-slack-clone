@@ -43,13 +43,6 @@ section {
   border: none;
 }
 
-.toggle__btn {
-  display: none;
-  @media (max-width: $breakpoint-sm) {
-    display: inline-flex;
-  }
-}
-
 mat-toolbar {
   flex-shrink: 0;
 }

@@ -34,7 +34,6 @@ export class ChannelsComponent implements OnInit, OnDestroy {
    */
   getUser(): void {
     this.subUser$ = this.storeService.currentUser$.subscribe((user) => {
-      console.log('channel comp');
       if (user) {
         this.user = user;
         this.user.channels = this.sortChannels(this.user.channels);

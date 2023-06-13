@@ -46,7 +46,6 @@ export class DirectMessagesComponent {
    */
   getUser(): void {
     this.subUser$ = this.storeService.currentUser$.subscribe((user) => {
-      console.log('dm comp');
       if (user) {
         this.user = user;
         this.isUserLoaded = true;
@@ -62,7 +61,6 @@ export class DirectMessagesComponent {
     this.subAllUsers$ = this.userDBService
       .getAllUsers$()
       .subscribe((users: TUser[]) => {
-        console.log('dm comp');
         this.allUsers = users;
         this.isAllUsersLoaded = true;
         this.getDMUsers();
