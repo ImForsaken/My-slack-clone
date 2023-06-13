@@ -10,6 +10,10 @@ export class LabelService {
   activeLabel: TUser | TChannel | null = null;
   mySubject = new BehaviorSubject<TUser | TChannel | null>(null);
 
+  /**
+   * returns stored Channel-, Username as string or null
+   * @returns
+   */
   getActiveNameOfChannelOfUser(): string | null {
     if (this.activeLabel) {
       if ('username' in this.activeLabel) {
@@ -21,6 +25,10 @@ export class LabelService {
     return null;
   }
 
+  /**
+   * returns stored user obj or null
+   * @returns
+   */
   getActiveUser(): TUser | null {
     if (this.activeLabel) {
       if ('username' in this.activeLabel) {
@@ -31,6 +39,10 @@ export class LabelService {
     return null;
   }
 
+  /**
+   * returns stored channel obj or null
+   * @returns
+   */
   getActiveChannel(): TChannel | null {
     if (this.activeLabel) {
       if ('name' in this.activeLabel) {

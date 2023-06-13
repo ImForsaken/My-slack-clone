@@ -1,4 +1,4 @@
-@use "../../shared/style/variables" as *;
+@import "../../shared/style/variables";
 .error {
   height: $main-height;
   display: flex;
