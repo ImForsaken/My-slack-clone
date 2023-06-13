@@ -39,6 +39,7 @@ import { ThreadContentComponent } from './chat/thread-content/thread-content.com
 import { PageNotFoundComponent } from './page/page-not-found/page-not-found.component';
 import { UserIconComponent } from './components/user-icon/user-icon.component';
 import { ChatHintComponent } from './components/info/chat-hint/chat-hint.component';
+import { LogoComponent } from './components/logo/logo.component';
 
 @NgModule({
   declarations: [
@@ -67,6 +68,7 @@ import { ChatHintComponent } from './components/info/chat-hint/chat-hint.compone
     ProfileSettingsDialogComponent,
     UserIconComponent,
     ChatHintComponent,
+    LogoComponent,
   ],
   imports: [
     BrowserModule,

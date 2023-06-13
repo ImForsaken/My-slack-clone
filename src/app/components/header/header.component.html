@@ -1,12 +1,6 @@
 <header class="header">
   <mat-toolbar class="header__content" color="primary">
-    <div class="header__logo" routerLink="/main" matTooltip="Home">
-      <img
-        class="header__logo-image"
-        src="../assets/icons/s-c-logo.jpg"
-        alt="Logo"
-      />
-    </div>
+    <app-logo routerLink="/main"></app-logo>
     <div class="header__menu">
       <!-- Info Button -->
       <button mat-icon-button [matMenuTriggerFor]="infoMenu" matTooltip="Info">

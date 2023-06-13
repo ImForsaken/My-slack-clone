@@ -1,0 +1,17 @@
+@import "../../shared/style/variables.scss";
+.logo__container {
+  cursor: pointer;
+  padding: 0.25rem;
+  height: $icon-size;
+  width: $icon-size;
+  padding: 0.5rem;
+  border-radius: 0.75rem;
+  &:hover {
+    background-color: $purple-hover;
+  }
+  .logo {
+    display: block;
+    height: 100%;
+    width: 100%;
+  }
+}
