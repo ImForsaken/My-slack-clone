@@ -31,7 +31,7 @@
         *ngFor="let channel of user.channels"
         class="channel"
         [channel]="channel"
-        [class.selected]="channel === labelService.activeLabel"
+        [class.selected]="channel === uiService.activeLabel"
         (click)="selectChannel(channel)"
       ></app-channel-label>
     </ng-container>

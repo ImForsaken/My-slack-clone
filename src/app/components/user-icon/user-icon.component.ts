@@ -7,7 +7,7 @@ import {
 } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { TUser } from 'src/app/shared/types/user';
-import { LabelService } from '../sidenav/label.service';
+import { UiService } from '../../shared/service/ui.service';
 import { TChannel } from 'src/app/shared/types/chat';
 
 @Component({
@@ -21,17 +21,14 @@ export class UserIconComponent implements OnInit, OnDestroy {
   user!: TUser;
   channel!: TChannel;
 
-  constructor(
-    private labelServcie: LabelService,
-    private cdr: ChangeDetectorRef
-  ) {}
+  constructor(private uiService: UiService, private cdr: ChangeDetectorRef) {}
 
   ngOnInit() {
     this.getLabel();
   }
 
   getLabel() {
-    this.labelSub$ = this.labelServcie.labelSubject$.subscribe((data) => {
+    this.labelSub$ = this.uiService.labelSubject$.subscribe((data) => {
       if (data) {
         // TUser property
         if ('username' in data) {

@@ -6,7 +6,7 @@ import { TUser } from 'src/app/shared/types/user';
 import { DirectMessagesDialogComponent } from '../dm-dialog/direct-messages-dialog.component';
 import { StoreService } from 'src/app/shared/service/store.service';
 import { TDirectMessage } from 'src/app/shared/types/chat';
-import { LabelService } from '../label.service';
+import { UiService } from '../../../shared/service/ui.service';
 
 @Component({
   selector: 'app-direct-messages',
@@ -28,7 +28,7 @@ export class DirectMessagesComponent {
     public dialog: MatDialog,
     private userDBService: UserDbService,
     private storeService: StoreService,
-    public labelService: LabelService
+    public uiService: UiService
   ) {}
 
   ngOnInit(): void {
@@ -41,8 +41,8 @@ export class DirectMessagesComponent {
    * @param dmUser
    */
   selectDMUser(dmUser: TUser): void {
-    this.labelService.activeLabel = dmUser;
-    this.labelService.labelSubject$.next(dmUser);
+    this.uiService.activeLabel = dmUser;
+    this.uiService.labelSubject$.next(dmUser);
   }
 
   /**

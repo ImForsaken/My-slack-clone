@@ -34,7 +34,7 @@
         (leaveChat)="leaveDMChat($event)"
         (click)="selectDMUser(dmUser)"
         class="direct-message"
-        [class.selected]="dmUser === labelService.activeLabel"
+        [class.selected]="dmUser === uiService.activeLabel"
       ></app-dm-label>
     </ng-container>
   </div>

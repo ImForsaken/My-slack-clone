@@ -1,9 +1,11 @@
 import { Component, OnDestroy, OnInit, ViewChild, inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatDrawerMode, MatSidenav } from '@angular/material/sidenav';
-import { LabelService } from 'src/app/components/sidenav/label.service';
+import { Subscription } from 'rxjs';
+import { UiService } from 'src/app/shared/service/ui.service';
 import { SidenavService } from 'src/app/shared/service/sidenav.service';
 import { UserDbService } from 'src/app/shared/service/user-db.service';
+import { TChannel } from 'src/app/shared/types/chat';
 import { TUser } from 'src/app/shared/types/user';
 
 @Component({
@@ -19,17 +21,39 @@ export class MainComponent implements OnInit, OnDestroy {
   user!: TUser;
   modeValue: MatDrawerMode = 'side';
   isSidenavOpened: boolean = true;
+  chatSubs$!: Subscription;
+  activeChannel: TChannel | null = null;
+  activeUserChat: TUser | null = null;
 
   constructor(
     public dialog: MatDialog,
     public userService: UserDbService,
-    public labelService: LabelService
+    public uiService: UiService
   ) {}
 
   /**
    * Start all Subscriptions from Database
    */
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.getActiveChat();
+  }
+
+  /**
+   * get stored object of Channel or User
+   */
+  getActiveChat() {
+    this.chatSubs$ = this.uiService.labelSubject$.subscribe((label) => {
+      if (label) {
+        if ('name' in label) {
+          this.activeChannel = label;
+          this.activeUserChat = null;
+        } else if ('username' in label) {
+          this.activeUserChat = label;
+          this.activeChannel = null;
+        }
+      }
+    });
+  }
 
   /**
    * switch between two material sidenav modes,
@@ -46,5 +70,7 @@ export class MainComponent implements OnInit, OnDestroy {
   /**
    * close all Subscriptions from Database
    */
-  ngOnDestroy(): void {}
+  ngOnDestroy(): void {
+    this.chatSubs$.unsubscribe();
+  }
 }

@@ -7,7 +7,7 @@ import { LegalNoticeComponent } from './components/info/legal-notice/legal-notic
 import { DataProtectionComponent } from './components/info/data-protection/data-protection.component';
 import { AuthGuard } from './shared/service/auth.guard';
 import { ChatContentComponent } from './chat/chat-content/chat-content.component';
-import { ChatHintComponent } from './components/info/chat-hint/chat-hint.component';
+import { ChatHintComponent } from './chat/chat-hint/chat-hint.component';
 
 const routes: Routes = [
   { path: '', component: WelcomeComponent },

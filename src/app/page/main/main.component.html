@@ -20,7 +20,7 @@
         </mat-drawer>
 
         <mat-drawer-content>
-          <!-- header -->
+          <!-- Chat Header -->
           <mat-toolbar>
             <button
               type="button"
@@ -30,41 +30,32 @@
             >
               <mat-icon>menu_open</mat-icon>
             </button>
+            <!-- =================== -->
             <!-- Headline for Chats -->
-
-            <!-- Show ChannelStatus -->
-            <ng-container *ngIf="labelService.getActiveChannel()">
+            <!-- Display ChannelStatus & Channelname -->
+            <ng-container *ngIf="activeChannel">
               <mat-icon
-                *ngIf="
-                  labelService.getActiveChannel()?.status === 'public';
-                  else privateBlock
-                "
+                *ngIf="activeChannel.status === 'public'; else privateBlock"
                 matTooltip="public"
                 >tag</mat-icon
               >
               <ng-template #privateBlock>
                 <mat-icon matTooltip="private">locked</mat-icon>
               </ng-template>
+              <span class="channelname">
+                {{ activeChannel.name }}
+              </span>
             </ng-container>
-
-            <!-- Show UserImg & Status -->
-            <ng-container *ngIf="labelService.getActiveUser()">
+            <!-- Display userIcon & username -->
+            <ng-container *ngIf="activeUserChat">
               <app-user-icon></app-user-icon>
+              <span>
+                {{ activeUserChat.username }}
+              </span>
             </ng-container>
-
-            <!-- =================== -->
-            <!-- Show Open Chat name -->
-            <ng-container *ngIf="labelService.activeLabel; else elseBlock">
-              <div>
-                {{ labelService.getActiveNameOfChannelOfUser() }}
-              </div>
-            </ng-container>
-            <ng-template #elseBlock>
-              <div>Open Chat</div>
-            </ng-template>
             <!-- =================== -->
           </mat-toolbar>
-          <!-- chat display -->
+          <!-- Display current Chat -->
           <router-outlet></router-outlet>
         </mat-drawer-content>
       </mat-drawer-container>
