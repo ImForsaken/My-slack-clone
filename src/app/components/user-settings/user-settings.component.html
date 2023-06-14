@@ -1,46 +1,44 @@
-<p>user-settings works!</p>
-<p>Hello, {{ data.user.username }}</p>
-<p>Hello, {{ data.user.id }}</p>
-<p>Hello, {{ data.user.email }}</p>
-
 <section class="section">
   <form (ngSubmit)="onSubmit()">
-    <fieldset>
+    <fieldset class="fieldset">
       <legend>Settings</legend>
-      <div>
-        <label for="username">Username:</label
+      <div class="wrapper">
+        <label for="username"
+          ><span class="wrapper__text">Username:</span></label
         ><input
           type="text"
           name="username"
           id="username"
           placeholder="Username"
-          [value]="user?.username"
+          [value]="data.user.username"
         />
       </div>
-      <div>
-        <img class="user__img" [src]="data.user.profilePicture" />
-        <label for="image">
-          <button mat-raised-button color="primary">Select</button>
+      <div class="wrapper">
+        <label for="image" class="wrapper">
+          <span class="wrapper__text">Profile Picture:</span>
+          <img class="wrapper__img" [src]="data.user.profilePicture" />
         </label>
         <input
           type="file"
           id="image"
           name="image"
-          style="display: block"
+          style="display: none"
           accept="image/*"
           (change)="onFileSelected($event)"
         />
       </div>
     </fieldset>
     <br />
-    <button mat-raised-button color="accent">Save</button>
-    <button
-      mat-raised-button
-      color="warn"
-      type="button"
-      (click)="closeDialog()"
-    >
-      Close
-    </button>
+    <div class="btn__container">
+      <button
+        type="button"
+        mat-raised-button
+        color="warn"
+        (click)="closeDialog()"
+      >
+        Close
+      </button>
+      <button type="submit" mat-raised-button color="accent">Save</button>
+    </div>
   </form>
 </section>

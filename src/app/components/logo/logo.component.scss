@@ -4,8 +4,8 @@
   padding: 0.25rem;
   height: $icon-size;
   width: $icon-size;
-  padding: 0.5rem;
-  border-radius: 0.75rem;
+  padding: 0.25rem;
+  border-radius: 0.5rem;
   &:hover {
     background-color: $purple-hover;
   }
@@ -13,5 +13,6 @@
     display: block;
     height: 100%;
     width: 100%;
+    border-radius: 0.25rem;
   }
 }

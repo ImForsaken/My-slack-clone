@@ -18,11 +18,7 @@ export class UserSettingsComponent {
     },
     private userService: UserDbService,
     public dialogRef: MatDialogRef<UserSettingsComponent>
-  ) {
-    if (data.user) {
-      this.user = data.user;
-    }
-  }
+  ) {}
   selectImage() {
     // Klick auf das Bild, um den Dateiauswahldialog zu öffnen
     console.log('selcect img');
