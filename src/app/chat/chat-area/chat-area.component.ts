@@ -3,6 +3,7 @@ import { ActivatedRoute, UrlSegment } from '@angular/router';
 import { Observable, Subscription, tap } from 'rxjs';
 import { ChannelDbService } from 'src/app/shared/service/channels-db.service';
 import { DirectMessageDbService } from 'src/app/shared/service/direct-messages-db.service';
+import { SidenavService } from 'src/app/shared/service/sidenav.service';
 import { ThreadService } from 'src/app/shared/service/thread.service';
 import { TMessage } from 'src/app/shared/types/message';
 
@@ -14,6 +15,7 @@ import { TMessage } from 'src/app/shared/types/message';
 export class ChatAreaComponent implements OnDestroy {
   private chatService: ChannelDbService = inject(ChannelDbService);
   private directMessageService: DirectMessageDbService = inject(DirectMessageDbService);
+  private sidenavService: SidenavService = inject(SidenavService);
   private route: ActivatedRoute = inject(ActivatedRoute);
   public threadService: ThreadService = inject(ThreadService);
 
@@ -30,7 +32,10 @@ export class ChatAreaComponent implements OnDestroy {
    */
   ngOnInit(): void {
     if (this.chatType === 'chat') {
-      this.routeSub = this.route.url.subscribe((route) => this.loadMessages(route));
+      this.routeSub = this.route.url.subscribe((route) => {
+        this.loadMessages(route);
+        this.sidenavService.close();
+      });
     } else if (this.chatType === 'thread') {
       this.threadSub = this.threadService.loadedThread$.subscribe(threadId => {
         if (threadId) {
