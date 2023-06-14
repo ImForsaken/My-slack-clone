@@ -1,4 +1,4 @@
-@use "../../shared/style/variables" as *;
+@import "../../shared/style/variables";
 .welcome {
   height: 100dvh;
   display: flex;

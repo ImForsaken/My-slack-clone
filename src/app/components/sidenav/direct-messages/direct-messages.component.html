@@ -12,7 +12,13 @@
       </mat-icon>
     </button>
     <!-- Titel Dialog Button -->
-    <button mat-button [matMenuTriggerFor]="menu">Direct Messages</button>
+    <button
+      mat-button
+      [matMenuTriggerFor]="menu"
+      matTooltip="Dirct Messages menu"
+    >
+      Direct Messages
+    </button>
     <mat-menu #menu="matMenu">
       <button mat-menu-item (click)="openUsersDialog()">
         <mat-icon>group</mat-icon>Users
@@ -28,7 +34,7 @@
         (leaveChat)="leaveDMChat($event)"
         (click)="selectDMUser(dmUser)"
         class="direct-message"
-        [class.selected]="dmUser === labelService.activeLabel"
+        [class.selected]="dmUser === uiService.activeLabel"
       ></app-dm-label>
     </ng-container>
   </div>

@@ -1,6 +1,9 @@
-@use "/src/app/shared/style/theme" as mat;
-@import "./app/shared/style/variables";
+// @use "@angular/material" as mat;
+// @use "/src/app/shared/style/my-theme" as mat;
+@import "/src/app/shared/style/my-theme";
 @import "~quill/dist/quill.snow.css";
+@import "./app/shared/style/variables";
+// Default CSS
 * {
   box-sizing: border-box;
   margin: 0;
@@ -33,7 +36,6 @@ body {
 
 .ql-editor {
   padding-right: 40px;
-  
   img {
     max-width: 150px;
     max-height: 150px;

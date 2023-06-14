@@ -1,0 +1,40 @@
+@use "sass:color";
+@import "../../shared/style/variables.scss";
+.section {
+  padding: 2rem;
+}
+
+.fieldset {
+  display: flex;
+  flex-direction: column;
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.wrapper__text {
+  font-weight: 500;
+}
+
+.wrapper__img {
+  border-radius: 0.25rem;
+  cursor: pointer;
+  height: $icon-size;
+  width: $icon-size;
+  &:hover {
+    filter: brightness(1.25);
+  }
+}
+
+.wrapper__hint {
+  color: $red;
+}
+
+.btn__container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}

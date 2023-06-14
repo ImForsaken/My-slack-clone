@@ -1,0 +1,57 @@
+<section class="section">
+  <form (ngSubmit)="onSubmit()">
+    <fieldset class="fieldset">
+      <legend>Settings</legend>
+      <div class="wrapper">
+        <span class="wrapper__text">Username:</span>
+        <mat-form-field appearance="outline">
+          <!-- <mat-label>Username:</mat-label> -->
+          <input
+            #tfUsername
+            matInput
+            type="text"
+            name="username"
+            id="username"
+            [value]="data.user.username"
+          />
+        </mat-form-field>
+      </div>
+      <div class="wrapper">
+        <label for="image" class="wrapper">
+          <span class="wrapper__text">Profile Picture:</span>
+          <img class="wrapper__img" [src]="data.user.profilePicture" />
+        </label>
+        <input
+          type="file"
+          id="image"
+          name="image"
+          style="display: none"
+          accept="image/*"
+          (change)="onFileSelected($event)"
+        />
+      </div>
+      <mat-hint class="wrapper__hint" *ngIf="isImageSizeExceeded"
+        >Bild größe (Max. 1 MB).</mat-hint
+      >
+    </fieldset>
+    <br />
+    <div class="btn__container">
+      <button
+        type="button"
+        mat-raised-button
+        color="warn"
+        (click)="closeDialog()"
+      >
+        Close
+      </button>
+      <button
+        [disabled]="isImageSizeExceeded"
+        type="submit"
+        mat-raised-button
+        color="accent"
+      >
+        Save
+      </button>
+    </div>
+  </form>
+</section>

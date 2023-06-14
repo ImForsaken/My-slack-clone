@@ -1,7 +1,7 @@
-<section>
+<section (window:resize)="toggleSideNav()">
   <mat-sidenav-container>
     <!-- leftSide menu content -->
-    <mat-sidenav #sidenav mode="side" [(opened)]="isSidenavOpened">
+    <mat-sidenav #sidenav [mode]="modeValue" [(opened)]="isSidenavOpened">
       <mat-toolbar class="sidenav__header" color="primary">
         <div>Slack-Clone</div>
       </mat-toolbar>
@@ -20,46 +20,42 @@
         </mat-drawer>
 
         <mat-drawer-content>
-          <!-- header -->
+          <!-- Chat Header -->
           <mat-toolbar>
             <button
-              class="toggle__btn"
               type="button"
               mat-button
               (click)="sidenav.toggle()"
-              matTooltip="Toggle Menu"
+              matTooltip="Sidemenu"
             >
               <mat-icon>menu_open</mat-icon>
             </button>
-            <ng-container *ngIf="labelService.activeLabel">
-              <div>{{ labelService.getActiveName() }}</div>
+            <!-- =================== -->
+            <!-- Headline for Chats -->
+            <!-- Display ChannelStatus & Channelname -->
+            <ng-container *ngIf="activeChannel">
+              <mat-icon
+                *ngIf="activeChannel.status === 'public'; else privateBlock"
+                matTooltip="public"
+                >tag</mat-icon
+              >
+              <ng-template #privateBlock>
+                <mat-icon matTooltip="private">locked</mat-icon>
+              </ng-template>
+              <span class="channelname">
+                {{ activeChannel.name }}
+              </span>
             </ng-container>
-            <ng-container *ngIf="labelService.getActiveObject()">
-              <div class="user__icon">
-                <div class="user__image-container">
-                  <img
-                    class="user__image"
-                    [src]="labelService.getActiveObject()!.profilePicture"
-                    alt="profile_picture"
-                    matTooltip="{{ labelService.getActiveObject()!.username }}"
-                  />
-                  <div class="user__status">
-                    <div
-                      *ngIf="labelService.getActiveObject()!.isOnline"
-                      class="user__status-online"
-                      matTooltip="online"
-                    ></div>
-                    <div
-                      *ngIf="!labelService.getActiveObject()!.isOnline"
-                      class="user__status-offline"
-                      matTooltip="offline"
-                    ></div>
-                  </div>
-                </div>
-              </div>
+            <!-- Display userIcon & username -->
+            <ng-container *ngIf="activeUserChat">
+              <app-user-icon></app-user-icon>
+              <span>
+                {{ activeUserChat.username }}
+              </span>
             </ng-container>
+            <!-- =================== -->
           </mat-toolbar>
-          <!-- chat display -->
+          <!-- Display current Chat -->
           <router-outlet></router-outlet>
         </mat-drawer-content>
       </mat-drawer-container>

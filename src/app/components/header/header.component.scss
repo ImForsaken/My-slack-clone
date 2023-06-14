@@ -7,22 +7,6 @@
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    .header__logo {
-      cursor: pointer;
-      padding: 0.25rem;
-      height: 2.5rem;
-      width: 2.5rem;
-      border-radius: 100%;
-      &:hover {
-        background-color: $purple-hover;
-      }
-      .header__logo-image {
-        display: block;
-        height: 100%;
-        width: 100%;
-        border-radius: 100%;
-      }
-    }
     .header__menu {
       display: flex;
       flex-direction: row;
@@ -40,28 +24,44 @@
 // ########  UserTag for testing  ##############
 // #############################################
 // height & width in size variable angeben
-.user__icon {
+.logo__container {
+  cursor: pointer;
+  padding: 0.25rem;
+  height: $icon-size;
+  width: $icon-size;
+  padding: 0.5rem;
+  border-radius: 0.75rem;
+  &:hover {
+    background-color: $purple-hover;
+  }
+  .logo {
+    display: block;
+    height: 100%;
+    width: 100%;
+  }
+}
+
+.user__container {
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 48px;
-  width: 48px;
-}
-
-.user__image-container {
-  display: block;
-  position: relative;
-  background-color: transparent;
-  height: 1.5rem;
-  width: 1.5rem;
+  cursor: pointer;
+  padding: 0.25rem;
+  height: $icon-size;
+  width: $icon-size;
+  padding: 0.25rem;
+  border-radius: 0.5rem;
+  &:hover {
+    background-color: $purple-hover;
+  }
 }
 
 .user__image {
-  border-radius: 0.25rem;
+  display: block;
   height: 100%;
   width: 100%;
-  object-fit: cover;
-  object-position: center center;
+  border-radius: 0.25rem;
 }
 
 .user__status {

@@ -25,7 +25,14 @@ export class NewChannelComponent implements OnInit, OnDestroy {
     private formBuilder: FormBuilder
   ) {
     this.channelForm = this.formBuilder.group({
-      name: ['', [Validators.required, Validators.minLength(3)]],
+      name: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(3),
+          Validators.pattern('^[A-Za-z][A-Za-z0-9\\s\\S]*$'),
+        ],
+      ],
       status: ['public', [Validators.required]],
     });
   }
@@ -39,11 +46,8 @@ export class NewChannelComponent implements OnInit, OnDestroy {
    */
   getUser(): void {
     this.subUser$ = this.storeService.currentUser$.subscribe((user) => {
-      console.log('new channel comp')
       if (user) {
         this.user = user;
-        this.user.isOnline = true;
-        this.userLoaded = true;
       }
     });
   }
@@ -70,6 +74,12 @@ export class NewChannelComponent implements OnInit, OnDestroy {
         return 'This field is required.';
       } else if (control.errors['minlength']) {
         return `Min. ${control.errors['minlength'].requiredLength} characters required.`;
+      } else if (control.errors['pattern']) {
+        if (control.value && control.value.includes(' ')) {
+          return 'No space allowed.';
+        } else {
+          return 'First character must be a letter.';
+        }
       }
     }
     return '';
@@ -81,7 +91,7 @@ export class NewChannelComponent implements OnInit, OnDestroy {
   onNewChannel(): void {
     if (this.channelForm.valid && this.user) {
       const newChannel: TChannel = {
-        name: this.channelForm.value.name,
+        name: this.channelForm.value.name.trim(),
         createdOn: this.user.id,
         status: this.channelForm.value.status as 'public' | 'private',
       };

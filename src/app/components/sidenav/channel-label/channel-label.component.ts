@@ -31,7 +31,6 @@ export class ChannelLabelComponent implements OnInit, OnDestroy {
    */
   getUser(): void {
     this.subUser$ = this.storeService.currentUser$.subscribe((user) => {
-      console.log('channel label comp');
       if (user) {
         this.user = user;
       }

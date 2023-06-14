@@ -19,7 +19,7 @@ import { TextEditorComponent } from './chat/text-editor/text-editor.component';
 // Components
 // Header
 import { HeaderComponent } from './components/header/header.component';
-import { ProfileSettingsDialogComponent } from './components/header/profile-settings-dialog/profile-settings-dialog.component';
+import { ProfileSettingsDialogComponent } from './components/profile-settings-dialog/profile-settings-dialog.component';
 // Info
 import { DataProtectionComponent } from './components/info/data-protection/data-protection.component';
 import { LegalNoticeComponent } from './components/info/legal-notice/legal-notice.component';
@@ -37,6 +37,11 @@ import { AllChannelsComponent } from './components/sidenav/channels-dialog/all-c
 import { DirectMessagesDialogComponent } from './components/sidenav/dm-dialog/direct-messages-dialog.component';
 import { ThreadContentComponent } from './chat/thread-content/thread-content.component';
 import { PageNotFoundComponent } from './page/page-not-found/page-not-found.component';
+import { UserIconComponent } from './components/user-icon/user-icon.component';
+import { ChatHintComponent } from './chat/chat-hint/chat-hint.component';
+import { LogoComponent } from './components/logo/logo.component';
+import { UserSettingsComponent } from './components/user-settings/user-settings.component';
+import { MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
@@ -63,6 +68,10 @@ import { PageNotFoundComponent } from './page/page-not-found/page-not-found.comp
     DirectMessagesDialogComponent,
     ThreadContentComponent,
     ProfileSettingsDialogComponent,
+    UserIconComponent,
+    ChatHintComponent,
+    LogoComponent,
+    UserSettingsComponent,
   ],
   imports: [
     BrowserModule,
