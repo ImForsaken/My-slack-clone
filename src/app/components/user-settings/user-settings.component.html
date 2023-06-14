@@ -1,0 +1,46 @@
+<p>user-settings works!</p>
+<p>Hello, {{ data.user.username }}</p>
+<p>Hello, {{ data.user.id }}</p>
+<p>Hello, {{ data.user.email }}</p>
+
+<section class="section">
+  <form (ngSubmit)="onSubmit()">
+    <fieldset>
+      <legend>Settings</legend>
+      <div>
+        <label for="username">Username:</label
+        ><input
+          type="text"
+          name="username"
+          id="username"
+          placeholder="Username"
+          [value]="user?.username"
+        />
+      </div>
+      <div>
+        <img class="user__img" [src]="data.user.profilePicture" />
+        <label for="image">
+          <button mat-raised-button color="primary">Select</button>
+        </label>
+        <input
+          type="file"
+          id="image"
+          name="image"
+          style="display: block"
+          accept="image/*"
+          (change)="onFileSelected($event)"
+        />
+      </div>
+    </fieldset>
+    <br />
+    <button mat-raised-button color="accent">Save</button>
+    <button
+      mat-raised-button
+      color="warn"
+      type="button"
+      (click)="closeDialog()"
+    >
+      Close
+    </button>
+  </form>
+</section>
