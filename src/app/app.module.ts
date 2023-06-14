@@ -19,7 +19,7 @@ import { TextEditorComponent } from './chat/text-editor/text-editor.component';
 // Components
 // Header
 import { HeaderComponent } from './components/header/header.component';
-import { ProfileSettingsDialogComponent } from './components/header/profile-settings-dialog/profile-settings-dialog.component';
+import { ProfileSettingsDialogComponent } from './components/profile-settings-dialog/profile-settings-dialog.component';
 // Info
 import { DataProtectionComponent } from './components/info/data-protection/data-protection.component';
 import { LegalNoticeComponent } from './components/info/legal-notice/legal-notice.component';

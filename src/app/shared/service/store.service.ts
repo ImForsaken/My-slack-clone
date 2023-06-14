@@ -18,7 +18,6 @@ import { TUser } from '../types/user';
 import { Firestore, doc, setDoc } from '@angular/fire/firestore';
 import { TChannel } from '../types/chat';
 import { RegisterFormComponent } from 'src/app/auth/register-form/register-form.component';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { UiService } from './ui.service';
 
 @Injectable({
@@ -41,7 +40,6 @@ export class StoreService {
     public router: Router,
     public userDBService: UserDbService,
     public auth: Auth,
-    private snackbar: MatSnackBar,
     private uiService: UiService
   ) {
     this.auth.onAuthStateChanged((user) => {
@@ -94,9 +92,7 @@ export class StoreService {
         //## LoadingSpinner ##
         this.uiService.loadingStateChanged$.next(false);
         //## Snackbar LOGIN ##
-        this.snackbar.open(error.message, 'Try Again', {
-          duration: 5000,
-        });
+        this.uiService.showSnackbar(error.message, 'Try Again', 5000);
       });
   }
 
@@ -161,7 +157,7 @@ export class StoreService {
         //## LoadingSpinner ##
         this.uiService.loadingStateChanged$.next(false);
         //## Snackbar ##
-        this.snackbar.open(error.message, 'Try Again', { duration: 5000 });
+        this.uiService.showSnackbar(error.message, 'Try Again', 5000);
         registerComponent.setErrorMessage('Email already in use!');
       });
   }
@@ -229,7 +225,7 @@ export class StoreService {
       })
       .catch((error) => {
         //## Snackbar ##
-        this.snackbar.open(error.message, 'Try Again', { duration: 5000 });
+        this.uiService.showSnackbar(error.message, 'Try Again', 5000);
         console.log('error', error);
       });
   }
