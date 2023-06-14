@@ -34,7 +34,7 @@ export class ChatAreaComponent implements OnDestroy {
     if (this.chatType === 'chat') {
       this.routeSub = this.route.url.subscribe((route) => {
         this.loadMessages(route);
-        this.sidenavService.close();
+        if (this.sidenavService.isSidenavSet()) this.sidenavService.close();
       });
     } else if (this.chatType === 'thread') {
       this.threadSub = this.threadService.loadedThread$.subscribe(threadId => {
