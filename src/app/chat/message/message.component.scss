@@ -19,6 +19,7 @@
     img {
         flex-shrink: 0;
         object-fit: cover;
+        border-radius: 6px;
     }
 }
 
@@ -74,4 +75,11 @@
 
 .btn-thread {
   right: 8px;
+}
+
+
+@media screen and (max-width: 600px) {
+  .message {
+    padding-inline: 16px;
+  }
 }

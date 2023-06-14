@@ -37,6 +37,7 @@ mat-toolbar {
 
 mat-drawer {
   max-width: 350px;
+  transition: none !important;
 }
 
 .mat-drawer-content {

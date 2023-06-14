@@ -20,6 +20,14 @@ export class SidenavService {
   }
 
   /**
+   * Returns a boolean if the sidenav is set.
+   * @returns Boolean.
+   */
+  public isSidenavSet(): boolean {
+    return this.sidenav ? true : false;
+  }
+ 
+  /**
    * Opens the current set sidenav.
    */
   public open() {
