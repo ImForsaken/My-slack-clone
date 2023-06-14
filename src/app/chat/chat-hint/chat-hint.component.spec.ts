@@ -8,9 +8,8 @@ describe('ChatHintComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ChatHintComponent ]
-    })
-    .compileComponents();
+      declarations: [ChatHintComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(ChatHintComponent);
     component = fixture.componentInstance;
