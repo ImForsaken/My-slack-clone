@@ -1,42 +1,76 @@
 <mat-card>
   <mat-card-header>
     <mat-card-title>Login to Slack</mat-card-title>
-    <mat-card-subtitle>Communicate with Friends or Business Partners</mat-card-subtitle>
+    <mat-card-subtitle
+      >Communicate with Friends or Business Partners</mat-card-subtitle
+    >
   </mat-card-header>
   <mat-error *ngIf="errorMsg">{{ errorMsg }}</mat-error>
-  <form [formGroup]="loginForm" (ngSubmit)="store.loginUser(this.loginForm)">
+  <form [formGroup]="loginForm" (ngSubmit)="store.userLogin(this.loginForm)">
     <mat-card-content>
       <br />
       <mat-form-field appearance="fill">
         <mat-label>Enter your email</mat-label>
-        <input matInput placeholder="pat@example.com" formControlName="userEmail" required />
-        <mat-error *ngIf="this.loginForm.controls['userEmail'].invalid">{{
-          getErrorMessage()
-          }}</mat-error>
+        <input
+          matInput
+          placeholder="pat@example.com"
+          formControlName="userEmail"
+          required
+        />
+        <mat-error *ngIf="this.loginForm.controls['userEmail'].invalid"
+          >{{ getErrorMessage() }}
+        </mat-error>
       </mat-form-field>
       <br />
       <mat-form-field appearance="fill">
         <mat-label>Enter your password</mat-label>
-        <input matInput [type]="hide ? 'password' : 'text'" formControlName="userPassword" required />
-        <mat-error *ngIf="this.loginForm.controls['userPassword'].invalid">{{
-          getErrorMessage()
-          }}</mat-error>
-        <button type="button" matTextSuffix mat-icon-button (click)="hide = !hide" [attr.aria-label]="'Hide password'"
-          [attr.aria-pressed]="hide">
+        <input
+          matInput
+          [type]="hide ? 'password' : 'text'"
+          formControlName="userPassword"
+          required
+        />
+        <mat-error *ngIf="this.loginForm.controls['userPassword'].invalid"
+          >{{ getErrorMessage() }}
+        </mat-error>
+        <button
+          type="button"
+          matTextSuffix
+          mat-icon-button
+          (click)="hide = !hide"
+          [attr.aria-label]="'Hide password'"
+          [attr.aria-pressed]="hide"
+        >
           <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
         </button>
       </mat-form-field>
-      <div class="matCardButtonContainer">
-        <button mat-raised-button color="accent" type="submit" [disabled]="!loginForm.valid">
+      <!-- LOGIN BUTTPNS CONTAINER -->
+      <div class="matCardButtonContainer" *ngIf="!isLoading">
+        <button
+          mat-raised-button
+          color="accent"
+          type="submit"
+          [disabled]="!loginForm.valid"
+        >
           Login
         </button>
-        <button mat-raised-button (click)="store.guestLogin()" type="button" color="accent">
+        <button
+          mat-raised-button
+          (click)="store.guestLogin()"
+          type="button"
+          color="accent"
+        >
           Guest Login
         </button>
       </div>
+      <!-- LOADING SPINNER -->
+      <mat-spinner *ngIf="isLoading" color="accent"></mat-spinner>
     </mat-card-content>
   </form>
+  <!-- FORM END -->
   <mat-card-actions>
-    <button mat-raised-button (click)="openDialog()" color="primary">Forgot password</button>
+    <button mat-raised-button (click)="openDialog()" color="primary">
+      Forgot password
+    </button>
   </mat-card-actions>
 </mat-card>

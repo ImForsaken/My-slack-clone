@@ -1,7 +1,6 @@
-@use "../app/shared/style/variables" as *;
-
+@import "../app/shared/style/variables";
 section {
-    height: 100dvh;
-    display: flex;
-    flex-direction: column;
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
 }

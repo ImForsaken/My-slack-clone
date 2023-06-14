@@ -1,53 +1,99 @@
 <mat-card>
-    <mat-card-header>
-        <mat-card-title>Register to Slack</mat-card-title>
-        <mat-card-subtitle>Join the Community for free!</mat-card-subtitle>
-    </mat-card-header>
-    <mat-error *ngIf="errorMsg">{{errorMsg}}</mat-error>
-    <form [formGroup]="registerForm" (ngSubmit)="this.store.signUp(this.registerForm, this)">
-        <mat-card-content>
-            <mat-form-field appearance="fill">
-                <mat-label>Enter your userName</mat-label>
-                <input matInput placeholder="coolUser123" formControlName='userName' required>
-                <mat-error *ngIf="registerForm.controls['userName'].invalid">
-                    Please enter username!
-                </mat-error>
-            </mat-form-field>
-            <mat-form-field appearance="fill">
-                <mat-label>Enter your email</mat-label>
-                <input matInput placeholder="pat@example.com" formControlName='userEmail' required>
-                <mat-error *ngIf="registerForm.controls['userEmail'].invalid">
-                    Email is invalid
-                </mat-error>
-            </mat-form-field>
-            <mat-form-field appearance="fill">
-                <mat-label>Enter your first name</mat-label>
-                <input matInput placeholder="Max" formControlName='firstName' required>
-                <mat-error *ngIf="registerForm.controls['firstName'].invalid">
-                    Please enter your Firstname!
-                </mat-error>
-            </mat-form-field>
-            <mat-form-field appearance="fill">
-                <mat-label>Enter your last name</mat-label>
-                <input matInput placeholder="Mustermann" formControlName='lastName' required>
-                <mat-error *ngIf="registerForm.controls['userName'].invalid">
-                    Please enter your Lastname
-                </mat-error>
-            </mat-form-field>
-            <mat-form-field appearance="fill">
-                <mat-label>Enter your password</mat-label>
-                <input matInput [type]="hide ? 'password' : 'text'" formControlName='userPassword' required>
-                <mat-error *ngIf="registerForm.controls['userPassword'].invalid">
-                    Password must be at least 6 characters long.
-                </mat-error>
-                <button type="button" matTextSuffix mat-icon-button (click)="hide = !hide"
-                    [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
-                    <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-                </button>
-            </mat-form-field>
-        </mat-card-content>
-        <mat-card-actions>
-            <button mat-raised-button color="accent" type="submit" [disabled]="!registerForm.valid">Submit</button>
-        </mat-card-actions>
-    </form>
+  <mat-card-header>
+    <mat-card-title>Register to Slack</mat-card-title>
+    <mat-card-subtitle>Join the Community for free!</mat-card-subtitle>
+  </mat-card-header>
+  <mat-error *ngIf="errorMsg">{{ errorMsg }}</mat-error>
+  <!-- FORM Start -->
+  <form
+    [formGroup]="registerForm"
+    (ngSubmit)="this.store.signUp(this.registerForm, this)"
+  >
+    <mat-card-content>
+      <mat-form-field appearance="fill">
+        <mat-label>Enter your userName</mat-label>
+        <input
+          matInput
+          placeholder="coolUser123"
+          formControlName="userName"
+          required
+        />
+        <mat-error *ngIf="registerForm.controls['userName'].invalid">
+          Please enter username!
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Enter your email</mat-label>
+        <input
+          matInput
+          placeholder="pat@example.com"
+          formControlName="userEmail"
+          required
+        />
+        <mat-error *ngIf="registerForm.controls['userEmail'].invalid">
+          Email is invalid
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Enter your first name</mat-label>
+        <input
+          matInput
+          placeholder="Max"
+          formControlName="firstName"
+          required
+        />
+        <mat-error *ngIf="registerForm.controls['firstName'].invalid">
+          Please enter your Firstname!
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Enter your last name</mat-label>
+        <input
+          matInput
+          placeholder="Mustermann"
+          formControlName="lastName"
+          required
+        />
+        <mat-error *ngIf="registerForm.controls['userName'].invalid">
+          Please enter your Lastname
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Enter your password</mat-label>
+        <input
+          matInput
+          [type]="hide ? 'password' : 'text'"
+          formControlName="userPassword"
+          required
+        />
+        <mat-error *ngIf="registerForm.controls['userPassword'].invalid">
+          Password must be at least 6 characters long.
+        </mat-error>
+        <button
+          type="button"
+          matTextSuffix
+          mat-icon-button
+          (click)="hide = !hide"
+          [attr.aria-label]="'Hide password'"
+          [attr.aria-pressed]="hide"
+        >
+          <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
+        </button>
+      </mat-form-field>
+    </mat-card-content>
+    <!-- Register Button Conatainer -->
+    <mat-card-actions>
+      <button
+        *ngIf="!isLoading"
+        mat-raised-button
+        color="accent"
+        type="submit"
+        [disabled]="!registerForm.valid"
+      >
+        Submit
+      </button>
+      <mat-spinner *ngIf="isLoading" diameter="50" color="accent"></mat-spinner>
+    </mat-card-actions>
+  </form>
+  <!-- FORM End -->
 </mat-card>

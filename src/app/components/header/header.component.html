@@ -1,12 +1,9 @@
 <header class="header">
   <mat-toolbar class="header__content" color="primary">
-    <div class="header__logo" routerLink="/main" matTooltip="Home">
-      <img
-        class="header__logo-image"
-        src="../assets/icons/s-c-logo.jpg"
-        alt="Logo"
-      />
-    </div>
+    <app-logo routerLink="/main"></app-logo>
+    <!-- =========== -->
+    <!-- <app-user-icon></app-user-icon> -->
+    <!-- =========== -->
     <div class="header__menu">
       <!-- Info Button -->
       <button mat-icon-button [matMenuTriggerFor]="infoMenu" matTooltip="Info">
@@ -41,27 +38,26 @@
         </button>
       </mat-menu>
       <!-- LoginUser -->
-      <div class="user__icon" *ngIf="user">
-        <div class="user__image-container">
-          <img
-            class="user__image"
-            [src]="user.profilePicture"
-            alt="profile_picture"
-            matTooltip="{{ user.username }}"
-            [matMenuTriggerFor]="userMenu"
-          />
-          <div class="user__status">
-            <div
-              *ngIf="user.isOnline"
-              class="user__status-online"
-              matTooltip="online"
-            ></div>
-            <div
-              *ngIf="!user.isOnline"
-              class="user__status-offline"
-              matTooltip="offline"
-            ></div>
-          </div>
+
+      <div *ngIf="user" class="user__container">
+        <img
+          class="user__image"
+          [src]="user.profilePicture"
+          alt="profile_picture"
+          matTooltip="{{ user.username }}"
+          [matMenuTriggerFor]="userMenu"
+        />
+        <div class="user__status">
+          <div
+            *ngIf="user.isOnline"
+            class="user__status-online"
+            matTooltip="online"
+          ></div>
+          <div
+            *ngIf="!user.isOnline"
+            class="user__status-offline"
+            matTooltip="offline"
+          ></div>
         </div>
       </div>
     </div>

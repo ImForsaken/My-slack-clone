@@ -3,8 +3,9 @@ import { MatDialog } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 import { StoreService } from 'src/app/shared/service/store.service';
 import { TUser } from 'src/app/shared/types/user';
-import { ProfileSettingsDialogComponent } from './profile-settings-dialog/profile-settings-dialog.component';
+import { ProfileSettingsDialogComponent } from '../profile-settings-dialog/profile-settings-dialog.component';
 import { UserDbService } from 'src/app/shared/service/user-db.service';
+import { UserSettingsComponent } from '../user-settings/user-settings.component';
 
 @Component({
   selector: 'app-header',
@@ -23,7 +24,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   getUser(): void {
     this.subUser$ = this.storeService.currentUser$.subscribe((user) => {
-      console.log('header comp');
       if (user) {
         this.user = user;
       }
@@ -35,8 +35,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   openSettingsDialog() {
-    const dialogRef = this.dialog.open(ProfileSettingsDialogComponent, {
-      data: { userId: this.user.id },
+    const dialogRef = this.dialog.open(UserSettingsComponent, {
+      data: { user: this.user },
     });
   }
 

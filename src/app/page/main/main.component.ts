@@ -1,15 +1,18 @@
-import { Component, OnDestroy, OnInit, ViewChild, inject } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+  inject,
+} from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { MatSidenav } from '@angular/material/sidenav';
+import { MatDrawerMode, MatSidenav } from '@angular/material/sidenav';
 import { Subscription } from 'rxjs';
-import { LabelService } from 'src/app/components/sidenav/label.service';
-import { ChannelDbService } from 'src/app/shared/service/channels-db.service';
-import { DirectMessageDbService } from 'src/app/shared/service/direct-messages-db.service';
+import { UiService } from 'src/app/shared/service/ui.service';
 import { SidenavService } from 'src/app/shared/service/sidenav.service';
-import { StoreService } from 'src/app/shared/service/store.service';
 import { UserDbService } from 'src/app/shared/service/user-db.service';
 import { TChannel } from 'src/app/shared/types/chat';
-import { TDirectMessages } from 'src/app/shared/types/dm';
 import { TUser } from 'src/app/shared/types/user';
 
 @Component({
@@ -17,104 +20,67 @@ import { TUser } from 'src/app/shared/types/user';
   templateUrl: './main.component.html',
   styleUrls: ['./main.component.scss'],
 })
-export class MainComponent implements OnInit, OnDestroy {
-  sidenavService: SidenavService = inject(SidenavService);
-
+export class MainComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild('threadDrawer') sidenav!: MatSidenav;
 
-  private subAllUsers$!: Subscription;
-  private subChannels$!: Subscription;
-  private subDirectMessages$!: Subscription;
-  private subUser$!: Subscription;
   user!: TUser;
+  modeValue: MatDrawerMode = 'side';
   isSidenavOpened: boolean = true;
+  chatSubs$!: Subscription;
+  activeChannel: TChannel | null = null;
+  activeUserChat: TUser | null = null;
 
   constructor(
     public dialog: MatDialog,
     public userService: UserDbService,
-    private channelService: ChannelDbService,
-    private dmService: DirectMessageDbService,
-    private storeService: StoreService,
-    public labelService: LabelService
+    public uiService: UiService,
+    private sidenavService: SidenavService
   ) {}
 
   /**
    * Start all Subscriptions from Database
    */
   ngOnInit(): void {
-    // this.getUser();
-    // this.getAllUsers();
-    // this.getAllChannels();
-    // this.getAllDircetMessages();
+    this.getActiveChat();
   }
 
-  ngAfterViewInit() {
+  ngAfterViewInit(): void {
     this.sidenavService.setSidenav(this.sidenav);
   }
 
   /**
-   * fetch current logged User
+   * get stored object of Channel or User
    */
-  getUser(): void {
-    this.subUser$ = this.storeService.currentUser$.subscribe((user) => {
-      console.log('main comp');
-      if (user) {
-        this.user = user;
+  getActiveChat() {
+    this.chatSubs$ = this.uiService.labelSubject$.subscribe((label) => {
+      if (label) {
+        if ('name' in label) {
+          this.activeChannel = label;
+          this.activeUserChat = null;
+        } else if ('username' in label) {
+          this.activeUserChat = label;
+          this.activeChannel = null;
+        }
       }
     });
   }
 
   /**
-   * fetch all Users form Database
+   * switch between two material sidenav modes,
+   * for a better device handling.
    */
-  getAllUsers(): void {
-    this.subAllUsers$ = this.userService
-      .getAllUsers$()
-      .subscribe((users: TUser[]): void => {
-        console.log('main comp');
-        this.userService.allUsers = users;
-      });
-  }
-
-  /**
-   * fetch all Channels form Database
-   */
-  getAllChannels(): void {
-    this.subChannels$ = this.channelService
-      .getAllChannels$()
-      .subscribe((channels: TChannel[]): void => {
-        console.log('main comp');
-        this.channelService.allChannels = channels;
-      });
-  }
-
-  /**
-   * fetch all DirectMessages form Database
-   */
-  getAllDircetMessages(): void {
-    this.subDirectMessages$ = this.dmService
-      .getAllDirectMessages$()
-      .subscribe((dms: TDirectMessages[]): void => {
-        console.log('main comp');
-        this.dmService.addDirectMessages = dms;
-      });
+  toggleSideNav(): void {
+    if (window.innerWidth <= 600) {
+      this.modeValue = 'over';
+    } else {
+      this.modeValue = 'side';
+    }
   }
 
   /**
    * close all Subscriptions from Database
    */
   ngOnDestroy(): void {
-    if (this.subUser$) {
-      this.subUser$.unsubscribe();
-    }
-    if (this.subAllUsers$) {
-      this.subAllUsers$.unsubscribe();
-    }
-    if (this.subChannels$) {
-      this.subChannels$.unsubscribe();
-    }
-    if (this.subDirectMessages$) {
-      this.subDirectMessages$.unsubscribe();
-    }
+    this.chatSubs$.unsubscribe();
   }
 }

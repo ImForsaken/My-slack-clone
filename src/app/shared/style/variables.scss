@@ -3,13 +3,18 @@
 
 /** Colors  */
 
-$purple: #9c27b0;
+$purple: #6a1b9a;
+$purple-hover: #4a148c;
+$white: #f8f8f8;
 $grey: #cac0cb;
 $dark-grey: #3f3b3f;
-$blue-active: #1164a3;
-$white: #f8f8f8;
-$purple-hover: #ab47bc;
+$blue-active: #1565c0;
 $green: #2bac76;
+$red: red;
+
+/** Sizes */
+
+$icon-size: 2.5rem;
 
 /** Header&Chat Height */
 
@@ -60,10 +65,9 @@ $breakpoint-xxs: 25em !default;
 @media (max-width: $breakpoint-xxs) {
 }
 
-/** Original Farben Slack
-$color-primary: #350d36 !default;
-$color-hover: #4d2a51 !default;
-$color-gray: #cac0cb !default;
-$color-white: #f8f8f8 !default;
-$color-active: #1164a3 !default;
- */
+// Original Farben Slack
+// $color-primary: #350d36 !default;
+// $color-hover: #4d2a51 !default;
+// $color-gray: #cac0cb !default;
+// $color-white: #f8f8f8 !default;
+// $color-active: #1164a3 !default;
