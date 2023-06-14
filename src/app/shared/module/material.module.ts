@@ -15,6 +15,8 @@ import { MatCardModule } from '@angular/material/card';
 import { MatTabsModule } from '@angular/material/tabs';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @NgModule({
   imports: [
@@ -34,6 +36,8 @@ import { MatSelectModule } from '@angular/material/select';
     MatTabsModule,
     ReactiveFormsModule,
     MatSelectModule,
+    MatSnackBarModule,
+    MatProgressSpinnerModule,
   ],
   exports: [
     BrowserAnimationsModule,
@@ -52,6 +56,8 @@ import { MatSelectModule } from '@angular/material/select';
     MatTabsModule,
     ReactiveFormsModule,
     MatSelectModule,
+    MatSnackBarModule,
+    MatProgressSpinnerModule,
   ],
 })
 export class MaterialModule {}

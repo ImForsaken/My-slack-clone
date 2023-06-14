@@ -1,5 +1,5 @@
 import { Injectable, inject } from '@angular/core';
-import { BehaviorSubject, Observable, of } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { UserDbService } from './user-db.service';
 import {
   Auth,
@@ -18,6 +18,8 @@ import { TUser } from '../types/user';
 import { Firestore, doc, setDoc } from '@angular/fire/firestore';
 import { TChannel } from '../types/chat';
 import { RegisterFormComponent } from 'src/app/auth/register-form/register-form.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { UiService } from './ui.service';
 
 @Injectable({
   providedIn: 'root',
@@ -27,8 +29,6 @@ export class StoreService {
   userService: UserDbService = inject(UserDbService);
   currentUser$!: Observable<TUser | null>;
   currentChat$!: Observable<string>;
-  // loggedInUserID$ = new BehaviorSubject<string>(''); -> wird nicht mehr gebraucht?
-  // userId!: string; -> wird nicht mehr gebraucht?
   user!: TUser;
   authLoggedUserUID!: string;
 
@@ -40,13 +40,14 @@ export class StoreService {
   constructor(
     public router: Router,
     public userDBService: UserDbService,
-    public auth: Auth
+    public auth: Auth,
+    private snackbar: MatSnackBar,
+    private uiService: UiService
   ) {
     this.auth.onAuthStateChanged((user) => {
       if (user) {
         // user is logged in
         this.authLoggedUserUID = user.uid;
-
         this.currentUser$ = this.userDBService.getUserById$(user.uid);
         this.userDBService.getUserById$(user.uid).subscribe((user) => {
           this.user = user;
@@ -58,21 +59,23 @@ export class StoreService {
     });
   }
 
-  loginUser(loginForm: FormGroup): void {
+  userLogin(loginForm: FormGroup): void {
     setPersistence(this.auth, browserSessionPersistence)
       .then(() => {
         this.loginCredentials(loginForm);
       })
       .catch((error) => {
-        console.log(error);
+        console.warn(error);
       });
   }
 
   guestLogin(): void {
-    this.loginUser(this.guestLoginCredentials);
+    this.userLogin(this.guestLoginCredentials);
   }
 
   loginCredentials(loginForm: FormGroup) {
+    //## LoadingSpinner ##
+    this.uiService.loadingStateChanged$.next(true);
     // Existing and future Auth states are now persisted in the current session only. Closing the window would clear any existing state even if a user forgets to sign out. New sign-in will be persisted with session persistence.
     return signInWithEmailAndPassword(
       this.auth,
@@ -80,13 +83,20 @@ export class StoreService {
       loginForm.controls['userPassword'].value
     )
       .then((userCredential: UserCredential): void => {
+        //## LoadingSpinner ##
+        this.uiService.loadingStateChanged$.next(false);
         setTimeout(() => {
           this.setUserOnline(this.user);
           this.router.navigate(['/main']);
         }, 500);
       })
       .catch((error) => {
-        console.warn('Error codes', error);
+        //## LoadingSpinner ##
+        this.uiService.loadingStateChanged$.next(false);
+        //## Snackbar LOGIN ##
+        this.snackbar.open(error.message, 'Try Again', {
+          duration: 5000,
+        });
       });
   }
 
@@ -112,6 +122,9 @@ export class StoreService {
     }
   }
 
+  /**
+   * logout user
+   */
   logout(): void {
     signOut(this.auth)
       .then((result) => {
@@ -123,20 +136,32 @@ export class StoreService {
       });
   }
 
+  /**
+   * Register User
+   * @param registerForm
+   * @param registerComponent
+   */
   signUp(registerForm: FormGroup, registerComponent: RegisterFormComponent) {
+    //## LoadingSpinner ##
+    this.uiService.loadingStateChanged$.next(true);
     createUserWithEmailAndPassword(
       this.auth,
       registerForm.controls['userEmail'].value,
       registerForm.controls['userPassword'].value
     )
       .then(async (userCredential: UserCredential) => {
-        // Sign-Up
+        // Register - Sign-Up
         const user = userCredential.user;
-        console.log(user);
+        //## LoadingSpinner ##
+        this.uiService.loadingStateChanged$.next(false);
         await this.addUserToCollection(user, registerForm);
-        this.loginUser(this.getLoginData(registerForm));
+        this.userLogin(this.getLoginData(registerForm));
       })
       .catch((error) => {
+        //## LoadingSpinner ##
+        this.uiService.loadingStateChanged$.next(false);
+        //## Snackbar ##
+        this.snackbar.open(error.message, 'Try Again', { duration: 5000 });
         registerComponent.setErrorMessage('Email already in use!');
       });
   }
@@ -203,6 +228,8 @@ export class StoreService {
         console.log('success', response);
       })
       .catch((error) => {
+        //## Snackbar ##
+        this.snackbar.open(error.message, 'Try Again', { duration: 5000 });
         console.log('error', error);
       });
   }
