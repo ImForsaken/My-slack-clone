@@ -10,8 +10,6 @@
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
-  // background-color: $purple;
-  // color: $white;
   text-align: center;
   background-color: #353330;
 }
@@ -36,6 +34,12 @@
       flex: 1;
       margin-top: 25px;
     }
+  }
+  @media (max-width: 600px) {
+    height: 100dvh;
+    width: 100vw;
+
+    border-radius: unset;
   }
 }
 
