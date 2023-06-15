@@ -35,4 +35,7 @@ input.example-right-align {
 
 .mdc-card__actions {
   margin: auto 0;
+  @media (max-width: 600px) {
+    margin: unset;
+  }
 }
