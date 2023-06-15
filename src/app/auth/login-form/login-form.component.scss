@@ -19,6 +19,7 @@ input.example-right-align {
 .matCardButtonContainer {
   display: flex;
   flex-direction: column;
+  margin-top: 35px;
   gap: 10px;
   width: 100%;
   justify-content: center;
@@ -30,4 +31,8 @@ input.example-right-align {
   @media (max-width: 600px) {
     justify-content: space-evenly;
   }
+}
+
+.mdc-card__actions {
+  margin: auto 0;
 }

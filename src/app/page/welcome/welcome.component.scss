@@ -21,7 +21,7 @@
 .welcomeForm {
   background-color: white;
   border-radius: 10px;
-  height: 80%;
+  min-height: 80%;
   width: 40%;
   min-width: 300px;
   max-width: 590px;
@@ -38,7 +38,8 @@
   @media (max-width: 600px) {
     height: 100dvh;
     width: 100vw;
-
+    max-width: none;
+    max-height: none;
     border-radius: unset;
   }
 }
@@ -57,6 +58,9 @@
 
 .mdc-card {
   background-color: transparent !important;
+  @media (max-width: 600px) {
+    justify-content: center !important;
+  }
 }
 
 .mat-mdc-card-header {
