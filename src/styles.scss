@@ -1,9 +1,6 @@
-// @use "@angular/material" as mat;
-// @use "/src/app/shared/style/my-theme" as mat;
 @import "/src/app/shared/style/my-theme";
 @import "~quill/dist/quill.snow.css";
 @import "./app/shared/style/variables";
-// Default CSS
 * {
   box-sizing: border-box;
   margin: 0;

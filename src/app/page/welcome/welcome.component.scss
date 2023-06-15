@@ -1,42 +1,84 @@
+@use "sass:color";
 @import "../../shared/style/variables";
 .welcome {
+  position: relative;
   height: 100dvh;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 1rem;
-  background-image: url("../../../assets/images/slackBgrRgb.jpg");
-  background-position: center;
-  background-size: cover;
-  background-repeat: no-repeat;
-  // background-color: $purple;
-  // color: $white;
   text-align: center;
-  background-color: #353330;
+  background-color: $purple; // fallback
+  background-image: linear-gradient(
+      0deg,
+      rgba($purple, 0.3) 0%,
+      rgba($purple, 0.5) 100%
+    ),
+    url("../../../assets/images/slackBgrRgb.jpg");
+  background-repeat: no-repeat, no-repeat;
+  background-position: center, center;
+  background-size: cover, cover;
 }
 
 .welcome__text {
-  padding: 10px;
+  padding: 0.75rem;
 }
 
-.welcomeForm {
-  background-color: white;
-  border-radius: 10px;
+.welcome__form {
+  position: relative;
+  z-index: 10;
+  background-color: $white;
+  border-radius: 0.75rem;
   height: 80%;
   width: 40%;
-  min-width: 300px;
-  max-width: 590px;
-  max-height: 725px;
+  min-width: 18rem;
+  max-width: 24rem;
+  max-height: 45rem;
   display: flex;
   flex-direction: column;
+  overflow-y: auto;
+  animation-name: fadeIn;
+  animation-duration: 2s;
+  animation-delay: 1s;
+  animation-fill-mode: backwards;
+  animation-iteration-count: 1;
+  animation-timing-function: ease-in-out;
   mat-tab-group {
     flex: 1;
     .mat-mdc-tab-body-wrapper {
       flex: 1;
-      margin-top: 25px;
+      margin-top: 1.5rem;
     }
   }
+}
+
+.welcome__logo {
+  position: absolute;
+  z-index: 5;
+  display: flex;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+  padding: 2rem;
+  animation-name: fadeBack;
+  animation-duration: 2s;
+  animation-delay: 0.5s;
+  animation-fill-mode: forwards;
+  animation-iteration-count: 1;
+  animation-timing-function: linear;
+}
+
+.welcome__headline {
+  display: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 6;
+  font-weight: 800;
+  font-size: clamp(1rem, 20vw, 14rem);
+  color: $white;
+  text-shadow: 0 0 0.125rem $dark-grey;
 }
 
 .mat-mdc-card {
@@ -69,5 +111,35 @@ mat-form-field {
 
 .mat-mdc-card-actions {
   flex-direction: column !important;
-  gap: 10px;
+  gap: 0.5rem;
+}
+
+@keyframes fadeBack {
+  0% {
+    opacity: 1;
+  }
+  33% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.75;
+  }
+}
+
+@keyframes fadeIn {
+  0% {
+    transform: scale(0);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes fadeOut {
+  0% {
+    transform: translate(-50%, -50%), scale(1);
+  }
+  100% {
+    transform: translate(-50%, -50%), scale(0);
+  }
 }
