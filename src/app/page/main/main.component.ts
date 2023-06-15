@@ -1,4 +1,11 @@
-import { Component, OnDestroy, OnInit, ViewChild, inject } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+  inject,
+} from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatDrawerMode, MatSidenav } from '@angular/material/sidenav';
 import { Subscription } from 'rxjs';
@@ -13,9 +20,7 @@ import { TUser } from 'src/app/shared/types/user';
   templateUrl: './main.component.html',
   styleUrls: ['./main.component.scss'],
 })
-export class MainComponent implements OnInit, OnDestroy {
-  sidenavService: SidenavService = inject(SidenavService);
-
+export class MainComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild('threadDrawer') sidenav!: MatSidenav;
 
   user!: TUser;
@@ -28,7 +33,8 @@ export class MainComponent implements OnInit, OnDestroy {
   constructor(
     public dialog: MatDialog,
     public userService: UserDbService,
-    public uiService: UiService
+    public uiService: UiService,
+    private sidenavService: SidenavService
   ) {}
 
   /**
@@ -36,6 +42,10 @@ export class MainComponent implements OnInit, OnDestroy {
    */
   ngOnInit(): void {
     this.getActiveChat();
+  }
+
+  ngAfterViewInit(): void {
+    this.sidenavService.setSidenav(this.sidenav);
   }
 
   /**

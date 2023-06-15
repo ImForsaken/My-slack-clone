@@ -1,7 +1,7 @@
 <section class="section">
   <form (ngSubmit)="onSubmit()">
     <fieldset class="fieldset">
-      <legend>Settings</legend>
+      <legend class="legend">Settings</legend>
       <div class="wrapper">
         <span class="wrapper__text">Username:</span>
         <mat-form-field appearance="outline">
@@ -19,7 +19,9 @@
       <div class="wrapper">
         <label for="image" class="wrapper">
           <span class="wrapper__text">Profile Picture:</span>
-          <img class="wrapper__img" [src]="data.user.profilePicture" />
+          <div class="wrapper__box">
+            <img class="wrapper__img" [src]="data.user.profilePicture" />
+          </div>
         </label>
         <input
           type="file"

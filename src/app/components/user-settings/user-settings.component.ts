@@ -46,7 +46,6 @@ export class UserSettingsComponent {
   }
 
   onFileSelected(event: Event): void {
-    console.log('EVENT: ', event);
     const fileInput = event.target as HTMLInputElement;
     const files = fileInput.files;
     if (files && files.length > 0) {

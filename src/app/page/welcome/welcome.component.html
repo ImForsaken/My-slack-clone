@@ -1,12 +1,44 @@
-<section class="welcome">
-  <div class="welcomeForm">
+<div class="welcome">
+  <h1 class="welcome__headline">Slack Clone</h1>
+  <div class="welcome__logo">
+    <svg viewBox="0 0 650 650">
+      <path
+        fill-rule="evenodd"
+        clip-rule="evenodd"
+        d="M500 20C500 8.9543 491.046 0 480 0H370C358.954 0 350 8.9543 350 20V280C350 291.046 358.954 300 370 300H630C641.046 300 650 291.046 650 280V170C650 158.954 641.046 150 630 150H520C508.954 150 500 141.046 500 130V20Z"
+        fill="#63AB42"
+      />
+      <path
+        fill-rule="evenodd"
+        clip-rule="evenodd"
+        d="M300 20C300 8.95431 291.046 0 280 0H170C158.954 0 150 8.95431 150 20V130C150 141.046 141.046 150 130 150H20C8.9543 150 0 158.954 0 170V280C0 291.046 8.9543 300 20 300H280C291.046 300 300 291.046 300 280V20Z"
+        fill="#5768FF"
+      />
+      <path
+        fill-rule="evenodd"
+        clip-rule="evenodd"
+        d="M650 370C650 358.954 641.046 350 630 350H370C358.954 350 350 358.954 350 370V630C350 641.046 358.954 650 370 650H480C491.046 650 500 641.046 500 630V520C500 508.954 508.954 500 520 500H630C641.046 500 650 491.046 650 480V370Z"
+        fill="#E79D2F"
+      />
+      <path
+        fill-rule="evenodd"
+        clip-rule="evenodd"
+        d="M300 370C300 358.954 291.046 350 280 350H20C8.95431 350 0 358.954 0 370V480C0 491.046 8.95431 500 20 500H130C141.046 500 150 508.954 150 520V630C150 641.046 158.954 650 170 650H280C291.046 650 300 641.046 300 630V370Z"
+        fill="#DE2C2C"
+      />
+    </svg>
+  </div>
+  <div class="welcome__form">
     <div class="welcome__text">
-      <h2>Welcome to our</h2>
       <h1>Slack-Clone</h1>
     </div>
     <mat-tab-group dynamicHeight>
-      <mat-tab label="Login"><app-login-form></app-login-form></mat-tab>
-      <mat-tab label="Sign-Up"><app-register-form></app-register-form></mat-tab>
+      <mat-tab label="Login">
+        <app-login-form></app-login-form>
+      </mat-tab>
+      <mat-tab label="Sign-Up">
+        <app-register-form></app-register-form>
+      </mat-tab>
     </mat-tab-group>
   </div>
-</section>
+</div>

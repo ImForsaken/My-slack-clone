@@ -1,12 +1,18 @@
 @use "sass:color";
 @import "../../shared/style/variables.scss";
 .section {
-  padding: 2rem;
+  padding: 1rem;
 }
 
 .fieldset {
   display: flex;
   flex-direction: column;
+}
+
+.legend {
+  font-size: 1.5em;
+  font-weight: 500;
+  color: $purple;
 }
 
 .wrapper {
@@ -19,11 +25,26 @@
   font-weight: 500;
 }
 
+.wrapper__box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid $grey;
+  border-radius: 0.25rem;
+  padding: 1rem;
+  &:hover {
+    border: 1px solid $dark-grey;
+  }
+}
+
 .wrapper__img {
   border-radius: 0.25rem;
   cursor: pointer;
-  height: $icon-size;
-  width: $icon-size;
+  object-fit: contain;
+  object-fit: center center;
+  height: $icon-size * 5;
+  width: $icon-size * 5;
+  aspect-ratio: 1/1;
   &:hover {
     filter: brightness(1.25);
   }
@@ -36,5 +57,6 @@
 .btn__container {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  gap: 1rem;
+  justify-content: flex-end;
 }
