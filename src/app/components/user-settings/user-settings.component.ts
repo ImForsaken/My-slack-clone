@@ -50,12 +50,12 @@ export class UserSettingsComponent {
     const files = fileInput.files;
     if (files && files.length > 0) {
       const file = files[0];
-      const maxFileSize = 1 * 1024 * 1024; // 5 MB
+      const maxFileSize = 1 * 1024 * 1024; // 1 MB
 
       if (file.size > maxFileSize) {
         console.log('Bild zu groß!');
         this.isImageSizeExceeded = true;
-        // Hier kannst du die Fehlermeldung entsprechend in deiner Benutzeroberfläche anzeigen
+        // Hier die Fehlermeldung der Benutzeroberfläche anzeigen.
         return;
       }
       const reader = new FileReader();
@@ -78,7 +78,6 @@ export class UserSettingsComponent {
     if (updatedUser.id) {
       this.userService.updateUser(updatedUser.id, updatedUser);
     }
-    console.log('update', this.data.user);
     this.closeDialog();
   }
 }

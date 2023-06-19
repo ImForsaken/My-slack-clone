@@ -8,16 +8,7 @@
   justify-content: center;
   align-items: center;
   text-align: center;
-  background-color: $purple; // fallback
-  background-image: linear-gradient(
-      0deg,
-      rgba($purple, 0.3) 0%,
-      rgba($purple, 0.5) 100%
-    ),
-    url("../../../assets/images/slackBgrRgb.jpg");
-  background-repeat: no-repeat, no-repeat;
-  background-position: center, center;
-  background-size: cover, cover;
+  background-color: $purple;
 }
 
 .welcome__text {
@@ -67,12 +58,6 @@
   height: 100%;
   width: 100%;
   padding: 2rem;
-  animation-name: fadeBack;
-  animation-duration: 2s;
-  animation-delay: 0.5s;
-  animation-fill-mode: forwards;
-  animation-iteration-count: 1;
-  animation-timing-function: linear;
 }
 
 .welcome__headline {
@@ -122,18 +107,6 @@ mat-form-field {
 .mat-mdc-card-actions {
   flex-direction: column !important;
   gap: 0.5rem;
-}
-
-@keyframes fadeBack {
-  0% {
-    opacity: 1;
-  }
-  33% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0.75;
-  }
 }
 
 @keyframes fadeIn {

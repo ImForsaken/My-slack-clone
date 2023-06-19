@@ -82,11 +82,12 @@ export class StoreService {
     )
       .then((userCredential: UserCredential): void => {
         //## LoadingSpinner ##
-        this.uiService.loadingStateChanged$.next(false);
+
         setTimeout(() => {
+          this.uiService.loadingStateChanged$.next(false);
           this.setUserOnline(this.user);
           this.router.navigate(['/main']);
-        }, 500);
+        }, 1000);
       })
       .catch((error) => {
         //## LoadingSpinner ##
@@ -206,12 +207,6 @@ export class StoreService {
         name: 'Community',
         id: '3NvnI5JguDd2UizBqnkP',
         status: 'public',
-        createdOn: 'admin',
-      },
-      {
-        status: 'public',
-        name: 'JavaScript',
-        id: 'Y0nlU5MQOOdUbwElvEwQ',
         createdOn: 'admin',
       },
     ];
