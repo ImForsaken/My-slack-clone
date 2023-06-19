@@ -28,17 +28,21 @@ import { StringMap } from 'quill';
 })
 export class UserDbService {
   private firestore: Firestore = inject(Firestore);
-  private usersCollRef: CollectionReference = collection(this.firestore, 'users');
+  private usersCollRef: CollectionReference = collection(
+    this.firestore,
+    'users'
+  );
   public allUsers: TUser[] = [];
   // loggedUser!: TUser;
-  public activeChatName: string = '';
 
   /**
    * Gets the firebase collection for all users.
    * @returns Obserable for all users.
    */
   getAllUsers$(): Observable<TUser[]> {
-    return collectionData(this.usersCollRef, { idField: 'id' }) as Observable<TUser[]>;
+    return collectionData(this.usersCollRef, { idField: 'id' }) as Observable<
+      TUser[]
+    >;
   }
 
   /**
@@ -57,8 +61,13 @@ export class UserDbService {
    * @returns Observable of the channel/chat document.
    */
   getUserByEmail$(email: string): Observable<TUser[]> {
-    const userQueryRef: Query<DocumentData> = query(this.usersCollRef, where('email', '==', email));
-    return collectionData(userQueryRef, { idField: 'id' }) as Observable<TUser[]>;
+    const userQueryRef: Query<DocumentData> = query(
+      this.usersCollRef,
+      where('email', '==', email)
+    );
+    return collectionData(userQueryRef, { idField: 'id' }) as Observable<
+      TUser[]
+    >;
   }
 
   /**
@@ -97,11 +106,17 @@ export class UserDbService {
    * @param partnerId Document id of the chat parnter user.
    * @param docId Document id of the direct message chat.
    */
-  async addDirectMessageChat(userId: string, partnerId: string, docId: string): Promise<void> {
-    const user: TUser = await getDoc(doc(this.usersCollRef, userId))
-      .then((user) => user.data()) as TUser;
-    const partner: TUser = await getDoc(doc(this.usersCollRef, partnerId))
-      .then((user) => user.data()) as TUser;
+  async addDirectMessageChat(
+    userId: string,
+    partnerId: string,
+    docId: string
+  ): Promise<void> {
+    const user: TUser = (await getDoc(doc(this.usersCollRef, userId)).then(
+      (user) => user.data()
+    )) as TUser;
+    const partner: TUser = (await getDoc(
+      doc(this.usersCollRef, partnerId)
+    ).then((user) => user.data())) as TUser;
 
     this.addDirectMessageChatToUser(user, partner, partnerId, docId);
     this.addDirectMessageChatToUser(partner, user, userId, docId);
@@ -114,7 +129,12 @@ export class UserDbService {
    * @param partnerId Document id of the partner.
    * @param docId Document id of the direct message chat.
    */
-  private addDirectMessageChatToUser(user: TUser, partner: TUser, partnerId: string, docId: string) {
+  private addDirectMessageChatToUser(
+    user: TUser,
+    partner: TUser,
+    partnerId: string,
+    docId: string
+  ) {
     user?.['directMessages'].push({
       chatPartnerID: partnerId,
       chatPartnerName: partner.username,
@@ -128,15 +148,25 @@ export class UserDbService {
    * @param dmId Document id of the direct message chat.
    */
   async deleteDirectMessagesChat(dmId: string) {
-    const directMessagesCollRef: CollectionReference = collection(this.firestore, 'directMessages');
-    const directMessageChat: TDirectMessages = await getDoc(doc(directMessagesCollRef, dmId))
-      .then(dmChat => dmChat.data()) as TDirectMessages;
-    const user: TUser = await getDoc(doc(this.usersCollRef, directMessageChat.userIDs[0]))
-      .then(user => user.data()) as TUser;
-    const partner: TUser = await getDoc(doc(this.usersCollRef, directMessageChat.userIDs[1]))
-      .then(user => user.data()) as TUser;
-    const userDmIndex = user?.['directMessages'].findIndex((dm) => dm.dmDocID === dmId);
-    const partnerDmIndex = partner?.['directMessages'].findIndex((dm) => dm.dmDocID === dmId);
+    const directMessagesCollRef: CollectionReference = collection(
+      this.firestore,
+      'directMessages'
+    );
+    const directMessageChat: TDirectMessages = (await getDoc(
+      doc(directMessagesCollRef, dmId)
+    ).then((dmChat) => dmChat.data())) as TDirectMessages;
+    const user: TUser = (await getDoc(
+      doc(this.usersCollRef, directMessageChat.userIDs[0])
+    ).then((user) => user.data())) as TUser;
+    const partner: TUser = (await getDoc(
+      doc(this.usersCollRef, directMessageChat.userIDs[1])
+    ).then((user) => user.data())) as TUser;
+    const userDmIndex = user?.['directMessages'].findIndex(
+      (dm) => dm.dmDocID === dmId
+    );
+    const partnerDmIndex = partner?.['directMessages'].findIndex(
+      (dm) => dm.dmDocID === dmId
+    );
 
     user?.['directMessages'].splice(userDmIndex, 1);
     partner?.['directMessages'].splice(partnerDmIndex, 1);
@@ -145,7 +175,7 @@ export class UserDbService {
     this.updateUser(partner?.['id']!, partner);
   }
 
-  // Werden aktuell nicht verwendet. ggf. löschen: 
+  // Werden aktuell nicht verwendet. ggf. löschen:
 
   // /**
   //  * Adds a new contact.

@@ -1,5 +1,4 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { StoreService } from 'src/app/shared/service/store.service';
 import { UserDbService } from 'src/app/shared/service/user-db.service';
@@ -17,7 +16,6 @@ export class ChannelLabelComponent implements OnInit, OnDestroy {
   @Input() channel!: TChannel;
 
   constructor(
-    private router: Router,
     private userService: UserDbService,
     private storeService: StoreService
   ) {}
@@ -35,15 +33,6 @@ export class ChannelLabelComponent implements OnInit, OnDestroy {
         this.user = user;
       }
     });
-  }
-
-  /**
-   * displays the current channel chat by writing the channelID into the url
-   * @param channel
-   */
-  openChannel(channel: TChannel): void {
-    this.router.navigateByUrl(`main/channel_${channel.id}`);
-    this.userService.activeChatName = channel.name;
   }
 
   /**

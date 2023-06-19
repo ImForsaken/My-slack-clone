@@ -7,6 +7,7 @@ import { AllChannelsComponent } from '../channels-dialog/all-channels.component'
 import { Subscription } from 'rxjs';
 import { TChannel } from 'src/app/shared/types/chat';
 import { UiService } from '../../../shared/service/ui.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-channels',
@@ -20,6 +21,7 @@ export class ChannelsComponent implements OnInit, OnDestroy {
   selectedChannel: TChannel | null = null;
 
   constructor(
+    private router: Router,
     public dialog: MatDialog,
     private storeService: StoreService,
     public uiService: UiService
@@ -50,6 +52,7 @@ export class ChannelsComponent implements OnInit, OnDestroy {
     if (channel) {
       this.uiService.activeLabel = channel;
       this.uiService.labelSubject$.next(channel);
+      this.router.navigateByUrl(`main/channel_${channel.id}`);
     }
   }
 

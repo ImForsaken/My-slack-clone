@@ -7,6 +7,7 @@ import { DirectMessagesDialogComponent } from '../dm-dialog/direct-messages-dial
 import { StoreService } from 'src/app/shared/service/store.service';
 import { TDirectMessage } from 'src/app/shared/types/chat';
 import { UiService } from '../../../shared/service/ui.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-direct-messages',
@@ -25,6 +26,7 @@ export class DirectMessagesComponent {
   selectedDmUsers: TUser | null = null;
 
   constructor(
+    private router: Router,
     public dialog: MatDialog,
     private userDBService: UserDbService,
     private storeService: StoreService,
@@ -43,6 +45,11 @@ export class DirectMessagesComponent {
   selectDMUser(dmUser: TUser): void {
     this.uiService.activeLabel = dmUser;
     this.uiService.labelSubject$.next(dmUser);
+    const dmId = dmUser.directMessages.find((dm) => {
+      return dm.chatPartnerID === this.storeService.user.id;
+    });
+
+    this.router.navigateByUrl(`main/dmuser_${dmId?.dmDocID}`);
   }
 
   /**
