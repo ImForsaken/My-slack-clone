@@ -7,3 +7,25 @@
 .username {
   color: $purple;
 }
+
+.team {
+  padding-block: 16px;
+}
+
+.team__list {
+  list-style: none;
+
+  li {
+    margin-block: 6px;
+
+    a {
+      text-decoration: none;
+    }
+  }
+
+  li::before {
+    content: '>';
+    font-size: 12px;
+    margin-right: 6px;
+  }
+}
