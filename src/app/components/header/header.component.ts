@@ -3,9 +3,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 import { StoreService } from 'src/app/shared/service/store.service';
 import { TUser } from 'src/app/shared/types/user';
-import { ProfileSettingsDialogComponent } from '../profile-settings-dialog/profile-settings-dialog.component';
-import { UserDbService } from 'src/app/shared/service/user-db.service';
 import { UserSettingsComponent } from '../user-settings/user-settings.component';
+import { UiService } from 'src/app/shared/service/ui.service';
 
 @Component({
   selector: 'app-header',
@@ -16,7 +15,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
   user!: TUser;
   subUser$!: Subscription;
 
-  constructor(private storeService: StoreService, public dialog: MatDialog) {}
+  constructor(
+    private storeService: StoreService,
+    public dialog: MatDialog,
+    private uiService: UiService) {}
 
   ngOnInit(): void {
     this.getUser();
@@ -38,6 +40,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
     const dialogRef = this.dialog.open(UserSettingsComponent, {
       data: { user: this.user },
     });
+  }
+
+  resetLabel() {
+    this.uiService.activeLabel = null;
+    this.uiService.labelSubject$.next(null);
   }
 
   ngOnDestroy(): void {

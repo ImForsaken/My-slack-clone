@@ -22,23 +22,14 @@
         <mat-drawer-content>
           <!-- Chat Header -->
           <mat-toolbar>
-            <button
-              type="button"
-              mat-button
-              (click)="sidenav.toggle()"
-              matTooltip="Sidemenu"
-            >
+            <button type="button" mat-button (click)="sidenav.toggle()" matTooltip="Sidemenu">
               <mat-icon>menu_open</mat-icon>
             </button>
             <!-- =================== -->
             <!-- Headline for Chats -->
             <!-- Display ChannelStatus & Channelname -->
             <ng-container *ngIf="activeChannel">
-              <mat-icon
-                *ngIf="activeChannel.status === 'public'; else privateBlock"
-                matTooltip="public"
-                >tag</mat-icon
-              >
+              <mat-icon *ngIf="activeChannel.status === 'public'; else privateBlock" matTooltip="public">tag</mat-icon>
               <ng-template #privateBlock>
                 <mat-icon matTooltip="private">locked</mat-icon>
               </ng-template>

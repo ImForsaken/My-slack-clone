@@ -61,6 +61,9 @@ export class MainComponent implements OnInit, OnDestroy, AfterViewInit {
           this.activeUserChat = label;
           this.activeChannel = null;
         }
+      } else {
+        this.activeUserChat = null;
+        this.activeChannel = null;
       }
     });
   }
