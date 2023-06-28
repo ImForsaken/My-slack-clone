@@ -39,7 +39,7 @@
   </form>
   <!-- FORM END -->
   <mat-card-actions>
-    <button mat-raised-button (click)="openDialog()" color="primary">
+    <button mat-raised-button (click)="openDialog()" color="primary" *ngIf="!isLoading">
       Forgot password
     </button>
   </mat-card-actions>
