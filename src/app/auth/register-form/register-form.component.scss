@@ -1,8 +1,10 @@
+
 .mat-mdc-card {
   box-shadow: none !important;
 }
 
 .loader {
+  border: 16px solid transparent;
   border-top: 16px solid #5667fe;
   border-bottom: 16px solid #5667fe;
   border-radius: 50%;
