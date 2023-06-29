@@ -81,8 +81,10 @@ export class MainComponent implements OnInit, OnDestroy, AfterViewInit {
   toggleSideNav(): void {
     if (window.innerWidth <= 600) {
       this.modeValue = 'over';
+      this.hasReachedThreshold = false;
     } else {
       this.modeValue = 'side';
+      this.hasReachedThreshold = true;
     }
   }
 
