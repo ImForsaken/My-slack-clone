@@ -9,6 +9,7 @@
   align-items: center;
   text-align: center;
   background-color: $purple;
+  overflow: clip;
 }
 
 .welcome__text {
@@ -29,8 +30,7 @@
   flex-direction: column;
   overflow-y: auto;
   animation-name: fadeIn;
-  animation-duration: 2s;
-  animation-delay: 1s;
+  animation-duration: 1s;
   animation-fill-mode: backwards;
   animation-iteration-count: 1;
   animation-timing-function: ease-in-out;
@@ -55,8 +55,8 @@
   z-index: 5;
   display: flex;
   justify-content: center;
-  height: 100%;
-  width: 100%;
+  height: 120%;
+  width: 120%;
   padding: 2rem;
 }
 
@@ -111,10 +111,10 @@ mat-form-field {
 
 @keyframes fadeIn {
   0% {
-    transform: scale(0);
+    opacity: 0;
   }
   100% {
-    transform: scale(1);
+    opacity: 1;
   }
 }
 

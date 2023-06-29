@@ -41,8 +41,7 @@ import { UserIconComponent } from './components/user-icon/user-icon.component';
 import { ChatHintComponent } from './chat/chat-hint/chat-hint.component';
 import { LogoComponent } from './components/logo/logo.component';
 import { UserSettingsComponent } from './components/user-settings/user-settings.component';
-import { MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material/dialog';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -76,7 +75,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
   ],
   imports: [
     BrowserModule,
-    BrowserAnimationsModule,
+    NoopAnimationsModule,
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
