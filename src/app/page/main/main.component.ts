@@ -31,7 +31,7 @@ export class MainComponent implements OnInit, OnDestroy, AfterViewInit {
   activeUserChat: TUser | null = null;
 
   private resizeThreshold = 600;
-  private hasReachedThreshold = false;
+  private hasReachedThreshold = true;
   private previousWidth = window.innerWidth;
 
 
